@@ -19,8 +19,7 @@ class UserTableSeeder extends Seeder
             'name' => 'user',
             'email' => 'user@dineconnect.com',
             'phone' => '0126260154',
-            'otp' => bcrypt('otp'),
-            'password' => bcrypt('otp'),
+            'password' => bcrypt('1234'),
         ]);
     }
 }

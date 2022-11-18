@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-// use Local\CMS\Traits\Helpers;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Traits\Helpers;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
 
-    use RegistersUsers;
+    use RegistersUsers, Helpers;
 
     /**
      * Get a validator for an incoming registration request.
@@ -28,24 +28,20 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone_code' => ['required'],
-            'nationality' => ['required'],
-            'phone' => ['required'],
-            'dob' => ['required','date_format:m/d/Y'],
-            'gender' => ['required'],
-            'password' => ['required', 'min:8'],
-            'confirm_password' => ['required_with:password', 'min:8', 'same:password'],
+            'phone' => ['required', 'unique:users'],
+            'passcode' => ['required', 'max:4'],
         ]);
     }
 
     public function register(Request $request)
     {
+
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
 
         $this->guard()->login($user);
-        $tokenResult = $user->createToken('Mobile Access Token');
+        $tokenResult = $user->createToken('Mobile Access Token', ['access:api']);
         $accessToken = $tokenResult->plainTextToken;
 
         return $this->__apiSuccess('Registered Successful.', [
@@ -61,28 +57,14 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone_code' => $data['phone_code'],
             'phone' => $data['phone'],
-            'nationality' => $data['nationality'],
-            'dob' => Carbon::parse($data['dob']),
-            'gender' => $data['gender'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($data['passcode']),
+            'occupation' => $data['occupation'],
         ]);
     }
 
-    public function checkExistEmail(Request $request)
+    protected function guard()
     {
-
-        $this->validate($request,[
-            'email' => 'required | email'
-        ]);
-
-        $user = User::where('email',$request->get('email'))->first();
-        if($user){
-            return $this->__apiFailed('Email existed');
-        }
-
-
-        return $this->__apiSuccess('Email valid. Kindly proceed');
+        return Auth::guard('web');
     }
 }

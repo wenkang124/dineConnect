@@ -79,4 +79,10 @@ trait Helpers
     {
         return config('app.env') == "production";
     }
+
+
+    public function __generateRandomIntCode($digits)
+    {
+        return rand(pow(10, $digits - 1), pow(10, $digits) - 1);
+    }
 }

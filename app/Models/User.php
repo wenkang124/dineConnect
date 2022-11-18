@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,8 +19,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'phone',
         'email',
-        'otp',
+        'password',
+        'occupation',
     ];
 
     /**
@@ -30,7 +31,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'otp',
+        'password',
         'remember_token',
     ];
 
@@ -42,4 +43,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function otp()
+    {
+        return $this->hasMany(UserOtp::class);
+    }
+    public function getLatestOtp($type = UserOtp::type['ForgotPassword'])
+    {
+        return $this->otp()->where('type', $type)->whereNull('otp_at')->latest()->first();
+    }
 }

@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use App\Traits\Helpers;
 use Validator;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -30,7 +28,7 @@ class LoginController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "phone" => 'required|string',
-            'otp' => 'required|string',
+            'passcode' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -38,6 +36,7 @@ class LoginController extends Controller
         }
 
         $user = User::where('phone', $request->phone)->first();
+
         if ($user) {
             if ($user->active == User::INACTIVE) {
                 return $this->__apiFailed('Error', ['message' => 'Your account has not been inactive by Admin. Please try again later.']);
@@ -47,11 +46,9 @@ class LoginController extends Controller
         }
 
 
-        $credentials = $request->only('phone', 'password');
-
         Auth::setDefaultDriver('web');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['phone' => $request->get('phone'), 'password' => $request->get('passcode')])) {
             return $this->sendLoginResponse($request);
         } else {
             return $this->sendFailedLoginResponse($request);
@@ -134,5 +131,10 @@ class LoginController extends Controller
     protected function guard()
     {
         return Auth::guard('web');
+    }
+
+    public function username()
+    {
+        return 'phone';
     }
 }

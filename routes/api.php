@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('/login', 'LoginController@login');
     Route::post('/register', 'RegisterController@register');
+    Route::post('/password/forgot', 'ForgotPasswordController@forgotPassword');
+    Route::post('/password/reset', 'ForgotPasswordController@resetPassword');
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {

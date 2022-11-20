@@ -15,16 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-
-// Route::namespace('Auth')->group(function () {
-//     Route::get('login', 'LoginController@showLoginForm')->name('login');
-//     Route::post('login', 'LoginController@login')->name('login');
-//     Route::post('logout', 'LoginController@logout')->name('logout');
-// });
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('/login', 'LoginController@login');
     Route::post('/register', 'RegisterController@register');
@@ -33,15 +23,21 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-
-
     Route::group(['prefix' => 'user'], function () {
-        Route::post('/me', function (Request $request) {
-            return $request->user();
-        });
+        Route::get('/me', 'UserController@me');
+        Route::post('/update', 'UserController@update');
+        Route::post('/update_passcode', 'UserController@updatePasscode');
+        Route::post('/logout', 'UserController@logout');
+        Route::delete('/delete', 'UserController@delete');
     });
 
-    Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
-        Route::post('/logout', 'LoginController@logout');
+    Route::group(['prefix' => 'home'], function () {
+        Route::get('', 'HomeController@getAllHomeData');
+    });
+
+
+    Route::group(['prefix' => 'preferences'], function () {
+        Route::get('', 'PreferenceController@getAllList');
+        Route::post('/submit', 'PreferenceController@submit');
     });
 });

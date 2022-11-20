@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Preference;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +15,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('foodgasms', function (Blueprint $table) {
+        Schema::create('user_preferences', function (Blueprint $table) {
             $table->id();
-            $table->longText('thumbanil');
-            $table->string('name');
+            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Preference::class);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('foodgasms');
+        Schema::dropIfExists('user_preferences');
     }
 };

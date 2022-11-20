@@ -115,19 +115,6 @@ class LoginController extends Controller
         return $this->__apiFailed('Login Failed.');
     }
 
-    /**
-     * Log the user out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function logout(Request $request)
-    {
-        $request->user()->tokens()->where('name', 'Mobile Access Token')->delete();
-        // $user->tokens()->where('name','Personal Access Token')->delete();
-        return $this->__apiSuccess('Logout Successful.');
-    }
-
     protected function guard()
     {
         return Auth::guard('web');

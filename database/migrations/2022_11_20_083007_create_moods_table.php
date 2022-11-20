@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('banners', function (Blueprint $table) {
+        Schema::create('moods', function (Blueprint $table) {
             $table->id();
-            $table->longText('image');
-            $table->longText('description');
-            $table->string('action')->nullable();
+            $table->string('name');
             $table->boolean('active')->default(true);
-            $table->integer('type')->default(1);
-            $table->integer('sequence');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('banners');
+        Schema::dropIfExists('moods');
     }
 };

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->longText('lng')->nullable();
             $table->longText('lat')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

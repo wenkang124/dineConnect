@@ -17,6 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminTableSeeder::class,
             UserTableSeeder::class,
+            PreferenceTableSeeder::class,
+            BannerTableSeeder::class,
+            CategoryTableSeeder::class,
+            MoodTableSeeder::class,
         ]);
     }
 }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('type')->comment('1:ForgotPassword');
             $table->timestamp('otp_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

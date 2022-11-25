@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\Controller;
+use App\Models\Feedback;
 use App\Models\User;
+use App\Models\UserFavourite;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -77,6 +78,55 @@ class UserController extends Controller
         $request->user()->tokens()->where('name', 'Mobile Access Token')->delete();
         $user->delete();
         return $this->__apiSuccess('Delete Successful.');
+    }
+
+    public function favourites(Request $request)
+    {
+        $page = $request->get('page') ?? 1;
+        $limit = $request->get('limit') ?? 10;
+
+        $favourites = UserFavourite::where('user_id', $request->user()->id)->with('favouritable')->limit($limit)->offset(($page - 1) * $limit)->get();
+
+        return $this->__apiSuccess('Retrieve Successful.', [
+            "favourites" => $favourites
+        ]);
+    }
+
+    public function favourite(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required',
+            'type' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($request->get('status')) {
+            auth()->user()->favourites()->create([
+                'favouritable_id' => $request->id,
+                'favouritable_type' => 'App\Models\\' . $request->get('type')
+            ]);
+        } else {
+            UserFavourite::where('user_id', $request->user()->id)->where('favouritable_id', $request->get('id'))->where('favouritable_type', 'App\Models\\' . $request->get('type'))->delete();
+        }
+
+        $favourites = UserFavourite::where('user_id', $request->user()->id)->with('favouritable')->get();
+        return $this->__apiSuccess('Submit Successful.', [
+            "favourites" => $favourites
+        ]);
+    }
+
+    public function feedback(Request $request)
+    {
+        $this->validate($request, [
+            'message' => 'required',
+        ]);
+
+        $feedback = new Feedback();
+        $feedback->user_id = $request->user()->id;
+        $feedback->message = $request->get('message');
+        $feedback->save();
+
+        return $this->__apiSuccess('Submit Successful.');
     }
 
     public function logout(Request $request)

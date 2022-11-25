@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class CategoryFactory extends Factory
+class MerchantFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,6 +18,10 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'description' => fake()->text(),
+            'thumbnail' => fake()->text(),
+            'lng' => fake()->text(),
+            'lat' => fake()->text(),
             'active' => rand(0, 1),
         ];
     }

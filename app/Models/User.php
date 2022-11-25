@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PDO;
 
 class User extends Authenticatable
 {
@@ -65,5 +66,10 @@ class User extends Authenticatable
     public function getLatestOtp($type = UserOtp::type['ForgotPassword'])
     {
         return $this->otp()->where('type', $type)->whereNull('otp_at')->latest()->first();
+    }
+
+    public function favourites()
+    {
+        return $this->hasMany(UserFavourite::class);
     }
 }

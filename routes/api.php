@@ -26,18 +26,29 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/me', 'UserController@me');
         Route::post('/update', 'UserController@update');
-        Route::post('/update_passcode', 'UserController@updatePasscode');
+        Route::post('/update-passcode', 'UserController@updatePasscode');
         Route::post('/logout', 'UserController@logout');
         Route::delete('/delete', 'UserController@delete');
+        Route::get('/favourites', 'UserController@favourites');
+        Route::post('/favourite', 'UserController@favourite');
+        Route::post('/feedback', 'UserController@feedback');
+    });
+
+    Route::group(['prefix' => 'preferences'], function () {
+        Route::get('', 'PreferenceController@getAllList');
+        Route::post('/submit', 'PreferenceController@submit');
     });
 
     Route::group(['prefix' => 'home'], function () {
         Route::get('', 'HomeController@getAllHomeData');
     });
 
+    Route::group(['prefix' => 'merchant'], function () {
+        Route::get('/random-list', 'MerchantController@randomList');
+    });
 
-    Route::group(['prefix' => 'preferences'], function () {
-        Route::get('', 'PreferenceController@getAllList');
-        Route::post('/submit', 'PreferenceController@submit');
+    Route::group(['prefix' => 'notification'], function () {
+        Route::get('/', 'NotificationController@getAllList');
+        Route::get('/detail/{id}', 'NotificationController@detail');
     });
 });

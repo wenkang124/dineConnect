@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             BannerTableSeeder::class,
             CategoryTableSeeder::class,
             MoodTableSeeder::class,
+            MerchantTableSeeder::class
         ]);
     }
 }

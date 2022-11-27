@@ -19,9 +19,10 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             PreferenceTableSeeder::class,
             BannerTableSeeder::class,
-            CategoryTableSeeder::class,
+            MerchantCategoryTableSeeder::class,
             MoodTableSeeder::class,
-            MerchantTableSeeder::class
+            MerchantTableSeeder::class,
+            UserSearchTableSeeder::class
         ]);
     }
 }

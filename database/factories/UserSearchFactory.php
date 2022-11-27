@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class MerchantFactory extends Factory
+class UserSearchFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,12 +17,8 @@ class MerchantFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'description' => fake()->text(),
-            'thumbnail' => fake()->text(),
-            'lat' => fake()->randomFloat(1, 10, 10),
-            'lng' => fake()->randomFloat(1, 10, 11),
-            'active' => rand(0, 1),
+            'keyword' => fake()->name(),
+            'user_id' => rand(1, 10),
         ];
     }
 }

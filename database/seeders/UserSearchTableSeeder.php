@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
+use App\Models\UserSearch;
 use Illuminate\Database\Seeder;
 
-class CategoryTableSeeder extends Seeder
+class UserSearchTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        Category::factory()
+        UserSearch::factory()
             ->count(10)
             ->create();
     }

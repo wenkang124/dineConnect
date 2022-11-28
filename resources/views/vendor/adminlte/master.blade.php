@@ -30,7 +30,17 @@
         {{-- Configured Stylesheets --}}
         @include('adminlte::plugins', ['type' => 'css'])
 
+        <link rel="stylesheet" type="text/css" href="{{ asset('vendor/DataTables/datatables.min.css') }}"/>
+        
+        <!-- Croppie -->
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/croppie.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/intlTelInput.css')}}">
+
         <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
+
+
+        {{-- Custom Stylesheets --}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/custom_admin.css?v='.time()) }}"/>
 
         @if(config('adminlte.google_fonts.allowed', true))
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -90,7 +100,25 @@
         {{-- Configured Scripts --}}
         @include('adminlte::plugins', ['type' => 'js'])
 
+        <script type="text/javascript" src="{{ asset('vendor/DataTables/datatables.min.js') }}"></script>
+        <!-- Croppie -->
+        <script  type="text/javascript" src="{{asset('assets/js/croppie.js')}}"></script>
+
+        <script  type="text/javascript" src="{{asset('assets/js/intlTelInput-jquery.min.js')}}"></script>
+        <script  type="text/javascript" src="{{asset('assets/js/utils.js')}}"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+
         <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+        <script>
+              $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        </script>
+        
+        <script  type="text/javascript" src="{{asset('js/main.js?v='.time())}}"></script>
     @else
         <script src="{{ mix(config('adminlte.laravel_mix_js_path', 'js/app.js')) }}"></script>
     @endif

@@ -18,7 +18,8 @@ class UserTableSeeder extends Seeder
         User::updateOrCreate([
             'name' => 'user',
             'email' => 'user@dineconnect.com',
-            'phone' => '0126260154',
+            'mobile_prefix_id' => '129',
+            'phone' => '126260154',
             'password' => bcrypt('1234'),
         ]);
     }

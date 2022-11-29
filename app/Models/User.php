@@ -15,7 +15,20 @@ class User extends Authenticatable
     use HasApiTokens, SoftDeletes, HasFactory, Notifiable, HasGlobalScope;
     const ACTIVE = 1;
     const INACTIVE = 0;
+    const ACTIVE_NAME = 'Active';
+    const INACTIVE_NAME ='Inactive';
+
+    const MODULE = "user";
+    const IMAGE_ASSET_PATH = 'storage/images/' . self::MODULE . 's';
+    const MEDIA_ASSET_PATH = 'storage/media/' . self::MODULE . 's';
+    const PROFILE_PICTURE = "profile_picture";
+
     const PATH_TO_STORAGE = "storage/files/users/";
+
+    const STATUS_LIST = [
+        self::ACTIVE => self::ACTIVE_NAME,
+        self::INACTIVE => self::INACTIVE_NAME,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -24,10 +37,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'mobile_prefix_id',
         'phone',
         'email',
         'password',
         'occupation',
+        'profile_image',
+        'status',
     ];
 
     /**
@@ -49,6 +65,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    
+    protected $appends = [
+        'status_name'
+    ];
+
+
     /** Relation */
     public function otp()
     {
@@ -58,6 +80,21 @@ class User extends Authenticatable
     public function preferences()
     {
         return $this->belongsToMany(Preference::class, 'user_preferences');
+    }
+    
+    public function prefixNumber()
+    {
+        return $this->belongsTo(Country::class, 'mobile_prefix_id', 'id');
+    }
+
+    /** Get Attribute */
+    public function getStatusNameAttribute()
+    {
+        return self::STATUS_LIST[$this->active] ?? '';
+    }
+    public function getCreatedAtYmdHiaAttribute()
+    {
+        return date('Y-m-d H:i A', strtotime($this->created_at));
     }
 
 

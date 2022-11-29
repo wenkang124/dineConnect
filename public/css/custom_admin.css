@@ -1,0 +1,32 @@
+/* Common */
+.btn-primary {
+    background: #5491d3!important;
+}
+.svg-white {
+    filter: invert(89%) sepia(58%) saturate(0%) hue-rotate(67deg) brightness(110%) contrast(103%);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0!important;
+    background: unset!important;
+    border: unset!important;
+    margin-top: 10px;
+}
+
+.btn-custom {
+    background: #5491d3!important;
+    color: white!important;
+}
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background: #5491d3!important;
+}
+
+.iti.iti--allow-dropdown.iti--separate-dial-code {
+    width: 100%!important;
+}
+
+.vertical-align-bottom {
+    display: inline-block;
+    height: 100%; 
+    align-self: flex-end;
+}

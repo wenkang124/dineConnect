@@ -26,7 +26,10 @@ class NotificationController extends Controller
 
     public function detail(Request $request, $id)
     {
-        
+        $this->validate($request, [
+            'id' => 'required|exists:notifications',
+        ]);
+
         $notification = Notification::where('id', $id)->firstOrFail();
 
         return $this->__apiSuccess('Retrieve Successful.', [

@@ -44,7 +44,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::group(['prefix' => 'merchant'], function () {
+        Route::get('', 'MerchantController@getAllList');
         Route::get('/random-list', 'MerchantController@randomList');
+        Route::get('/detail/{id}', 'MerchantController@detail');
     });
 
     Route::group(['prefix' => 'notification'], function () {
@@ -55,6 +57,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'search'], function () {
         Route::get('/histories', 'SearchController@histories');
         Route::get('/suggestion-by-lat-lng', 'SearchController@suggestionByLatLng');
-        Route::get('/detail/{id}', 'NotificationController@detail');
+        Route::delete('/histories/delete', 'SearchController@historiesDelete');
     });
 });

@@ -20,4 +20,26 @@ class MerchantController extends Controller
             "merchant" => $merchant,
         ]);
     }
+
+    public function getAllList()
+    {
+        $list = Merchant::Active()->get();
+
+        return $this->__apiSuccess('Retrieve Successful.', [
+            "merchants" => $list,
+        ]);
+    }
+
+    public function detail(Request $request, $id)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:merchants',
+        ]);
+
+        $merchant = Merchant::find($id);
+
+        return $this->__apiSuccess('Retrieve Successful.', [
+            "merchant" => $merchant,
+        ]);
+    }
 }

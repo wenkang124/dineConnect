@@ -39,4 +39,17 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/{item}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('show');
         
     });
+
+    
+    Route::prefix('banners')->name('banners.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\BannerController::class, 'index'])->name('index');
+        Route::get('/datatable', [App\Http\Controllers\Admin\BannerController::class, 'dataTable'])->name('datatable');            
+        Route::get('/create', [App\Http\Controllers\Admin\BannerController::class, 'create'])->name('create');       
+        Route::post('/store', [App\Http\Controllers\Admin\BannerController::class, 'store'])->name('store');           
+        Route::get('/edit/{item}', [App\Http\Controllers\Admin\BannerController::class, 'edit'])->name('edit');       
+        Route::post('/update/{item}', [App\Http\Controllers\Admin\BannerController::class, 'update'])->name('update');
+        Route::post('/delete/{banner}', [App\Http\Controllers\Admin\BannerController::class, 'destroy'])->name('destroy');
+        
+        Route::get('/{item}', [App\Http\Controllers\Admin\BannerController::class, 'show'])->name('show');
+    });
 });

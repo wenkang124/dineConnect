@@ -36,6 +36,7 @@ class UserController extends Controller
                             <a href="'.route('admin.users.edit', [$item]).'" class="btn btn-xs btn-warning mx-1"><i class="fa fa-edit"></i></a>
                             <a href="'.route('admin.users.destroy', ['user'=>$item]).'" class="btn btn-xs btn-danger mx-1 delete-btn" data-confirm="Are you sure you want to delete this user?" data-redirect="'.route('admin.users.index').'"><i class="fa fa-trash"></i></a>';
                 })
+                ->rawColumns(['action'])
                 ->make(true);
     }
 
@@ -184,7 +185,9 @@ class UserController extends Controller
                 $img->save($upload_path .'/'. $file_name);
         
                 $item->profile_image = User::IMAGE_ASSET_PATH . '/' .$file_name;  
-                unlink($temp_path);
+                if($temp_path) {
+                    unlink($temp_path);
+                }
             }    
             $item->save();
 

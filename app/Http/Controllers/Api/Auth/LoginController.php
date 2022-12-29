@@ -27,6 +27,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            "mobile_prefix_id" => 'required',
             "phone" => 'required|string',
             'passcode' => 'required|string',
         ]);
@@ -35,7 +36,7 @@ class LoginController extends Controller
             return response(['message' => $validator->errors()->first()], 422);
         }
 
-        $user = User::where('phone', $request->phone)->first();
+        $user = User::where('mobile_prefix_id', $request->mobile_prefix_id)->where('phone', $request->phone)->first();
 
         if ($user) {
             if ($user->active == User::INACTIVE) {

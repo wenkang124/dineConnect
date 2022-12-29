@@ -33,7 +33,7 @@ class MerchantController extends Controller
     public function detail(Request $request, $id)
     {
         $this->validate($request, [
-            'id' => 'required|exists:merchants',
+            'id' => 'required|exists:merchants', 
         ]);
 
         $merchant = Merchant::find($id);

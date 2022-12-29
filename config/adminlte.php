@@ -306,6 +306,12 @@ return [
             'url'  => 'users',
             'icon' => 'fas fa-fw fa-user',
         ],
+        ['header' => 'General Management'],
+        [
+            'text' => 'Banners',
+            'url'  => 'banners',
+            'icon' => 'fas fa-fw fa-images pr-2'
+        ],
 
         // Sidebar items:
         // [

@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             MerchantCategoryTableSeeder::class,
             MoodTableSeeder::class,
             MerchantTableSeeder::class,
-            UserSearchTableSeeder::class
+            UserSearchTableSeeder::class,
+            CountryTableSeeder::class
         ]);
     }
 }

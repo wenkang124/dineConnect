@@ -22,6 +22,10 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('/password/reset', 'ForgotPasswordController@resetPassword');
 });
 
+Route::group(['prefix' => 'config'], function () {
+    Route::get('/countries', 'ConfigController@countries');
+});
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/me', 'UserController@me');

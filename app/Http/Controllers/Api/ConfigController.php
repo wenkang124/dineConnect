@@ -14,8 +14,9 @@ class ConfigController extends Controller
     {
         $countries = Country::all();
 
-        return $this->__apiSuccess('Retrieve Successful.', [
-            "countries" => $countries
-        ]);
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $countries
+        );
     }
 }

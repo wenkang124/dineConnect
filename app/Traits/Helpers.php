@@ -17,7 +17,7 @@ trait Helpers
 
     function __apiFailed($message, $data = null, int $code = 500, array $debug = null)
     {
-        return response()->json(new JsonResponse($this->__api($debug, false, $message, $code, $data)), $code);
+        return new JsonResponse($this->__api($debug, true, $message, $code, $data));
     }
 
     private function __api(array $debug = null, bool $status, $message, int $code = 0, $data = null): array

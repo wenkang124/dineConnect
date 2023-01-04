@@ -16,7 +16,7 @@ class User extends Authenticatable
     const ACTIVE = 1;
     const INACTIVE = 0;
     const ACTIVE_NAME = 'Active';
-    const INACTIVE_NAME ='Inactive';
+    const INACTIVE_NAME = 'Inactive';
 
     const MODULE = "user";
     const IMAGE_ASSET_PATH = 'storage/images/' . self::MODULE . 's';
@@ -65,7 +65,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    
+
     protected $appends = [
         'status_name'
     ];
@@ -81,7 +81,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Preference::class, 'user_preferences');
     }
-    
+
     public function prefixNumber()
     {
         return $this->belongsTo(Country::class, 'mobile_prefix_id', 'id');

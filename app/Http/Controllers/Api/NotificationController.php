@@ -18,9 +18,10 @@ class NotificationController extends Controller
 
         $notifications = auth()->user()->notifications()->limit($limit)->offset(($page - 1) * $limit)->get();
 
-        return $this->__apiSuccess('Retrieve Successful.', [
-            "notifications" => $notifications,
-        ]);
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $notifications,
+        );
     }
 
 
@@ -32,8 +33,9 @@ class NotificationController extends Controller
 
         $notification = Notification::where('id', $id)->firstOrFail();
 
-        return $this->__apiSuccess('Retrieve Successful.', [
-            "notification" => $notification,
-        ]);
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $notification,
+        );
     }
 }

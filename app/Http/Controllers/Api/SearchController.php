@@ -18,9 +18,10 @@ class SearchController extends Controller
     {
         $histories = UserSearch::latest()->take(10)->get();
 
-        return $this->__apiSuccess('Retrieve Successful.', [
-            "histories" => $histories,
-        ]);
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $histories,
+        );
     }
 
     public function suggestionByLatLng(Request $request)

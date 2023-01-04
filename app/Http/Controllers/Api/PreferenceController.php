@@ -28,8 +28,9 @@ class PreferenceController extends Controller
 
         auth()->user()->preferences()->sync(json_decode($request->preferences));
 
-        return $this->__apiSuccess('Submit Successful.', [
-            "preferences" => auth()->user()->preferences,
-        ]);
+        return $this->__apiSuccess(
+            'Submit Successful.',
+            auth()->user()->preferences,
+        );
     }
 }

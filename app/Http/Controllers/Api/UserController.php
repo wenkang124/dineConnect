@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\Feedback;
 use App\Models\User;
 use App\Models\UserFavourite;
@@ -17,9 +18,11 @@ class UserController extends Controller
 
     public function me(Request $request)
     {
-        return $this->__apiSuccess('Retrieve Successful.', [
-            "user" => $request->user()
-        ]);
+
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            new UserResource($request->user())
+        );
     }
 
     public function update(Request $request)
@@ -48,9 +51,10 @@ class UserController extends Controller
         $user->save();
 
 
-        return $this->__apiSuccess('Update Successful.', [
-            "user" => $request->user()
-        ]);
+        return $this->__apiSuccess(
+            'Update Successful.',
+            new UserResource($user)
+        );
     }
 
     public function updatePasscode(Request $request)
@@ -87,9 +91,10 @@ class UserController extends Controller
 
         $favourites = UserFavourite::where('user_id', $request->user()->id)->with('favouritable')->limit($limit)->offset(($page - 1) * $limit)->get();
 
-        return $this->__apiSuccess('Retrieve Successful.', [
-            "favourites" => $favourites
-        ]);
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $favourites
+        );
     }
 
     public function favourite(Request $request)
@@ -110,9 +115,10 @@ class UserController extends Controller
         }
 
         $favourites = UserFavourite::where('user_id', $request->user()->id)->with('favouritable')->get();
-        return $this->__apiSuccess('Submit Successful.', [
-            "favourites" => $favourites
-        ]);
+        return $this->__apiSuccess(
+            'Submit Successful.',
+            $favourites
+        );
     }
 
     public function feedback(Request $request)

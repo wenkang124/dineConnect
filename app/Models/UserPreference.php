@@ -9,10 +9,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserPreference extends Model
 {
     use HasFactory, SoftDeletes;
-
-
-    public function preference()
-    {
-        return $this->belongsTo(Preference::class);
-    }
 }

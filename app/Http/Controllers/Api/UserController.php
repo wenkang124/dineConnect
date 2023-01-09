@@ -30,6 +30,7 @@ class UserController extends Controller
         $this->validate($request, [
             'phone' => 'required|unique:users,phone,' . auth()->user()->id,
             'name' => 'required',
+            'mobile_prefix_id' => 'required',
         ]);
 
         $user = auth()->user();
@@ -45,6 +46,7 @@ class UserController extends Controller
         // }
 
 
+        $user->mobile_prefix_id = $request->mobile_prefix_id;
         $user->phone = $request->phone;
         $user->name = $request->name;
         $user->occupation = $request->occupation;

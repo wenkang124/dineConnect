@@ -12,7 +12,7 @@ class ConfigController extends Controller
 
     public function countries()
     {
-        $countries = Country::all();
+        $countries = Country::orderBy('sequence')->get();
 
         return $this->__apiSuccess(
             'Retrieve Successful.',

@@ -16,9 +16,10 @@ class PreferenceController extends Controller
     {
         $list = Preference::Active()->get();
 
-        return $this->__apiSuccess('Retrieve Successful.', [
-            "preferences" => $list,
-        ]);
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $list,
+        );
     }
 
     public function submit(Request $request)

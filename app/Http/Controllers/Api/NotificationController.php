@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Models\Notification;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NotificationController extends Controller
 {
@@ -27,9 +28,15 @@ class NotificationController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'id' => 'required|exists:notifications',
         ]);
+
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
+
 
         $notification = Notification::where('id', $id)->firstOrFail();
 

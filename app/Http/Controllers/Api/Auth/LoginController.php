@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Api\Controller;
 use App\Models\User;
 use App\Traits\Helpers;
-use Validator;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -33,7 +33,7 @@ class LoginController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response(['message' => $validator->errors()->first()], 422);
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
         }
 
         $user = User::where('mobile_prefix_id', $request->mobile_prefix_id)->where('phone', $request->phone)->first();

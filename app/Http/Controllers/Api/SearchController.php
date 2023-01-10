@@ -9,6 +9,7 @@ use App\Models\UserSearch;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class SearchController extends Controller
 {
@@ -38,9 +39,13 @@ class SearchController extends Controller
 
     public function historiesDelete(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'id' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
 
         UserSearch::whereIn('id', json_decode($request->get('id')))->delete();
 

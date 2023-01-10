@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Models\Preference;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PreferenceController extends Controller
 {
@@ -22,9 +23,14 @@ class PreferenceController extends Controller
 
     public function submit(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'preferences' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
+
 
         auth()->user()->preferences()->sync(json_decode($request->preferences));
 

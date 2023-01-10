@@ -8,6 +8,7 @@ use App\Models\Feedback;
 use App\Models\User;
 use App\Models\UserFavourite;
 use App\Traits\Helpers;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,11 +28,16 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'phone' => 'required|unique:users,phone,' . auth()->user()->id,
             'name' => 'required',
             'mobile_prefix_id' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
 
         $user = auth()->user();
 
@@ -61,10 +67,14 @@ class UserController extends Controller
 
     public function updatePasscode(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'old_passcode' => 'required|max:4',
             'new_passcode' => 'required|max:4',
         ]);
+
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
 
         $user = auth()->user();
 
@@ -101,11 +111,16 @@ class UserController extends Controller
 
     public function favourite(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'id' => 'required',
             'type' => 'required',
             'status' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
+
 
         if ($request->get('status')) {
             auth()->user()->favourites()->create([
@@ -125,9 +140,14 @@ class UserController extends Controller
 
     public function feedback(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'message' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
+
 
         $feedback = new Feedback();
         $feedback->user_id = $request->user()->id;

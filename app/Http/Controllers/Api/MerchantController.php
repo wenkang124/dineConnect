@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Models\Merchant;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MerchantController extends Controller
 {
@@ -34,10 +35,14 @@ class MerchantController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'id' => 'required|exists:merchants',
         ]);
 
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
+        
         $merchant = Merchant::find($id);
 
         return $this->__apiSuccess(

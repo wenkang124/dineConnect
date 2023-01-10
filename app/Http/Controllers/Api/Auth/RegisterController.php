@@ -25,19 +25,23 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+    }
+
+    public function register(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'mobile_prefix_id' => ['required'],
             'phone' => ['required', 'unique:users'],
             'passcode' => ['required', 'max:4'],
         ]);
-    }
 
-    public function register(Request $request)
-    {
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
 
-        $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
 

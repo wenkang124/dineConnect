@@ -10,6 +10,7 @@ use App\Models\UserOtp;
 use App\Traits\Helpers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ForgotPasswordController extends Controller
 {
@@ -17,13 +18,15 @@ class ForgotPasswordController extends Controller
 
     public function forgotPassword(Request $request)
     {
-
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:users',
         ], [
             'email.exists' => 'The email is invalid'
         ]);
 
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
 
         $user = User::where('email', $request->get('email'))->firstOrFail();
 

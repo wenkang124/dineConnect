@@ -23,8 +23,16 @@ class MerchantController extends Controller
         );
     }
 
-    public function getAllList()
+    public function getAllList(Request $request)
     {
+        // ->when($request->get('id'),function($query){
+        //     if($request->get('type') == "mode"){
+        //         $query->where()
+
+        //     }else{
+
+        //     }
+        // })
         $list = Merchant::Active()->get();
 
         return $this->__apiSuccess(
@@ -42,7 +50,7 @@ class MerchantController extends Controller
         if ($validator->fails()) {
             return $this->__apiFailed($validator->errors()->first(), $validator->errors());
         }
-        
+
         $merchant = Merchant::find($id);
 
         return $this->__apiSuccess(

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\Controller;
 use App\Models\Banner;
-use App\Models\Category;
+use App\Models\MerchantCategory;
 use App\Models\Mood;
 use App\Traits\Helpers;
 
@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function getAllHomeData()
     {
         $banners = Banner::Active()->get();
-        $categories = Category::Active()->get();
+        $categories = MerchantCategory::Active()->get();
         $moods = Mood::Active()->get();
 
         return $this->__apiSuccess('Retrieve Successful.', [

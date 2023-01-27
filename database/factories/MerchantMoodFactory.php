@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class MerchantCategoryFactory extends Factory
+class MerchantMoodFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class MerchantCategoryFactory extends Factory
     {
         return [
             'merchant_id' => rand(1, 10),
-            'category_id' => rand(1, 10),
+            'mood_id' => rand(1, 10),
         ];
     }
 }

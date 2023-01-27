@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\Controller;
 use App\Models\Merchant;
-use App\Models\MerchantCategory;
+use App\Models\Category;
 use App\Models\UserSearch;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class SearchController extends Controller
 
     public function suggestionByLatLng(Request $request)
     {
-        $merchant_categories = MerchantCategory::active()->get();
+        $merchant_categories = Category::active()->get();
         $merchants = Merchant::select(DB::raw("*, ( 3959 * acos( cos( radians(" . $request->get('lat') . ") ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(" . $request->get('lng') . ") ) + sin( radians(" . $request->get('lat') . ") ) * sin( radians( lat ) ) ) ) AS distance"))->havingRaw('distance < 50')->orderBy('distance')
             ->get();
 

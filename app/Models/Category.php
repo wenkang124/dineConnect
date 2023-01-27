@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Mood extends Model
+class Category extends Model
 {
     use HasFactory, SoftDeletes, HasGlobalScope;
 
     public function merchants()
     {
-        return $this->belongsToMany(Merchant::class, 'merchant_moods');
+        return $this->belongsToMany(Merchant::class, 'merchant_categories');
     }
 }

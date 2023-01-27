@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\HasGlobalScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MerchantCategory extends Model
+class MerchantMood extends Model
 {
     use HasFactory;
 }

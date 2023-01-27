@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::group(['prefix' => 'merchant'], function () {
-        Route::get('', 'MerchantController@getAllList');
+        Route::get('', 'MerchantController@getMerchantList');
         Route::get('/random-list', 'MerchantController@randomList');
         Route::get('/detail/{id}', 'MerchantController@detail');
     });

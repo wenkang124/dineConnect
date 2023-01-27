@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\Controller;
+use App\Http\Resources\MerchantMoodResource;
+use App\Http\Resources\UserResource;
+use App\Models\Category;
 use App\Models\Merchant;
+use App\Models\Mood;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -23,21 +27,19 @@ class MerchantController extends Controller
         );
     }
 
-    public function getAllList(Request $request)
+    public function getMerchantList(Request $request)
     {
-        // ->when($request->get('id'),function($query){
-        //     if($request->get('type') == "mode"){
-        //         $query->where()
 
-        //     }else{
+        if ($request->get('type') == "mode") {
+            $list = Mood::Active()->where('id', $request->get('id'))->first();
+        } else {
+            $list = Category::Active()->where('id', $request->get('id'))->first();
+        }
 
-        //     }
-        // })
-        $list = Merchant::Active()->get();
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
-            $list,
+            $list->merchants,
         );
     }
 

@@ -104,9 +104,4 @@ class User extends Authenticatable
     {
         return $this->otp()->where('type', $type)->whereNull('otp_at')->latest()->first();
     }
-
-    public function favourites()
-    {
-        return $this->hasMany(UserFavourite::class);
-    }
 }

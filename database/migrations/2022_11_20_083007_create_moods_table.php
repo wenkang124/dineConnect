@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('moods', function (Blueprint $table) {
             $table->id();
+            $table->longText('image');
             $table->string('name');
             $table->boolean('active')->default(true);
             $table->timestamps();

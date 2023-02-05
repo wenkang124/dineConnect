@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Category;
 use App\Models\Merchant;
 use App\Models\Mood;
+use App\Models\UserFavourite;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,11 +20,11 @@ class MerchantController extends Controller
     public function randomList(Request $request)
     {
 
-        $merchant = Merchant::active()->inRandomOrder()->limit($request->get('limit') ?? 5)->get();
+        $merchants = Merchant::active()->inRandomOrder()->limit($request->get('limit') ?? 5)->get();
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
-            $merchant,
+            $merchants,
         );
     }
 
@@ -39,7 +40,7 @@ class MerchantController extends Controller
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
-            $list->merchants,
+            $list->merchants ?? [],
         );
     }
 
@@ -59,5 +60,27 @@ class MerchantController extends Controller
             'Retrieve Successful.',
             $merchant,
         );
+    }
+
+    public function favourite(Request $request, $id)
+    {
+        $if_exist = UserFavourite::where('favouritable_type', Merchant::class)->where('favouritable_id', $id)->where('user_id', auth()->user()->id)->first();
+
+        if ($if_exist) {
+            $if_exist->delete();
+            return $this->__apiSuccess(
+                'Unfavourite successfully !',
+            );
+        } else {
+            $favourite = new UserFavourite();
+            $favourite->favouritable_type = Merchant::class;
+            $favourite->favouritable_id = $id;
+            $favourite->user_id = auth()->user()->id;
+            $favourite->save();
+
+            return $this->__apiSuccess(
+                'Favourite successfully !',
+            );
+        }
     }
 }

@@ -11,6 +11,10 @@ class Merchant extends Model
 {
     use HasFactory, SoftDeletes, HasGlobalScope;
 
+    protected $appends = [
+        'is_favourite',
+    ];
+
     public function moods()
     {
         return $this->belongsToMany(Mood::class, 'merchant_moods');
@@ -19,5 +23,21 @@ class Merchant extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'merchant_categories');
+    }
+
+    public function favourites()
+    {
+        return $this->morphMany(UserFavourite::class, 'favouritable');
+    }
+
+    public function getIsFavouriteAttribute()
+    {
+        if ($this->favourites()->where('user_id', auth()->user()->id)->first()) {
+            return true;
+        } else {
+            return false;
+        }
+        // $favourites = UserFavourite::where('user_id', auth()->user()->id)->()->get();
+
     }
 }

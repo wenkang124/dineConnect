@@ -11,6 +11,7 @@ class UserFavourite extends Model
     const MORPHABLE = "favouritable";
 
     protected $fillable = [
+        'user_id',
         'favouritable_type',
         'favouritable_id',
     ];
@@ -18,5 +19,10 @@ class UserFavourite extends Model
     public function favouritable()
     {
         return $this->morphTo();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

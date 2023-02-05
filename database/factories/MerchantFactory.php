@@ -19,7 +19,7 @@ class MerchantFactory extends Factory
         return [
             'name' => fake()->name(),
             'description' => fake()->text(),
-            'thumbnail' => fake()->text(),
+            'thumbnail' => 'https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg',
             'lat' => fake()->randomFloat(1, 10, 10),
             'lng' => fake()->randomFloat(1, 10, 11),
             'active' => rand(0, 1),

@@ -39,6 +39,19 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/{item}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('show');
         
     });
+    
+    Route::prefix('merchants')->name('merchants.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\MerchantController::class, 'index'])->name('index');
+        Route::get('/datatable', [App\Http\Controllers\Admin\MerchantController::class, 'dataTable'])->name('datatable');                
+        Route::get('/create', [App\Http\Controllers\Admin\MerchantController::class, 'create'])->name('create');       
+        Route::post('/store', [App\Http\Controllers\Admin\MerchantController::class, 'store'])->name('store');           
+        Route::get('/edit/{item}', [App\Http\Controllers\Admin\MerchantController::class, 'edit'])->name('edit');       
+        Route::post('/update/{item}', [App\Http\Controllers\Admin\MerchantController::class, 'update'])->name('update');
+        Route::post('/delete/{merchant}', [App\Http\Controllers\Admin\MerchantController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{item}', [App\Http\Controllers\Admin\MerchantController::class, 'show'])->name('show');
+        
+    });
 
     
     Route::prefix('banners')->name('banners.')->group(function () {

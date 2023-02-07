@@ -308,6 +308,11 @@ return [
         ],
         ['header' => 'General Management'],
         [
+            'text' => 'Merchants',
+            'url'  => 'merchants',
+            'icon' => 'fas fa-fw fa-store pr-2'
+        ],
+        [
             'text' => 'Banners',
             'url'  => 'banners',
             'icon' => 'fas fa-fw fa-images pr-2'

@@ -10,9 +10,30 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use HasFactory, SoftDeletes, HasGlobalScope;
+    
+    const ACTIVE = 1;
+    const INACTIVE = 0;
+    const ACTIVE_NAME = 'Active';
+    const INACTIVE_NAME ='Inactive';
+    
+    const STATUS_LIST = [
+        self::ACTIVE => self::ACTIVE_NAME,
+        self::INACTIVE => self::INACTIVE_NAME,
+    ];
+
+    protected $fillable = [
+        'name',
+        'image',
+        'active',
+    ];
 
     public function merchants()
     {
         return $this->belongsToMany(Merchant::class, 'merchant_categories');
+    }
+
+    public function getStatusNameAttribute()
+    {
+        return self::STATUS_LIST[$this->active] ?? '';
     }
 }

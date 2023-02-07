@@ -11,6 +11,20 @@ class Merchant extends Model
 {
     use HasFactory, SoftDeletes, HasGlobalScope;
 
+    const ACTIVE = 1;
+    const INACTIVE = 0;
+    const ACTIVE_NAME = 'Active';
+    const INACTIVE_NAME ='Inactive';
+
+    const STATUS_LIST = [
+        self::ACTIVE => self::ACTIVE_NAME,
+        self::INACTIVE => self::INACTIVE_NAME,
+    ];
+
+    const FILE_PREFIX = "merchant";
+    const MODULE = "merchant";
+    const UPLOAD_PATH = 'storage/images/' . self::MODULE . 's';
+
     protected $appends = [
         'is_favourite',
     ];
@@ -28,6 +42,21 @@ class Merchant extends Model
     public function favourites()
     {
         return $this->morphMany(UserFavourite::class, 'favouritable');
+    }
+
+    public function getStatusNameAttribute()
+    {
+        return self::STATUS_LIST[$this->active] ?? '';
+    }
+
+    public function getCreatedAtYmdHiaAttribute()
+    {
+        return date('Y-m-d H:i A', strtotime($this->created_at));
+    }
+
+    public function getImagePathAttribute()
+    {
+        return $this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->thumbnail : $this->thumbnail;
     }
 
     public function getIsFavouriteAttribute()

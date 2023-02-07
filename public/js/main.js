@@ -1,3 +1,7 @@
+$('.multiple-select2').select2({
+  tags: true,
+});
+
 $(document).on('click', '.delete-btn', function (event) {
     var that = this;
     event.preventDefault();

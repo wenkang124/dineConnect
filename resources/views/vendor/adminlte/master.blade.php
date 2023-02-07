@@ -36,8 +36,11 @@
         <link rel="stylesheet" type="text/css" href="{{asset('assets/css/croppie.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('assets/css/intlTelInput.css')}}">
 
+
         <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
 
+        <!-- Select2 -->
+        <link href="{{asset('assets/css/select2.min.css')}}" rel="stylesheet" />
 
         {{-- Custom Stylesheets --}}
         <link rel="stylesheet" type="text/css" href="{{ asset('css/custom_admin.css?v='.time()) }}"/>
@@ -106,6 +109,9 @@
 
         <script  type="text/javascript" src="{{asset('assets/js/intlTelInput-jquery.min.js')}}"></script>
         <script  type="text/javascript" src="{{asset('assets/js/utils.js')}}"></script>
+        
+        <!-- Select2 -->
+        <script src="{{asset('assets/js/select2.min.js')}}"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 

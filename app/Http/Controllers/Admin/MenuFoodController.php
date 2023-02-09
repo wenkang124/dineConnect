@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
 use App\Models\Country;
+use App\Models\MenuFood;
 use App\Models\Merchant;
 use App\Models\Mood;
 use App\Traits\MediaTrait;
@@ -14,18 +15,18 @@ use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Datatables;
 use Image;
 
-class MerchantController extends Controller
+class MenuFoodController extends Controller
 {
     use MediaTrait;
     
-    public function index()
+    public function index($merchant_id)
     {
-        return view('admin.merchants.index');
+        return view('admin.menu_foods.index', compact('merchant_id'));
     }
 
-    public function dataTable()
+    public function dataTable($merchant_id)
     {
-        $items = Merchant::query();
+        $items = MenuFood::query();
 
         return Datatables::of($items)
                 ->editColumn('active', function ($item) {
@@ -38,37 +39,29 @@ class MerchantController extends Controller
                     return "<img src='".$item->thumbnail."' width='250' class='p-4' />";
                 })
                 ->addColumn('actions', function ($item) {
-                    return '<a href="'.route('admin.merchants.show', [$item]).'" class="btn btn-xs btn-primary mx-1 my-1">View <i class="fa fa-eye"></i></a>
-                            <a href="'.route('admin.merchants.edit', [$item]).'" class="btn btn-xs btn-warning mx-1 my-1">Edit <i class="fa fa-edit"></i></a>                           
-                            <a href="'.route('admin.merchants.destroy', ['merchant'=>$item]).'" class="btn btn-xs btn-danger mx-1 my-1 delete-btn" data-confirm="Are you sure you want to delete this merchant?" data-redirect="'.route('admin.merchants.index').'">Delete <i class="fa fa-trash"></i></a>
-                            <div class="dropdown">
-                                <button class="btn btn-xs btn-secondary dropdown-toggle mx-1 my-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    More Action
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="'.route('admin.menu_foods.index', ['merchant_id'=> $item->id]).'">Menu Food</a>
-                                </div>
-                            </div>';
+                    return '<a href="'.route('admin.menu_foods.show', [$item]).'" class="btn btn-xs btn-primary mx-1 my-1">View <i class="fa fa-eye"></i></a>
+                            <a href="'.route('admin.menu_foods.edit', [$item]).'" class="btn btn-xs btn-warning mx-1 my-1">Edit <i class="fa fa-edit"></i></a>                           
+                            <a href="'.route('admin.menu_foods.destroy', ['menu_food'=>$item]).'" class="btn btn-xs btn-danger mx-1 my-1 delete-btn" data-confirm="Are you sure you want to delete this food from menu?" data-redirect="'.route('admin.menu_foods.index').'">Delete <i class="fa fa-trash"></i></a>';
                 })
                 ->rawColumns(['thumbnail', 'actions'])
                 ->make(true);
     }
 
-    public function show(Merchant $item) {
+    public function show($merchant_id, MenuFood $item) {
         $categories = Category::where('active', Category::ACTIVE)->get();
         $moods = Mood::where('active', Mood::ACTIVE)->get();
 
-        return view('admin.merchants.show', compact('item', 'categories', 'moods'));
+        return view('admin.menu_foods.show', compact('merchant_id', 'item', 'categories', 'moods'));
     }
 
-    public function create() {
+    public function create($merchant_id) {
         $categories = Category::where('active', Category::ACTIVE)->get();
         $moods = Mood::where('active', Mood::ACTIVE)->get();
 
-        return view('admin.merchants.create', compact('categories', 'moods'));
+        return view('admin.menu_foods.create', compact('merchant_id', 'categories', 'moods'));
     }
 
-    public function store(Request $request) {
+    public function store($merchant_id, Request $request) {
 
         $this->validate($request, [
             'name' => 'required',
@@ -165,14 +158,14 @@ class MerchantController extends Controller
     }
 
     
-    public function edit(Merchant $item) {
+    public function edit($merchant_id, MenuFood $item) {
         $categories = Category::where('active', Category::ACTIVE)->get();
         $moods = Mood::where('active', Mood::ACTIVE)->get();
 
-        return view('admin.merchants.edit', compact('item', 'categories', 'moods'));
+        return view('admin.menu_foods.edit', compact('merchant_id', 'item', 'categories', 'moods'));
     }
 
-    public function update(Merchant $item, Request $request) {
+    public function update($merchant_id, MenuFood $item, Request $request) {
 
         $this->validate($request, [
             'name' => 'required',
@@ -270,15 +263,15 @@ class MerchantController extends Controller
         } 
     }
 
-    public function destroy(Merchant $merchant) {
+    public function destroy($merchant_id, MenuFood $menu_food) {
         //
-        if(empty($merchant)){
-            return response()->json(['success' => false, 'message' => 'Merchant not found.']);
+        if(empty($menu_food)){
+            return response()->json(['success' => false, 'message' => 'Food not found.']);
         }
  
-        $merchant->delete();
+        $menu_food->delete();
  
-        Session::flash("success", "Merchant has been successfully deleted.");
+        Session::flash("success", "Food has been successfully deleted.");
  
         return response()->json(['success' => true]);
     }

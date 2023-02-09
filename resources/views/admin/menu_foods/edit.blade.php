@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h4 class="text-dark pl-2">Merchant Management</h4>
+    <h4 class="text-dark pl-2">Food Management</h4>
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('admin.merchants.index')}}">Merchants</a></li>
+                <li class="breadcrumb-item"><a href="{{route('admin.menu_foods.index', ['merchant_id'=>$merchant_id])}}">Foods</a></li>
                 <li class="breadcrumb-item">Edit - {{ $item->name }}</li>
             </ol>
             </div>
@@ -51,20 +51,20 @@
                         <div class="row">  
                             <div class="col-lg-12">
                                 <section class="content">
-                                    <form class="form-horizontal" action="{{ route('admin.merchants.update', ['item' => $item]) }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                                    <form class="form-horizontal" action="{{ route('admin.menu_foods.update', ['item' => $item, 'merchant_id'=>$merchant_id]) }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                                         @csrf                                                              
                                         <div class="row">                            
                                             <div class="col-lg-12" style="margin-top: 25px;">
                                                 <div class="form-group text-right">
-                                                    <a class="btn btn-secondary" href="{{ route('admin.merchants.index') }}">Back</a>
-                                                    <button type="submit" class="btn btn-success create-merchant_btn">Edit</button>
+                                                    <a class="btn btn-secondary" href="{{ route('admin.menu_foods.index', ['merchant_id'=>$merchant_id]) }}">Back</a>
+                                                    <button type="submit" class="btn btn-success create-menu_food_btn">Edit</button>
                                                 </div>
                                             </div>
                                         </div>    
                                         <!-- Default box -->
                                         <div class="card">
                                             <div class="card-header">
-                                                <h3 class="card-title">Merchant Details</h3>
+                                                <h3 class="card-title">Food Details</h3>
                                 
                                                 <div class="card-tools">
                                                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">    
-                                                    @include('admin.merchants.form.index', ['readonly'=>''])
+                                                    @include('admin.menu_foods.form.index', ['readonly'=>''])
                                                 </div>
                                             </div>
                                         </div>
@@ -92,7 +92,7 @@
                                             </div>
                                             <div class="card-body">      
                                                 <div class="row">    
-                                                    @include('admin.merchants.form.other-details', ['readonly'=>''])
+                                                    @include('admin.menu_foods.form.other-details', ['readonly'=>''])
                                                 </div>
                                             </div>
                                         </div>
@@ -148,7 +148,7 @@
     //         {
     //             extend: 'csv',
     //             text: 'Export',
-    //             title: 'Merchants {{ date('Y-m-d') }}'
+    //             title: 'Foods {{ date('Y-m-d') }}'
     //         },
     //         {
     //             extend: 'print',
@@ -157,10 +157,10 @@
     //                 key: 'p',
     //                 altkey: true
     //             }, 
-    //             title: 'Merchants {{ date('Y-m-d') }}'
+    //             title: 'Foods {{ date('Y-m-d') }}'
     //         }
     //     ],
-    //     ajax: "{!! route('admin.merchants.datatable') !!}",
+    //     ajax: "{!! route('admin.menu_foods.datatable', ['merchant_id'=>$merchant_id]) !!}",
     //     order: [[ 0, "desc" ]],
     //     columns: [
     //         { data: 'id', name: 'id' },

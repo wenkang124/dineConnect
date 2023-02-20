@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h4 class="text-dark pl-2">Food Management</h4>
+    <h4 class="text-dark pl-2">Dishes Management</h4>
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('admin.menu_foods.index', ['merchant_id'=>$merchant_id])}}">Foods</a></li>
+                <li class="breadcrumb-item"><a href="{{route('admin.menu_foods.index', ['merchant_id'=>$merchant_id])}}">Dishes</a></li>
                 <li class="breadcrumb-item">Edit - {{ $item->name }}</li>
             </ol>
             </div>
@@ -64,7 +64,7 @@
                                         <!-- Default box -->
                                         <div class="card">
                                             <div class="card-header">
-                                                <h3 class="card-title">Food Details</h3>
+                                                <h3 class="card-title">Dish Details</h3>
                                 
                                                 <div class="card-tools">
                                                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -76,23 +76,6 @@
                                             <div class="card-body">
                                                 <div class="row">    
                                                     @include('admin.menu_foods.form.index', ['readonly'=>''])
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="card-title">Other Details</h3>
-                                
-                                                <div class="card-tools">
-                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                                    <i class="fas fa-minus"></i></button>
-                                                    {{-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                                                    <i class="fas fa-times"></i></button> --}}
-                                                </div>
-                                            </div>
-                                            <div class="card-body">      
-                                                <div class="row">    
-                                                    @include('admin.menu_foods.form.other-details', ['readonly'=>''])
                                                 </div>
                                             </div>
                                         </div>

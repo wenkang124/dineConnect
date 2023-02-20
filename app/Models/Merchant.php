@@ -31,12 +31,22 @@ class Merchant extends Model
 
     public function moods()
     {
-        return $this->belongsToMany(Mood::class, 'merchant_moods');
+        return $this->belongsToMany(Mood::class, 'merchant_moods')->withTimestamps();
     }
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'merchant_categories');
+        return $this->belongsToMany(Category::class, 'merchant_categories')->withTimestamps();
+    }
+
+    public function menuFoods()
+    {
+        return $this->hasMany(MenuFood::class);
+    }
+
+    public function operationDaySettings()
+    {
+        return $this->hasMany(MerchantOperationDaySetting::class);
     }
 
     public function favourites()

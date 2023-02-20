@@ -21,12 +21,38 @@ class MenuFood extends Model
         self::INACTIVE => self::INACTIVE_NAME,
     ];
 
+    const FILE_PREFIX = "menu_food";
+    const MODULE = "menu_food";
+    const UPLOAD_PATH = 'storage/images/' . self::MODULE . 's';
+
     protected $fillable = [
         'name',
-        'image',
+        'short_description',
+        'description',
+        'price',
+        'thumbnail',
         'active',
     ];
+
+    public function menuCategories()
+    {
+        return $this->belongsToMany(MenuCategory::class, 'menu_food_menu_categories')->withTimestamps();
+    }
+    public function menuSubCategories()
+    {
+        return $this->belongsToMany(MenuSubCategory::class, 'menu_food_menu_sub_categories')->withTimestamps();
+    }
     
+    public function getCreatedAtYmdHiaAttribute()
+    {
+        return date('Y-m-d H:i A', strtotime($this->created_at));
+    }
+    
+    public function getImagePathAttribute()
+    {
+        return $this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->thumbnail : $this->thumbnail;
+    }
+
     public function getStatusNameAttribute()
     {
         return self::STATUS_LIST[$this->active] ?? '';

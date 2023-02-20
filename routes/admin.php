@@ -53,12 +53,12 @@ Route::middleware('auth:admin')->group(function () {
         
     });
     
-    Route::prefix('menu_foods/{merchant_id}')->name('menu_foods.')->group(function () {
-        Route::get('/', [App\Http\Controllers\Admin\MenuFoodController::class, 'index'])->name('index');
-        Route::get('/datatable', [App\Http\Controllers\Admin\MenuFoodController::class, 'dataTable'])->name('datatable');                
-        Route::get('/create', [App\Http\Controllers\Admin\MenuFoodController::class, 'create'])->name('create');       
-        Route::post('/store', [App\Http\Controllers\Admin\MenuFoodController::class, 'store'])->name('store');           
-        Route::get('/edit/{item}', [App\Http\Controllers\Admin\MenuFoodController::class, 'edit'])->name('edit');       
+    Route::prefix('menu_foods')->name('menu_foods.')->group(function () {
+        Route::get('/{merchant_id}', [App\Http\Controllers\Admin\MenuFoodController::class, 'index'])->name('index');
+        Route::get('/{merchant_id}/datatable', [App\Http\Controllers\Admin\MenuFoodController::class, 'dataTable'])->name('datatable');                
+        Route::get('/{merchant_id}/create', [App\Http\Controllers\Admin\MenuFoodController::class, 'create'])->name('create');       
+        Route::post('/{merchant_id}/store', [App\Http\Controllers\Admin\MenuFoodController::class, 'store'])->name('store');           
+        Route::get('/{merchant_id}/edit/{item}', [App\Http\Controllers\Admin\MenuFoodController::class, 'edit'])->name('edit');       
         Route::post('/update/{item}', [App\Http\Controllers\Admin\MenuFoodController::class, 'update'])->name('update');
         Route::post('/delete/{menu_food}', [App\Http\Controllers\Admin\MenuFoodController::class, 'destroy'])->name('destroy');
 

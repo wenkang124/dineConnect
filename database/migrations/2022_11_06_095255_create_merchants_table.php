@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('thumbnail');
             $table->decimal('lat', 10, 8)->nullable();
             $table->decimal('lng', 11, 8)->nullable();
+            $table->boolean('is_open')->default(true);
             $table->boolean('active')->default(true);
             $table->timestamps();
             $table->softDeletes();

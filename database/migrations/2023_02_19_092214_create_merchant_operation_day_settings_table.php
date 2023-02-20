@@ -14,17 +14,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('menu_food', function (Blueprint $table) {
+        Schema::create('merchant_operation_day_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Merchant::class);
-            $table->string('name');
-            $table->double('price', 10, 2);
-            $table->longText('thumbnail');
-            $table->longtext('short_description');
-            $table->longText('description');
-            $table->boolean('active')->default(true);
+            $table->integer('day');
+            $table->time('start_time')->default('08:00');
+            $table->time('end_time')->default('22:00');
+            $table->unique(['merchant_id', 'day']);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_food');
+        Schema::dropIfExists('merchant_operation_day_settings');
     }
 };

@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Merchant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,17 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('menu_food', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Merchant::class);
+        Schema::create('menu_categories', function (Blueprint $table) {
+            $table->id();            
             $table->string('name');
-            $table->double('price', 10, 2);
-            $table->longText('thumbnail');
-            $table->longtext('short_description');
-            $table->longText('description');
+            $table->longText('image');
             $table->boolean('active')->default(true);
-            $table->timestamps();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_food');
+        Schema::dropIfExists('menu_categories');
     }
 };

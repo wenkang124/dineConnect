@@ -30,20 +30,31 @@
         {{-- Configured Stylesheets --}}
         @include('adminlte::plugins', ['type' => 'css'])
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('vendor/DataTables/datatables.min.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('vendor/DataTables/datatables.min.css') }}" />
         
         <!-- Croppie -->
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/croppie.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/intlTelInput.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/croppie.css')}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/intlTelInput.css')}}" />
+        {{-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" /> --}}
 
 
         <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
 
         <!-- Select2 -->
         <link href="{{asset('assets/css/select2.min.css')}}" rel="stylesheet" />
+        <link href="{{asset('assets/css/icheck-bootstrap.min.css')}}" rel="stylesheet" />
+
+        <!-- include libraries(jQuery, bootstrap) -->
+        {{-- <script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+        {{-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" /> --}}
+        {{-- <script type="text/javascript" src="cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script> --}}
+
+        <!-- include summernote css/js -->
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
         {{-- Custom Stylesheets --}}
         <link rel="stylesheet" type="text/css" href="{{ asset('css/custom_admin.css?v='.time()) }}"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('css/datetimepicker.css?v='.time())}}" />
 
         @if(config('adminlte.google_fonts.allowed', true))
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -96,7 +107,7 @@
 
     {{-- Base Scripts --}}
     @if(!config('adminlte.enabled_laravel_mix'))
-        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/jquery/jquery-2.2.4.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 
@@ -112,6 +123,11 @@
         
         <!-- Select2 -->
         <script src="{{asset('assets/js/select2.min.js')}}"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 

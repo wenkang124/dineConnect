@@ -1,6 +1,14 @@
 $('.multiple-select2').select2({
   tags: true,
 });
+$('.single-select2').select2({
+  tags: true,
+  maximumSelectionLength: 1
+});
+$('#summernote').summernote({
+  tabsize: 2,
+  height: 200
+});
 
 $(document).on('click', '.delete-btn', function (event) {
     var that = this;

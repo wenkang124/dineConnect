@@ -46,7 +46,7 @@ class MerchantController extends Controller
                                     More Action
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="'.route('admin.menu_foods.index', ['merchant_id'=> $item->id]).'">Menu Food</a>
+                                    <a class="dropdown-item" href="'.route('admin.menu_foods.index', ['merchant_id'=> $item->id]).'">Dishes Management</a>
                                 </div>
                             </div>';
                 })
@@ -77,6 +77,10 @@ class MerchantController extends Controller
             'lng' => 'nullable|numeric',
             'lat' => 'nullable|numeric',
             'active' => 'required|numeric',
+            'is_open' => 'required|numeric',
+            'operation_days' => 'nullable',
+            'start_times' => 'nullable',
+            'end_times' => 'nullable',
             'categories' => 'required',
             'moods' => 'required'
         ]);
@@ -87,6 +91,7 @@ class MerchantController extends Controller
 
             $item = new Merchant();
 
+            // Details
             $item->name = $request->get('name');
             $item->description = $request->get('description');
             $item->lng = $request->get('lng');
@@ -110,8 +115,30 @@ class MerchantController extends Controller
                 $item->thumbnail = rtrim($path, '/') . "/" . $new_filename_with_extension;
             }      
 
+            // Operation Details
+            $item->is_open = $request->get('is_open');
+
             $item->save();
-            
+
+            //Operation Details
+            if($request->get('operation_days')) {
+                $operation_settings = [];
+                $operation_days = [];
+                foreach($request->get('operation_days') as $key => $operation_day) {
+                    if($operation_day != null) {
+                        $operation_settings[] = [
+                            'day' => $operation_day,
+                            'start_time' => date('H:i:s', strtotime($request->get('start_times')[$key])),
+                            'end_time' => date('H:i:s', strtotime($request->get('end_times')[$key]))
+                        ];
+                        $operation_days[] = $operation_day;
+                    }
+                }
+                $item->operationDaySettings()->whereNotIn('day',$operation_days)->delete();
+                $item->operationDaySettings()->createMany($operation_settings);
+            }
+
+            // Other Details
             if($request->get('categories')) {
                 $category_ids = [];
                 foreach($request->get('categories') as $category) {
@@ -181,6 +208,10 @@ class MerchantController extends Controller
             'lng' => 'nullable|numeric',
             'lat' => 'nullable|numeric',
             'active' => 'required|numeric',
+            'is_open' => 'required|numeric',
+            'operation_days' => 'nullable',
+            'start_times' => 'nullable',
+            'end_times' => 'nullable',
             'categories' => 'required',
             'moods' => 'required'
         ]);
@@ -189,6 +220,7 @@ class MerchantController extends Controller
 
         try {
 
+            // Details
             $item->name = $request->get('name');
             $item->description = $request->get('description');
             $item->lng = $request->get('lng');
@@ -217,7 +249,32 @@ class MerchantController extends Controller
                     unlink($temp_path);
                 }
             }    
+            
+            // Operation Details
+            $item->is_open = $request->get('is_open');
+
             $item->save();
+
+            //Operation Details
+            if($request->get('operation_days')) {
+                $operation_settings = [];
+                $operation_days = [];
+                foreach($request->get('operation_days') as $key => $operation_day) {
+                    if($operation_day != null) {
+                        $operation_settings[] = [
+                            'day' => $operation_day,
+                            'merchant_id' => $item->id,
+                            'start_time' => date('H:i:s', strtotime($request->get('start_times')[$key])),
+                            'end_time' => date('H:i:s', strtotime($request->get('end_times')[$key]))
+                        ];
+                        $operation_days[] = $operation_day;
+                    }
+                }
+                $item->operationDaySettings()->whereNotIn('day',$operation_days)->delete();
+                $item->operationDaySettings()->upsert($operation_settings, ['merchant_id', 'day']);
+            }
+
+            // Other Details
             if($request->get('categories')) {
                 $category_ids = [];
                 foreach($request->get('categories') as $category) {
@@ -276,6 +333,10 @@ class MerchantController extends Controller
             return response()->json(['success' => false, 'message' => 'Merchant not found.']);
         }
  
+        $merchant->menuFoods()->delete();
+        $merchant->operationDaySettings()->delete();
+        $merchant->categories()->detach();
+        $merchant->moods()->detach();
         $merchant->delete();
  
         Session::flash("success", "Merchant has been successfully deleted.");

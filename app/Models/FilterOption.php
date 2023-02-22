@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class FilterOption extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'label',
+        'min',
+        'max',
+    ];
 }

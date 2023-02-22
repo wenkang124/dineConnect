@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('filter_options', function (Blueprint $table) {
             $table->id();
+            $table->string('label');
+            $table->integer('min');
+            $table->integer('max');
             $table->timestamps();
         });
     }

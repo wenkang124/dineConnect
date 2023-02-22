@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             MerchantCategoryTableSeeder::class,
             MerchantMoodTableSeeder::class,
             MenuCategoryTableSeeder::class,
+            FilterOptionTableSeeder::class
         ]);
     }
 }

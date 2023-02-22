@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('/login', 'LoginController@login');
     Route::post('/register', 'RegisterController@register');
+    Route::post('/register-verify-otp', 'RegisterController@registerVerifyOtp');
     Route::post('/password/forgot', 'ForgotPasswordController@forgotPassword');
     Route::post('/password/reset', 'ForgotPasswordController@resetPassword');
 });
@@ -27,6 +28,14 @@ Route::group(['prefix' => 'config'], function () {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+
+    Route::group(['prefix' => 'config'], function () {
+        Route::get('/filter-options', 'ConfigController@filterOptions');
+        Route::get('/moods', 'ConfigController@moods');
+        Route::get('/categories', 'ConfigController@categories');
+    });
+
+    
     Route::group(['prefix' => 'user'], function () {
         Route::get('/me', 'UserController@me');
         Route::post('/update', 'UserController@update');
@@ -60,6 +69,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::group(['prefix' => 'search'], function () {
+        Route::post('/', 'SearchController@search');
+        Route::post('/filter', 'SearchController@filter');
         Route::get('/histories', 'SearchController@histories');
         Route::get('/suggestion-by-lat-lng', 'SearchController@suggestionByLatLng');
         Route::delete('/histories/delete', 'SearchController@historiesDelete');

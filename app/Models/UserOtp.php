@@ -21,5 +21,6 @@ class UserOtp extends Model
 
     const type = [
         'ForgotPassword' => 1,
+        'Register' => 2,
     ];
 }

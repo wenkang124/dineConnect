@@ -83,7 +83,11 @@ class SearchController extends Controller
             return $this->__apiFailed($validator->errors()->first(), $validator->errors());
         }
 
-        UserSearch::whereIn('id', json_decode($request->get('id')))->delete();
+        if ($request->get('id') != "all") {
+            UserSearch::where('user_id', auth()->user()->id)->delete();
+        }
+
+        UserSearch::whereIn('id', json_decode($request->get('id')))->where('user_id', auth()->user()->id)->delete();
 
         return $this->__apiSuccess('Delete Successful.');
     }

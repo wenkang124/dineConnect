@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('/login', 'LoginController@login');
     Route::post('/register', 'RegisterController@register');
+    Route::post('/register-resend-otp', 'RegisterController@registerResendOtp');
     Route::post('/register-verify-otp', 'RegisterController@registerVerifyOtp');
     Route::post('/password/forgot', 'ForgotPasswordController@forgotPassword');
     Route::post('/password/reset', 'ForgotPasswordController@resetPassword');

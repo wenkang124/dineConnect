@@ -66,6 +66,34 @@ class RegisterController extends Controller
         // }
     }
 
+    public function registerResendOtp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string', 'email'],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
+
+
+        $user = User::where('email', $request->get('email'))->firstOrFail();
+
+        if ($user->email_verified_at) {
+            return $this->__apiFailed('User already verifed.');
+        }
+
+        UserOtp::create([
+            'otp' => $this->__generateRandomIntCode(4),
+            'type' => UserOtp::type['Register'],
+            'user_id' => $user->id,
+        ]);
+
+        $user->notify(new RegisterRequestOtp);
+
+        return $this->__apiSuccess('Resend OTP Successful. Please verify you account.');
+    }
+
     public function registerVerifyOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [

@@ -30,7 +30,8 @@ class UserController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'phone' => 'required|unique:users,phone,' . auth()->user()->id,
+            'phone' => 'required|unique:users,phone,' . auth()->user()->id . 'id,deleted_at,NULL',
+            'email' => 'required|email|unique:users,email,' . auth()->user()->id . 'id,deleted_at,NULL',
             'name' => 'required',
             'mobile_prefix_id' => 'required',
         ]);

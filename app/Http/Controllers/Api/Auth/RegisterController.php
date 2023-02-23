@@ -120,7 +120,15 @@ class RegisterController extends Controller
 
             UserOtp::find($latest_otp->id)->update(['otp_at' => Carbon::now()]);
 
-            return $this->__apiSuccess('Verified successfully !');
+
+            $this->guard()->login($user);
+            $tokenResult = $user->createToken('Mobile Access Token', ['access:api']);
+            $accessToken = $tokenResult->plainTextToken;
+
+
+            return $this->__apiSuccess('Verified successfully !', [
+                "token" => $accessToken,
+            ]);
         } else {
             return $this->__apiFailed('Otp wrong !');
         }

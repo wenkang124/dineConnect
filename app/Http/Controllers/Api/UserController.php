@@ -22,7 +22,7 @@ class UserController extends Controller
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
-            new UserResource($request->user())
+            new UserResource(auth()->user())
         );
     }
 

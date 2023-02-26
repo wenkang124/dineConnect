@@ -145,3 +145,10 @@
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     border: none!important;
 }
+
+.vertical-align-bottom {
+    display: flex;
+    justify-content: end;
+    align-content: center;
+    flex-direction: column;
+}

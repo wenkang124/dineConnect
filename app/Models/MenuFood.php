@@ -43,6 +43,16 @@ class MenuFood extends Model
         return $this->belongsToMany(MenuSubCategory::class, 'menu_food_menu_sub_categories')->withTimestamps();
     }
     
+    public function flavours()
+    {
+        return $this->hasMany(MenuFoodFlavour::class);
+    }
+    
+    public function portions()
+    {
+        return $this->hasMany(MenuFoodPortion::class);
+    }
+    
     public function getCreatedAtYmdHiaAttribute()
     {
         return date('Y-m-d H:i A', strtotime($this->created_at));

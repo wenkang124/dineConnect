@@ -62,7 +62,7 @@ Route::middleware('auth:admin')->group(function () {
         Route::post('/update/{item}', [App\Http\Controllers\Admin\MenuFoodController::class, 'update'])->name('update');
         Route::post('/delete/{menu_food}', [App\Http\Controllers\Admin\MenuFoodController::class, 'destroy'])->name('destroy');
 
-        Route::get('/{item}', [App\Http\Controllers\Admin\MenuFoodController::class, 'show'])->name('show');
+        Route::get('/{merchant_id}/{item}', [App\Http\Controllers\Admin\MenuFoodController::class, 'show'])->name('show');
         
     });
 

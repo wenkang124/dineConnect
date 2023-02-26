@@ -71,7 +71,7 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">Other Details</h3>
+                                            <h3 class="card-title">Flavours</h3>
                             
                                             <div class="card-tools">
                                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -80,11 +80,69 @@
                                                 <i class="fas fa-times"></i></button> --}}
                                             </div>
                                         </div>
-                                        <div class="card-body">      
-                                            <div class="row">    
-                                                @include('admin.menu_foods.form.other-details', ['readonly'=>'readonly'])
+                                        <div class="card-body">   
+                                            @if(count($item->flavours) > 0)
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <div class="form-group">
+                                                        <label for="flavour_titles" class="moto-widget-contact_form-label">Title <span class="text-danger">*Example: Spicy-ness, Sour-ness, etc</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-5">
+                                                    <div class="form-group">
+                                                        <label for="flavour_percentages" class="moto-widget-contact_form-label">Percentage <span class="text-danger">%</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @include('admin.menu_foods.form.flavours', ['readonly'=>'readonly'])  
+                                            @else
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <p>No flavour.</p>
+                                                </div>
+                                            </div>
+                                            @endif              
+                                        </div>   
+                                    </div> 
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Portions</h3>
+                            
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                                <i class="fas fa-minus"></i></button>
+                                                {{-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                                <i class="fas fa-times"></i></button> --}}
                                             </div>
                                         </div>
+                                        <div class="card-body">  
+                                            @if(count($item->portions) > 0)
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <label for="portion_sizes" class="moto-widget-contact_form-label">Size</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label for="portion_servings" class="moto-widget-contact_form-label">Portion Serving <span class="text-danger">*Example: 1.5 - 2 person portion</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label for="portion_descriptions" class="moto-widget-contact_form-label">Portion Description <span class="text-danger">*Example: Suitable for sharing and hungers.</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @include('admin.menu_foods.form.portions', ['readonly'=>'readonly'])   
+                                            @else
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <p>No portion.</p>
+                                                </div>
+                                            </div>
+                                            @endif              
+                                        </div>                                            
                                     </div>
                                 </section>
                             </div>

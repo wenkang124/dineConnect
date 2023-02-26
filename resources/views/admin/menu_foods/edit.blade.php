@@ -79,6 +79,98 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Flavours</h3>
+                                
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                                    <i class="fas fa-minus"></i></button>
+                                                    {{-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                                    <i class="fas fa-times"></i></button> --}}
+                                                </div>
+                                            </div>
+                                            <div class="card-body">   
+                                                <div class="row">
+                                                    <div class="col-lg-5">
+                                                        <div class="form-group">
+                                                            <label for="flavour_titles" class="moto-widget-contact_form-label">Title <span class="text-danger">*Example: Spicy-ness, Sour-ness, etc</span></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        <div class="form-group">
+                                                            <label for="flavour_percentages" class="moto-widget-contact_form-label">Percentage <span class="text-danger">%</span></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn bg-success addmore" 
+                                                            data-container="flavour_container" 
+                                                            data-clone="flavour_percentage"
+                                                            data-input-count="3"
+                                                            data-input-1="portion_size_input" data-input-name-1="portion_sizes[]"
+                                                            data-input-2="portion_servings_input" data-input-name-2="portion_servings[]"
+                                                             data-input-3="portion_descriptions_input" data-input-name-3="portion_descriptions[]">
+                                                                Add
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @include('admin.menu_foods.form.flavours', ['readonly'=>''])                 
+                                            </div>   
+                                        </div> 
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Portions</h3>
+                                
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                                    <i class="fas fa-minus"></i></button>
+                                                    {{-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                                    <i class="fas fa-times"></i></button> --}}
+                                                </div>
+                                            </div>
+                                            <div class="card-body">  
+                                                <div class="row">
+                                                    <div class="col-lg-2">
+                                                        <div class="form-group">
+                                                            <label for="portion_sizes" class="moto-widget-contact_form-label">Size</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label for="portion_servings" class="moto-widget-contact_form-label">Portion Serving <span class="text-danger">*Example: 1.5 - 2 person portion</span></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label for="portion_descriptions" class="moto-widget-contact_form-label">Portion Description <span class="text-danger">*Example: Suitable for sharing and hungers.</span></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn bg-success addmore"
+                                                            data-container="portion_container" 
+                                                            data-clone="portion_list"
+                                                            data-input-name-1="portion_sizes[]"
+                                                            data-input-name-2="portion_servings[]"
+                                                            data-input-name-3="portion_descriptions[]">
+                                                                Add
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @include('admin.menu_foods.form.portions', ['readonly'=>''])                 
+                                            </div>                                            
+                                        </div>                                                               
+                                        <div class="row">                            
+                                            <div class="col-lg-12" style="margin-top: 25px;">
+                                                <div class="form-group text-right">
+                                                    <a class="btn btn-secondary" href="{{ route('admin.menu_foods.index', ['merchant_id'=>$merchant_id]) }}">Back</a>
+                                                    <button type="submit" class="btn btn-success create-menu_food_btn">Edit</button>
+                                                </div>
+                                            </div>
+                                        </div> 
                                     </form>
                                 </section>
                             </div>

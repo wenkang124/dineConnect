@@ -53,10 +53,10 @@ class MenuFoodController extends Controller
     }
 
     public function show($merchant_id, MenuFood $item) {
-        $categories = Category::where('active', Category::ACTIVE)->get();
-        $moods = Mood::where('active', Mood::ACTIVE)->get();
+        $categories = MenuCategory::where('active', MenuCategory::ACTIVE)->get();
+        $sub_categories = MenuSubCategory::where('active', MenuSubCategory::ACTIVE)->get();
 
-        return view('admin.menu_foods.show', compact('merchant_id', 'item', 'categories', 'moods'));
+        return view('admin.menu_foods.show', compact('merchant_id', 'item', 'categories', 'sub_categories'));
     }
 
     public function create($merchant_id) {
@@ -75,7 +75,12 @@ class MenuFoodController extends Controller
             'price' => 'nullable|numeric',
             'active' => 'required|numeric',
             'categories' => 'required',
-            'sub_categories' => 'required'
+            'sub_categories' => 'required',
+            'flavour_titles' => 'nullable',
+            'flavour_percentages' => 'nullable',
+            'portion_sizes' => 'nullable',
+            'portion_servings' => 'nullable',
+            'portion_descriptions' => 'nullable',
         ]);
 
         DB::beginTransaction();
@@ -151,6 +156,39 @@ class MenuFoodController extends Controller
                 $item->menuSubCategories()->sync($sub_category_ids);
             }
 
+            //Menu Food Flavour
+            if($request->get('flavour_titles')) {
+                $menu_food_flavours = [];
+                $new_flavours = [];
+                foreach($request->get('flavour_titles') as $key => $flavour_title) {
+                    if($flavour_title != null) {
+                        $menu_food_flavours[] = [
+                            'flavour_title' => $flavour_title,
+                            'flavour_percentage' => $request->get('flavour_percentages')[$key] ?? 0.00
+                        ];
+                        $new_flavours[] = $flavour_title;
+                    }
+                }
+                $item->flavours()->createMany($menu_food_flavours);
+            }
+
+            //Menu Food Flavour
+            if($request->get('portion_sizes')) {
+                $menu_food_portions = [];
+                $new_portions = [];
+                foreach($request->get('portion_sizes') as $key => $portion_size) {
+                    if($portion_size != null) {
+                        $menu_food_portions[] = [
+                            'size' => $portion_size,
+                            'portion_serving' => $request->get('portion_servings')[$key] ?? '',
+                            'description' => $request->get('portion_descriptions')[$key] ?? ''
+                        ];
+                        $new_portions[] = $portion_size;
+                    }
+                }
+                $item->portions()->createMany($menu_food_portions);
+            }
+
             DB::commit();
             Session::flash("success", "New dish successfully created.");
 
@@ -183,7 +221,9 @@ class MenuFoodController extends Controller
             'price' => 'nullable|numeric',
             'active' => 'required|numeric',
             'categories' => 'required',
-            'sub_categories' => 'required'
+            'sub_categories' => 'required',
+            'flavour_titles' => 'nullable',
+            'flavour_percentages' => 'nullable'
         ]);
 
         DB::beginTransaction();
@@ -264,6 +304,42 @@ class MenuFoodController extends Controller
                 $item->menuSubCategories()->sync($sub_category_ids);
             }
 
+             //Menu Food Flavour
+            $item->flavours()->delete();
+            if($request->get('flavour_titles')) {
+                $menu_food_flavours = [];
+                $new_flavours = [];
+                foreach($request->get('flavour_titles') as $key => $flavour_title) {
+                    if($flavour_title != null) {
+                        $menu_food_flavours[] = [
+                            'flavour_title' => $flavour_title,
+                            'flavour_percentage' => $request->get('flavour_percentages')[$key] ?? 0.00
+                        ];
+                        $new_flavours[] = $flavour_title;
+                    }
+                }
+                $item->flavours()->createMany($menu_food_flavours);
+            }
+
+            
+            //Menu Food Flavour
+            $item->portions()->delete();
+            if($request->get('portion_sizes')) {
+                $menu_food_portions = [];
+                $new_portions = [];
+                foreach($request->get('portion_sizes') as $key => $portion_size) {
+                    if($portion_size != null) {
+                        $menu_food_portions[] = [
+                            'size' => $portion_size,
+                            'portion_serving' => $request->get('portion_servings')[$key] ?? '',
+                            'description' => $request->get('portion_descriptions')[$key] ?? ''
+                        ];
+                        $new_portions[] = $portion_size;
+                    }
+                }
+                $item->portions()->createMany($menu_food_portions);
+            }
+
             DB::commit();
             Session::flash("success", "Dish details successfully updated.");
 
@@ -286,6 +362,8 @@ class MenuFoodController extends Controller
 
         $menu_food->menuCategories()->detach();
         $menu_food->menuSubCategories()->detach();
+        $menu_food->flavours()->delete();
+        $menu_food->portions()->delete();
         $menu_food->delete();
  
         Session::flash("success", "Dish has been successfully deleted.");

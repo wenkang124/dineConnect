@@ -34,6 +34,10 @@ class MenuFood extends Model
         'active',
     ];
 
+    protected $appends = [
+        'image_full_path',
+    ];
+
     public function menuCategories()
     {
         return $this->belongsToMany(MenuCategory::class, 'menu_food_menu_categories')->withTimestamps();
@@ -61,6 +65,11 @@ class MenuFood extends Model
     public function getImagePathAttribute()
     {
         return $this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->thumbnail : $this->thumbnail;
+    }
+
+    public function getImageFullPathAttribute()
+    {
+        return asset($this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->thumbnail : $this->thumbnail);
     }
 
     public function getStatusNameAttribute()

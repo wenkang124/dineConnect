@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\MerchantMoodResource;
 use App\Http\Resources\UserResource;
 use App\Models\Category;
+use App\Models\MenuFood;
 use App\Models\Merchant;
 use App\Models\Mood;
 use App\Models\UserFavourite;
@@ -82,5 +83,15 @@ class MerchantController extends Controller
                 'Favourite successfully !',
             );
         }
+    }
+
+    public function dishes(Request $request, $id)
+    {
+        $dishes = MenuFood::active()->where('merchant_id', $id)->get();
+
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $dishes,
+        );
     }
 }

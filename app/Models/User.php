@@ -87,6 +87,11 @@ class User extends Authenticatable
         return $this->belongsTo(Country::class, 'mobile_prefix_id', 'id');
     }
 
+    public function searchHistories()
+    {
+        return $this->hasMany(UserSearch::class);
+    }
+
     /** Get Attribute */
     public function getStatusNameAttribute()
     {

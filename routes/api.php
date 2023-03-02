@@ -75,7 +75,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/filter', 'SearchController@filter');
         Route::get('/histories', 'SearchController@histories');
         Route::get('/suggestion-by-lat-lng', 'SearchController@suggestionByLatLng');
-        Route::delete('/histories/delete', 'SearchController@historiesDelete');
+        Route::delete('/histories/delete/{ids}', 'SearchController@historiesDelete');
     });
 
     Route::group(['prefix' => 'dishes'], function () {

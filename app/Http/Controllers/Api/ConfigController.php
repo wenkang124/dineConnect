@@ -25,11 +25,17 @@ class ConfigController extends Controller
 
     public function filterOptions()
     {
-        $filterOptions = FilterOption::all();
+        $filterPriceOptions = FilterOption::where('label', 'Price')->first();
+        $filterDistanceOptions = FilterOption::where('label', 'Distance')->first();
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
-            $filterOptions
+            [
+                'min_price' => $filterPriceOptions->min,
+                'max_price' => $filterPriceOptions->max,
+                'min_distance' => $filterDistanceOptions->min,
+                'max_distance' => $filterDistanceOptions->max,
+            ]
         );
     }
 

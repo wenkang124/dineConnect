@@ -19,6 +19,11 @@ class SearchController extends Controller
     {
         $mechants = Merchant::where('name', 'LIKE', '%' . $request->keyword . '%')->Active()->get();
 
+        $search_history = new UserSearch();
+        $search_history->user_id = auth()->user()->id;
+        $search_history->keyword = $request->keyword;
+        $search_history->save();
+
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $mechants,
@@ -53,7 +58,7 @@ class SearchController extends Controller
 
     public function histories()
     {
-        $histories = UserSearch::latest()->take(10)->get();
+        $histories = auth()->user()->searchHistories()->latest()->take(10)->get();
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
@@ -63,31 +68,21 @@ class SearchController extends Controller
 
     public function suggestionByLatLng(Request $request)
     {
-        $merchant_categories = Category::active()->get();
         $merchants = Merchant::select(DB::raw("*, ( 3959 * acos( cos( radians(" . $request->get('lat') . ") ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(" . $request->get('lng') . ") ) + sin( radians(" . $request->get('lat') . ") ) * sin( radians( lat ) ) ) ) AS distance"))->havingRaw('distance < 50')->orderBy('distance')
             ->get();
 
         return $this->__apiSuccess('Retrieve Successful.', [
-            "merchant_categories" => $merchant_categories,
             "merchants" => $merchants,
         ]);
     }
 
-    public function historiesDelete(Request $request)
+    public function historiesDelete(Request $request, $ids)
     {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
-        }
-
-        if ($request->get('id') != "all") {
+        if (($ids) == "all") {
             UserSearch::where('user_id', auth()->user()->id)->delete();
         }
-
-        UserSearch::whereIn('id', json_decode($request->get('id')))->where('user_id', auth()->user()->id)->delete();
+        
+        UserSearch::whereIn('id', json_decode($ids))->where('user_id', auth()->user()->id)->delete();
 
         return $this->__apiSuccess('Delete Successful.');
     }

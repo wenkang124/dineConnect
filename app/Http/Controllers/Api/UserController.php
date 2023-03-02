@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\Feedback;
+use App\Models\MenuFood;
+use App\Models\Merchant;
 use App\Models\User;
 use App\Models\UserFavourite;
 use App\Traits\Helpers;
@@ -99,10 +101,18 @@ class UserController extends Controller
 
     public function favourites(Request $request)
     {
-        $page = $request->get('page') ?? 1;
-        $limit = $request->get('limit') ?? 10;
+        $page = $request->get('page');
+        $limit = $request->get('limit');
 
-        $favourites = UserFavourite::where('user_id', $request->user()->id)->with('favouritable')->limit($limit)->offset(($page - 1) * $limit)->get();
+        $favourites = UserFavourite::where('user_id', $request->user()->id)->when($request->get('type'), function ($query) use ($request) {
+            if ($request->get('type') == "Merchant") {
+                $query->where('favouritable_type', Merchant::class);
+            } else {
+                $query->where('favouritable_type', MenuFood::class);
+            }
+        })->with('favouritable')->when($page && $limit, function ($query) use ($limit, $page) {
+            $query->limit($limit)->offset(($page - 1) * $limit);
+        })->get();
 
         return $this->__apiSuccess(
             'Retrieve Successful.',

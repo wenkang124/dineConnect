@@ -43,6 +43,11 @@ class Merchant extends Model
     {
         return $this->hasMany(MenuFood::class);
     }
+    
+    public function merchantGallery()
+    {
+        return $this->hasMany(MerchantGallery::class);
+    }
 
     public function operationDaySettings()
     {

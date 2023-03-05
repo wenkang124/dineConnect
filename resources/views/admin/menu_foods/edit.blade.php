@@ -51,7 +51,7 @@
                         <div class="row">  
                             <div class="col-lg-12">
                                 <section class="content">
-                                    <form class="form-horizontal" action="{{ route('admin.menu_foods.update', ['item' => $item, 'merchant_id'=>$merchant_id]) }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                                    <form class="form-horizontal" action="{{ route('admin.menu_foods.update', ['item' => $item]) }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                                         @csrf                                                              
                                         <div class="row">                            
                                             <div class="col-lg-12" style="margin-top: 25px;">

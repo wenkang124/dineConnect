@@ -317,6 +317,11 @@ return [
             'url'  => 'banners',
             'icon' => 'fas fa-fw fa-images pr-2'
         ],
+        [
+            'text' => 'Advertisements',
+            'url'  => 'advertisements',
+            'icon' => 'fas fa-fw fa-ad pr-2'
+        ],
 
         // Sidebar items:
         // [

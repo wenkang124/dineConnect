@@ -73,7 +73,7 @@
 <div class="col-lg-12">
     <div class="form-group">
         <label for="description" class="moto-widget-contact_form-label">Description <span class="red">*</span></label>
-        <textarea id="summernote" name="description">{{ old('description',$item->description??"") }}</textarea>
+        <textarea id="{{ $readonly? 'summernote-disable' : 'summernote' }}" name="description">{{ old('description',$item->description??"") }}</textarea>
     </div>
 </div>
 @if($readonly)

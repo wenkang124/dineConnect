@@ -9,6 +9,7 @@ $('#summernote').summernote({
   tabsize: 2,
   height: 200
 });
+$('#summernote-disable').summernote('disable');
 
 $(document).on('click', '.delete-btn', function (event) {
     var that = this;

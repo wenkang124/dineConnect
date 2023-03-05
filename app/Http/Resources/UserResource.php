@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'occupation' => $this->occupation,
             'active' => $this->active,
             'mobile_prefix_id' => $this->mobile_prefix_id,
-            'phone' => $this->phone,
+            'phone' => $this->prefixNumber->phonecode . $this->phone,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'email_verified_at' => $this->email_verified_at,

@@ -76,13 +76,14 @@ class SearchController extends Controller
         ]);
     }
 
-    public function historiesDelete(Request $request, $ids)
+    public function historiesDelete(Request $request, $id)
     {
-        if (($ids) == "all") {
+        if ($id == "all") {
             UserSearch::where('user_id', auth()->user()->id)->delete();
+        } else {
+            UserSearch::where('id', $id)->where('user_id', auth()->user()->id)->delete();
         }
-        
-        UserSearch::whereIn('id', json_decode($ids))->where('user_id', auth()->user()->id)->delete();
+
 
         return $this->__apiSuccess('Delete Successful.');
     }

@@ -32,10 +32,10 @@ class UserController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'phone' => 'required|unique:users,phone,' . auth()->user()->id . 'id,deleted_at,NULL',
-            'email' => 'required|email|unique:users,email,' . auth()->user()->id . 'id,deleted_at,NULL',
+            // 'phone' => 'required|unique:users,phone,' . auth()->user()->id . 'id,deleted_at,NULL',
+            // 'email' => 'required|email|unique:users,email,' . auth()->user()->id . 'id,deleted_at,NULL',
             'name' => 'required',
-            'mobile_prefix_id' => 'required',
+            // 'mobile_prefix_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -55,8 +55,8 @@ class UserController extends Controller
         // }
 
 
-        $user->mobile_prefix_id = $request->mobile_prefix_id;
-        $user->phone = $request->phone;
+        // $user->mobile_prefix_id = $request->mobile_prefix_id;
+        // $user->phone = $request->phone;
         $user->name = $request->name;
         $user->occupation = $request->occupation;
         $user->save();

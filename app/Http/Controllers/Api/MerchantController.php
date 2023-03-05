@@ -47,16 +47,7 @@ class MerchantController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|exists:merchants',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
-        }
-
-        $merchant = Merchant::find($id);
-
+        $merchant = Merchant::where('id', $id)->firstOrFail();
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $merchant,

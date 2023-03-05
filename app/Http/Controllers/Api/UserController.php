@@ -13,6 +13,7 @@ use App\Traits\Helpers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Image;
 
 class UserController extends Controller
 {
@@ -44,15 +45,24 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        //pending
-        // if ($request->file('profile_image')) {
-        //     $image = $this->uploadImage($request->file('profile_image'), $request, User::PATH_TO_STORAGE);
-        //     if (!$image['status']) {
-        //         return $this->__apiFailed('Something went wrong while upload image');
-        //     }
-        //     $user->files()->detach();
-        //     $user->files()->attach([$image['file']['id'] => ['zone' => 'profile-image']]);
-        // }
+        if ($request->file('profile_image')) {
+            $data = $request->file('profile_image');
+            $img = Image::make($data);
+            $img->resize(600, 600);
+            $file_name = "profile_" . time() . '.png';
+            $upload_path = public_path(User::IMAGE_ASSET_PATH);
+
+            if (!file_exists($upload_path)) {
+                mkdir($upload_path, 0755, true);
+            }
+
+            $img->save($upload_path . '/' . $file_name);
+
+            $user->profile_image = User::IMAGE_ASSET_PATH . '/' . $file_name;
+        }
+
+        $user->save();
+
 
 
         // $user->mobile_prefix_id = $request->mobile_prefix_id;

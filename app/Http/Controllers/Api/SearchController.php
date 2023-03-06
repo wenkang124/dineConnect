@@ -72,7 +72,7 @@ class SearchController extends Controller
             ->get();
 
         return $this->__apiSuccess('Retrieve Successful.', [
-            "merchants" => $merchants,
+            $merchants,
         ]);
     }
 

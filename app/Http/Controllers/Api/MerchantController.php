@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Category;
 use App\Models\MenuFood;
 use App\Models\Merchant;
+use App\Models\MerchantGallery;
 use App\Models\Mood;
 use App\Models\UserFavourite;
 use App\Traits\Helpers;
@@ -83,6 +84,15 @@ class MerchantController extends Controller
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $dishes,
+        );
+    }
+
+    public function galleries(Request $request, $id)
+    {
+        $galleries = MerchantGallery::active()->where('merchant_id', $id)->orderBy('sequence')->get();
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $galleries,
         );
     }
 }

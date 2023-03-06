@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/detail/{id}', 'MerchantController@detail');
         Route::post('/favourite/{id}', 'MerchantController@favourite');
         Route::get('/{id}/dishes', 'MerchantController@dishes');
+        Route::get('/{id}/galleries', 'MerchantController@galleries');
     });
 
     Route::group(['prefix' => 'notification'], function () {
@@ -81,5 +82,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'dishes'], function () {
         Route::get('/', 'DishController@getAllList');
         Route::get('/detail/{id}', 'DishController@detail');
+    });
+
+    Route::group(['prefix' => 'advertisment'], function () {
+        Route::get('/', 'AdvertismentController@getAllList');
+        Route::get('/detail/{id}', 'AdvertismentController@detail');
     });
 });

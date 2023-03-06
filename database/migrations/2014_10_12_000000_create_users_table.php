@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('profile_image')->nullable();
             $table->boolean('active')->default(true);
+            $table->string('fcm_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

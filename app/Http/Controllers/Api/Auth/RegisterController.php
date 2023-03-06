@@ -125,6 +125,8 @@ class RegisterController extends Controller
             $tokenResult = $user->createToken('Mobile Access Token', ['access:api']);
             $accessToken = $tokenResult->plainTextToken;
 
+            $user->fcm_token = $request->get('fcm_token');
+            $user->save();
 
             return $this->__apiSuccess('Verified successfully !', [
                 "token" => $accessToken,

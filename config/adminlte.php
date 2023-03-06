@@ -322,6 +322,11 @@ return [
             'url'  => 'advertisements',
             'icon' => 'fas fa-fw fa-ad pr-2'
         ],
+        [
+            'text' => 'Notifications',
+            'url'  => 'notifications',
+            'icon' => 'fas fa-fw fa-envelope pr-2'
+        ],
 
         // Sidebar items:
         // [

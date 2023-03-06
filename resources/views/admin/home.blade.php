@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<h5>Welcome to Cays Media Group Admin Panel.</h5>
+<h5>Welcome to Dinneconnect Admin Panel.</h5>
 <p>Dashboard is under maintenance.</p>
 @stop
 

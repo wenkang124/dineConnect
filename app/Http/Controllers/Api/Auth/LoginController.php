@@ -71,6 +71,9 @@ class LoginController extends Controller
 
         // Sanctum
         $accessToken = $tokenResult->plainTextToken;
+        
+        $user->fcm_token = $request->get('fcm_token');
+        $user->save();
 
         $this->clearLoginAttempts($request);
 

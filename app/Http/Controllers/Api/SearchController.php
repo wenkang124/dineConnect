@@ -71,9 +71,10 @@ class SearchController extends Controller
         $merchants = Merchant::select(DB::raw("*, ( 3959 * acos( cos( radians(" . $request->get('lat') . ") ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(" . $request->get('lng') . ") ) + sin( radians(" . $request->get('lat') . ") ) * sin( radians( lat ) ) ) ) AS distance"))->havingRaw('distance < 50')->orderBy('distance')
             ->get();
 
-        return $this->__apiSuccess('Retrieve Successful.', [
-            $merchants,
-        ]);
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $merchants
+        );
     }
 
     public function historiesDelete(Request $request, $id)

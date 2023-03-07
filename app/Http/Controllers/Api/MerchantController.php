@@ -48,7 +48,7 @@ class MerchantController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $merchant = Merchant::where('id', $id)->firstOrFail();
+        $merchant = Merchant::with('operationDaySettings')->where('id', $id)->firstOrFail();
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $merchant,

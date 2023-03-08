@@ -9,15 +9,29 @@ use Illuminate\Database\Eloquent\Model;
 class MerchantOperationDaySetting extends Model
 {
     use HasFactory, HasGlobalScope;
-     
+
     const ACTIVE = 1;
     const INACTIVE = 0;
     const ACTIVE_NAME = 'Active';
-    const INACTIVE_NAME ='Inactive';
-    
+    const INACTIVE_NAME = 'Inactive';
+
     const STATUS_LIST = [
         self::ACTIVE => self::ACTIVE_NAME,
         self::INACTIVE => self::INACTIVE_NAME,
+    ];
+
+    const DAY_LABEL = [
+        1 => "Monday",
+        2 => "Tuesday",
+        3 => "Wednesday",
+        4 => "Thursday",
+        5 => "Friday",
+        6 => "Saturday",
+        0 => "Sunday",
+    ];
+
+    protected $appends = [
+        'day_label',
     ];
 
     protected $fillable = [
@@ -25,5 +39,10 @@ class MerchantOperationDaySetting extends Model
         'start_time',
         'end_time',
     ];
-    
+
+    /** Get Attribute */
+    public function getDayLabelAttribute()
+    {
+        return self::DAY_LABEL[$this->day];
+    }
 }

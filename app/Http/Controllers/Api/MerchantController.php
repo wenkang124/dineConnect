@@ -9,9 +9,11 @@ use App\Models\Category;
 use App\Models\MenuFood;
 use App\Models\Merchant;
 use App\Models\MerchantGallery;
+use App\Models\MerchantOperationDaySetting;
 use App\Models\Mood;
 use App\Models\UserFavourite;
 use App\Traits\Helpers;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -49,6 +51,16 @@ class MerchantController extends Controller
     public function detail(Request $request, $id)
     {
         $merchant = Merchant::with('operationDaySettings')->where('id', $id)->firstOrFail();
+        $operation = Carbon::now()->dayOfWeek;
+        $opeation_setting = MerchantOperationDaySetting::where('merchant_id', $id)->where('day', $operation)->latest()->first();
+        if (empty($opeation_setting)) {
+            $merchant->operation = 'Closed';
+            $merchant->is_open = 0;
+        } else {
+            $merchant->operation = 'Open till ' . Carbon::parse($opeation_setting->end_time)->format('h:i');
+            $merchant->is_open = 1;
+        }
+
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $merchant,

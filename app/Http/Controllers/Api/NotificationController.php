@@ -30,12 +30,12 @@ class NotificationController extends Controller
     {
 
         $notification = Notification::where('id', $id)->firstOrFail();
-        $notification->data = json_decode($notification->data);
-        $notification->data['display_date'] = $notification->display_date;
+        $data = json_decode($notification->data);
+        $data->display_date = $notification->display_date;
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
-            json_decode($notification->data),
+            $data,
         );
     }
 }

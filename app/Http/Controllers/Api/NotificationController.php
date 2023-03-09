@@ -33,7 +33,7 @@ class NotificationController extends Controller
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
-            $notification,
+            json_decode($notification->data),
         );
     }
 }

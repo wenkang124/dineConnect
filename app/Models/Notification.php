@@ -21,4 +21,9 @@ class Notification extends Model
     {
         return date('Y-m-d H:i A', strtotime($this->created_at));
     }
+
+    public function getCreatedAtAttribute()
+    {
+        return $this->created_at_ymd_hia;
+    }
 }

@@ -10,6 +10,10 @@ class Notification extends Model
 {
     use HasFactory;
 
+    protected $appends = [
+        'display_date'
+    ];
+
     /** Relation */
     public function notifiable()
     {
@@ -23,8 +27,7 @@ class Notification extends Model
         return date('Y-m-d H:i A', strtotime($this->created_at));
     }
 
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->diffForHumans();
+    public function getDisplayDateAttribute() {
+        return $this->created_at->diffForHumans();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +25,6 @@ class Notification extends Model
 
     public function getCreatedAtAttribute($value)
     {
-        return $value->diffForHumans();
+        return Carbon::parse($value)->diffForHumans();
     }
 }

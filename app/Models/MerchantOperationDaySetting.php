@@ -21,13 +21,13 @@ class MerchantOperationDaySetting extends Model
     ];
 
     const DAY_LABEL = [
+        0 => "Sunday",
         1 => "Monday",
         2 => "Tuesday",
         3 => "Wednesday",
         4 => "Thursday",
         5 => "Friday",
         6 => "Saturday",
-        0 => "Sunday",
     ];
 
     protected $appends = [
@@ -38,6 +38,7 @@ class MerchantOperationDaySetting extends Model
         'day',
         'start_time',
         'end_time',
+        'active',
     ];
 
     /** Get Attribute */

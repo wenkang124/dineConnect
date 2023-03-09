@@ -28,6 +28,42 @@
 </div>
 <div class="col-lg-6">
     <div class="form-group">
+        <label for="address" class="moto-widget-contact_form-label">Address <span class="red">*</span></label>
+        <input type="text" name="address" required class="form-control" value="{{ old('address',$item->address??"") }}" {{ $readonly??'' }}  autocomplete="nope">
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="form-group">
+        <label for="postal_code" class="moto-widget-contact_form-label">Postal Code <span class="red">*</span></label>
+        <input type="text" name="postal_code" required class="form-control" value="{{ old('postal_code',$item->postal_code??"") }}" {{ $readonly??'' }}  autocomplete="nope">
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="form-group">
+        <label for="city" class="moto-widget-contact_form-label">City <span class="red">*</span></label>
+        <input type="text" name="city" required class="form-control" value="{{ old('city',$item->city??"") }}" {{ $readonly??'' }}  autocomplete="nope">
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="form-group">
+        <label for="state" class="moto-widget-contact_form-label">State <span class="red">*</span></label>
+        <input type="text" name="state" required class="form-control" value="{{ old('state',$item->state??"") }}" {{ $readonly??'' }}  autocomplete="nope">
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="form-group">
+        <label for="name" class="moto-widget-contact_form-label">Country </label>
+        <select name="country_id" required class="form-control single-select2-without-tags w-100" multiple="multiple" required {{ ($readonly? 'disabled' : '') }}>
+            @foreach($countries as $key => $country)
+            <option value="{{ $country->id }}" {{ old('country_id') && old('country_id') == $country->id? 'selected' : (isset($item)&&$item->country_id == $country->id? 'selected' : '') }}>
+                {{ $country->nicename }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="form-group">
         <label for="longitude" class="moto-widget-contact_form-label">Longitude</label>
         <input type="number" name="lng" class="form-control" value="{{ old('lng',$item->lng??"") }}" {{ $readonly??'' }} step="0.00000001" autocomplete="nope">
     </div>

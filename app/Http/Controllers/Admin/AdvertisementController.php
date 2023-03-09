@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Advertisement;
+use App\Models\Merchant;
 use App\Models\User;
 use App\Traits\MediaTrait;
 use Illuminate\Support\Str;
@@ -48,11 +49,15 @@ class AdvertisementController extends Controller
     }
 
     public function show(Advertisement $item) {
-        return view('admin.advertisements.show', compact('item'));
+        $merchants = Merchant::where('active', 1)->get();
+
+        return view('admin.advertisements.show', compact('item', 'merchants'));
     }
 
     public function create() {
-        return view('admin.advertisements.create');
+        $merchants = Merchant::where('active', 1)->get();
+
+        return view('admin.advertisements.create', compact('merchants'));
     }
 
     public function store(Request $request) {
@@ -62,6 +67,7 @@ class AdvertisementController extends Controller
             'description' => 'required',
             'sequence' => 'required|numeric|min:1',
             'active' => 'required|numeric',
+            'merchants' => 'nullable',
         ]);
 
         DB::beginTransaction();
@@ -93,6 +99,17 @@ class AdvertisementController extends Controller
             }    
             $item->save();
 
+            $merchant_ids = [];
+            if($request->get('merchants')) {
+                foreach($request->get('merchants') as $merchant) {
+                    $exist_merchant = Merchant::find($merchant);
+                    if($exist_merchant) {
+                        $merchant_ids[] = $merchant;
+                    }
+                }
+            }
+            $item->merchants()->sync($merchant_ids);
+
             DB::commit();
             Session::flash("success", "New Advertisement successfully created.");
 
@@ -109,7 +126,9 @@ class AdvertisementController extends Controller
 
     
     public function edit(Advertisement $item) {
-        return view('admin.advertisements.edit', compact('item'));
+        $merchants = Merchant::where('active', 1)->get();
+
+        return view('admin.advertisements.edit', compact('item', 'merchants'));
     }
 
     public function update(Advertisement $item, Request $request) {
@@ -119,6 +138,7 @@ class AdvertisementController extends Controller
             'description' => 'required',
             'sequence' => 'required|numeric|min:1',
             'active' => 'required|numeric',
+            'merchants' => 'nullable'
         ]);
 
         DB::beginTransaction();
@@ -154,6 +174,17 @@ class AdvertisementController extends Controller
             }    
             $item->save();
 
+            $merchant_ids = [];
+            if($request->get('merchants')) {
+                foreach($request->get('merchants') as $merchant) {
+                    $exist_merchant = Merchant::find($merchant);
+                    if($exist_merchant) {
+                        $merchant_ids[] = $merchant;
+                    }
+                }
+            }
+            $item->merchants()->sync($merchant_ids);
+
             DB::commit();
             Session::flash("success", "Advertisement details successfully updated.");
 
@@ -174,6 +205,7 @@ class AdvertisementController extends Controller
             return response()->json(['success' => false, 'message' => 'Advertisement not found.']);
         }
  
+        $advertisement->merchants()->detach();
         $advertisement->delete();
 
         Session::flash("success", "Advertisement has been successfully deleted.");

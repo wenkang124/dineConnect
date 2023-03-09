@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Advertisement;
 use App\Models\Merchant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,14 +15,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('merchant_operation_day_settings', function (Blueprint $table) {
+        Schema::create('merchant_advertisements', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Merchant::class);
-            $table->integer('day');
-            $table->time('start_time')->default('08:00');
-            $table->time('end_time')->default('22:00');
-            $table->boolean('active')->default(false);
-            $table->unique(['merchant_id', 'day']);
+            $table->foreignIdFor(Advertisement::class);
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('merchant_operation_day_settings');
+        Schema::dropIfExists('merchant_advertisements');
     }
 };

@@ -26,6 +26,18 @@
         <textarea id="{{ $readonly? 'summernote-disable' : 'summernote' }}" name="description" class="form-control" value="" {{ $readonly??'' }}  autocomplete="nope">{{ old('description',$item->description??"") }}</textarea>
     </div>
 </div>
+<div class="col-lg-12">
+    <div class="form-group">
+        <label for="name" class="moto-widget-contact_form-label">Merchants </label>
+        <select name="merchants[]" class="form-control multiple-select2-without-tags w-100" multiple="multiple" {{ ($readonly? 'disabled' : '') }}>
+            @foreach($merchants as $key => $merchant)
+            <option value="{{ $merchant->id }}" {{ old('merchants')? \Helper::instance()->selectionSelected($merchant->id, old('merchants')) : (isset($item)&&$item->merchants? \Helper::instance()->selectionSelected($merchant->id, $item->merchants->pluck('id')->toArray()) : '') }}>
+                {{ $merchant->name }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+</div>
 <div class="col-lg-6">
     <div class="form-group">
         <label for="sequence" class="moto-widget-contact_form-label">Sequence</label>

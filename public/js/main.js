@@ -1,14 +1,23 @@
 $('.multiple-select2').select2({
   tags: true,
 });
+
+$('.multiple-select2-without-tags').select2();
+
 $('.single-select2').select2({
   tags: true,
   maximumSelectionLength: 1
 });
+
+$('.single-select2-without-tags').select2({
+  maximumSelectionLength: 1
+});
+
 $('#summernote').summernote({
   tabsize: 2,
   height: 200
 });
+
 $('#summernote-disable').summernote('disable');
 
 $(document).on('click', '.delete-btn', function (event) {

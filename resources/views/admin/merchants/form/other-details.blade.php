@@ -23,3 +23,15 @@
         </select>
     </div>
 </div>
+<div class="col-lg-6">
+    <div class="form-group">
+        <label for="name" class="moto-widget-contact_form-label">Advertisements </label>
+        <select name="advertisements[]" class="form-control multiple-select2-without-tags w-100" multiple="multiple" {{ ($readonly? 'disabled' : '') }}>
+            @foreach($advertisements as $key => $advertisement)
+            <option value="{{ $advertisement->id }}" {{ old('advertisements')? \Helper::instance()->selectionSelected($advertisement->id, old('advertisements')) : (isset($item)&&$item->advertisements? \Helper::instance()->selectionSelected($advertisement->id, $item->advertisements->pluck('id')->toArray()) : '') }}>
+                {{ $advertisement->title }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+</div>

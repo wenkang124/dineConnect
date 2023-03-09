@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Country;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,11 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description');
             $table->longText('thumbnail');
+            $table->longText('address');
+            $table->string('postal_code');
+            $table->string('city');
+            $table->string('state');
+            $table->foreignIdFor(Country::class);
             $table->decimal('lat', 10, 8)->nullable();
             $table->decimal('lng', 11, 8)->nullable();
             $table->boolean('is_open')->default(true);

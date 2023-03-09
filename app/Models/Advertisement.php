@@ -28,6 +28,12 @@ class Advertisement extends Model
         'image_full_path',
     ];
 
+    /** Relationship */
+    public function merchants()
+    {
+        return $this->belongsToMany(Merchant::class, 'merchant_advertisements');
+    }
+
     /** Get Attribute */
     public function getStatusNameAttribute()
     {

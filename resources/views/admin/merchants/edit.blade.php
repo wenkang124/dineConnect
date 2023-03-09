@@ -113,7 +113,15 @@
                                                     @include('admin.merchants.form.other-details', ['readonly'=>''])
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>                                                   
+                                        <div class="row">                            
+                                            <div class="col-lg-12" style="margin-top: 25px;">
+                                                <div class="form-group text-right">
+                                                    <a class="btn btn-secondary" href="{{ route('admin.merchants.index') }}">Back</a>
+                                                    <button type="submit" class="btn btn-success create-merchant_btn">Edit</button>
+                                                </div>
+                                            </div>
+                                        </div>  
                                     </form>
                                 </section>
                             </div>

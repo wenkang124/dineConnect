@@ -14,8 +14,8 @@
 <div class="col-lg-2">
     <div class="form-group">
         <div class="icheck-primary">
-            <input name="operation_days[{{ $i }}]" type="checkbox" id="operation_day_{{ $i }}" value="{{ $i }}" {{ old('operation_days')? \Helper::instance()->checkboxChecked($i, old('operation_days')) : (isset($item)&&$item->operationDaySettings? \Helper::instance()->checkboxChecked($i, $item->operationDaySettings->pluck('day')->toArray()) : '') }} />
-            <label for="operation_day_{{ $i }}" class="moto-widget-contact_form-label">{{ $days[$i] }} </label>
+            <input name="operation_days[{{ $i }}]" type="checkbox" id="operation_day_{{ $i }}" value="{{ $i }}" {{ old('operation_days')? \Helper::instance()->checkboxChecked($i, old('operation_days')) : (isset($item)&&$item->operationDaySettings? \Helper::instance()->checkboxChecked($i, $item->operationDaySettings->where('active', App\Models\MerchantOperationDaySetting::ACTIVE)->pluck('day')->toArray()) : '') }} />
+            <label for="operation_day_{{ $i }}" class="moto-widget-contact_form-label">{{ App\Models\MerchantOperationDaySetting::DAY_LABEL[$i] }} </label>
         </div>
     </div>
 </div>

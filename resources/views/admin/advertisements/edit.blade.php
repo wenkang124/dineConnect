@@ -52,33 +52,42 @@
                             <div class="col-lg-12">
                                 <section class="content">
                                     <!-- Default box -->
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Advertisement Details</h3>
-                            
-                                            <div class="card-tools">
-                                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                                <i class="fas fa-minus"></i></button>
-                                                {{-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                                                <i class="fas fa-times"></i></button> --}}
+                                    <form class="form-horizontal" action="{{ route('admin.advertisements.update', ['item' => $item]) }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                                        @csrf      
+                                        <div class="row">
+                                            <div class="col-lg-12" style="margin-top: 25px;">
+                                                <div class="form-group text-right">
+                                                    <a class="btn btn-secondary" href="{{ route('admin.advertisements.index') }}">Back</a>
+                                                    <button type="submit" class="btn btn-success create-banner_btn">Edit</button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="card-body">
-                                            <form class="form-horizontal" action="{{ route('admin.advertisements.update', ['item' => $item]) }}" method="POST" autocomplete="off" enctype="multipart/form-data">
-                                                @csrf                        
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Advertisement Details</h3>
+                                
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                                    <i class="fas fa-minus"></i></button>
+                                                    {{-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                                    <i class="fas fa-times"></i></button> --}}
+                                                </div>
+                                            </div>
+                                            <div class="card-body">                  
                                                 <div class="row">    
                                                     @include('admin.advertisements.form.index', ['readonly'=>''])
-
-                                                    <div class="col-lg-12" style="margin-top: 25px;">
-                                                        <div class="form-group text-right">
-                                                            <a class="btn btn-secondary" href="{{ route('admin.advertisements.index') }}">Back</a>
-                                                            <button type="submit" class="btn btn-success create-banner_btn">Edit</button>
-                                                        </div>
-                                                    </div>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="row">
+                                            <div class="col-lg-12" style="margin-top: 25px;">
+                                                <div class="form-group text-right">
+                                                    <a class="btn btn-secondary" href="{{ route('admin.advertisements.index') }}">Back</a>
+                                                    <button type="submit" class="btn btn-success create-banner_btn">Edit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </section>
                             </div>
                         </div>

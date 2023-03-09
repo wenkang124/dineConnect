@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Merchant;
+use App\Models\MerchantOperationDaySetting;
 use App\Models\Mood;
 use App\Traits\MediaTrait;
 use Illuminate\Http\Request;
@@ -58,15 +60,19 @@ class MerchantController extends Controller
     public function show(Merchant $item) {
         $categories = Category::where('active', Category::ACTIVE)->get();
         $moods = Mood::where('active', Mood::ACTIVE)->get();
+        $countries = Country::where('status', 1)->get();
+        $advertisements = Advertisement::all();
 
-        return view('admin.merchants.show', compact('item', 'categories', 'moods'));
+        return view('admin.merchants.show', compact('item', 'categories', 'moods', 'countries', 'advertisements'));
     }
 
     public function create() {
         $categories = Category::where('active', Category::ACTIVE)->get();
         $moods = Mood::where('active', Mood::ACTIVE)->get();
+        $countries = Country::where('status', 1)->get();
+        $advertisements = Advertisement::all();
 
-        return view('admin.merchants.create', compact('categories', 'moods'));
+        return view('admin.merchants.create', compact('categories', 'moods', 'countries', 'advertisements'));
     }
 
     public function store(Request $request) {
@@ -75,6 +81,11 @@ class MerchantController extends Controller
             'name' => 'required',
             'description' => 'required',
             'thumbnail' => 'required|file|mimes:jpg,jpeg,png,gif',
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required',
+            'state' => 'required',
+            'country_id' => 'required',
             'lng' => 'nullable|numeric',
             'lat' => 'nullable|numeric',
             'active' => 'required|numeric',
@@ -83,7 +94,8 @@ class MerchantController extends Controller
             'start_times' => 'nullable',
             'end_times' => 'nullable',
             'categories' => 'required',
-            'moods' => 'required'
+            'moods' => 'required',
+            'advertisements' => 'nullable'
         ]);
 
         DB::beginTransaction();
@@ -95,6 +107,11 @@ class MerchantController extends Controller
             // Details
             $item->name = $request->get('name');
             $item->description = $request->get('description');
+            $item->address = $request->get('address');
+            $item->city = $request->get('city');
+            $item->postal_code = $request->get('postal_code');
+            $item->state = $request->get('state');
+            $item->country_id = $request->get('country_id');
             $item->lng = $request->get('lng');
             $item->lat = $request->get('lat');
             $item->active = $request->get('active');
@@ -122,21 +139,33 @@ class MerchantController extends Controller
             $item->save();
 
             //Operation Details
-            if($request->get('operation_days')) {
-                $operation_settings = [];
-                $operation_days = [];
-                foreach($request->get('operation_days') as $key => $operation_day) {
-                    if($operation_day != null) {
-                        $operation_settings[] = [
-                            'day' => $operation_day,
+            foreach(MerchantOperationDaySetting::DAY_LABEL as $key => $value) {
+                if($request->get('operation_days')) {
+                    if(isset($request->get('operation_days')[$key])) {
+                        $item->operationDaySettings()->updateOrCreate([
+                            'day' => $key,
+                            'merchant_id' => $item->id,
+                        ], [
                             'start_time' => date('H:i:s', strtotime($request->get('start_times')[$key])),
-                            'end_time' => date('H:i:s', strtotime($request->get('end_times')[$key]))
-                        ];
-                        $operation_days[] = $operation_day;
+                            'end_time' => date('H:i:s', strtotime($request->get('end_times')[$key])),
+                            'active' => true,
+                        ]);
+                    } else {
+                        $item->operationDaySettings()->updateOrCreate([
+                            'day' => $key,
+                            'merchant_id' => $item->id,
+                        ], [
+                            'active' => false,
+                        ]);
                     }
+                } else {      
+                    $item->operationDaySettings()->updateOrCreate([
+                        'day' => $key,
+                        'merchant_id' => $item->id,
+                    ], [
+                        'active' => false,
+                    ]);
                 }
-                $item->operationDaySettings()->whereNotIn('day',$operation_days)->delete();
-                $item->operationDaySettings()->createMany($operation_settings);
             }
 
             // Other Details
@@ -178,6 +207,17 @@ class MerchantController extends Controller
                 $item->moods()->sync($mood_ids);
             }
 
+            $advertisement_ids = [];
+            if($request->get('advertisements')) {
+                foreach($request->get('advertisements') as $advertisement) {
+                    $exist_advertisement = Advertisement::find($advertisement);
+                    if($exist_advertisement) {
+                        $advertisement_ids[] = $advertisement;
+                    }
+                }
+            }
+            $item->advertisements()->sync($advertisement_ids);
+
             DB::commit();
             Session::flash("success", "New merchant successfully created.");
 
@@ -196,8 +236,10 @@ class MerchantController extends Controller
     public function edit(Merchant $item) {
         $categories = Category::where('active', Category::ACTIVE)->get();
         $moods = Mood::where('active', Mood::ACTIVE)->get();
+        $countries = Country::where('status', 1)->get();
+        $advertisements = Advertisement::all();
 
-        return view('admin.merchants.edit', compact('item', 'categories', 'moods'));
+        return view('admin.merchants.edit', compact('item', 'categories', 'moods', 'countries', 'advertisements'));
     }
 
     public function update(Merchant $item, Request $request) {
@@ -206,6 +248,11 @@ class MerchantController extends Controller
             'name' => 'required',
             'description' => 'required',
             'thumbnail' => 'nullable|file|mimes:jpg,jpeg,png,gif',
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required',
+            'state' => 'required',
+            'country_id' => 'required',
             'lng' => 'nullable|numeric',
             'lat' => 'nullable|numeric',
             'active' => 'required|numeric',
@@ -224,6 +271,11 @@ class MerchantController extends Controller
             // Details
             $item->name = $request->get('name');
             $item->description = $request->get('description');
+            $item->address = $request->get('address');
+            $item->city = $request->get('city');
+            $item->postal_code = $request->get('postal_code');
+            $item->state = $request->get('state');
+            $item->country_id = $request->get('country_id');
             $item->lng = $request->get('lng');
             $item->lat = $request->get('lat');
             $item->active = $request->get('active');
@@ -257,22 +309,33 @@ class MerchantController extends Controller
             $item->save();
 
             //Operation Details
-            if($request->get('operation_days')) {
-                $operation_settings = [];
-                $operation_days = [];
-                foreach($request->get('operation_days') as $key => $operation_day) {
-                    if($operation_day != null) {
-                        $operation_settings[] = [
-                            'day' => $operation_day,
+            foreach(MerchantOperationDaySetting::DAY_LABEL as $key => $value) {
+                if($request->get('operation_days')) {
+                    if(isset($request->get('operation_days')[$key])) {
+                        $item->operationDaySettings()->updateOrCreate([
+                            'day' => $key,
                             'merchant_id' => $item->id,
+                        ], [
                             'start_time' => date('H:i:s', strtotime($request->get('start_times')[$key])),
-                            'end_time' => date('H:i:s', strtotime($request->get('end_times')[$key]))
-                        ];
-                        $operation_days[] = $operation_day;
+                            'end_time' => date('H:i:s', strtotime($request->get('end_times')[$key])),
+                            'active' => true,
+                        ]);
+                    } else {
+                        $item->operationDaySettings()->updateOrCreate([
+                            'day' => $key,
+                            'merchant_id' => $item->id,
+                        ], [
+                            'active' => false,
+                        ]);
                     }
+                } else {      
+                    $item->operationDaySettings()->updateOrCreate([
+                        'day' => $key,
+                        'merchant_id' => $item->id,
+                    ], [
+                        'active' => false,
+                    ]);
                 }
-                $item->operationDaySettings()->whereNotIn('day',$operation_days)->delete();
-                $item->operationDaySettings()->upsert($operation_settings, ['merchant_id', 'day']);
             }
 
             // Other Details
@@ -313,6 +376,18 @@ class MerchantController extends Controller
 
                 $item->moods()->sync($mood_ids);
             }
+
+            $advertisement_ids = [];
+            if($request->get('advertisements')) {
+                foreach($request->get('advertisements') as $advertisement) {
+                    $exist_advertisement = Advertisement::find($advertisement);
+                    if($exist_advertisement) {
+                        $advertisement_ids[] = $advertisement;
+                    }
+                }
+
+            }
+            $item->advertisements()->sync($advertisement_ids);
 
             DB::commit();
             Session::flash("success", "Merchant details successfully updated.");

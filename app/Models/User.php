@@ -77,6 +77,11 @@ class User extends Authenticatable
         return $this->hasMany(UserOtp::class);
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
     public function preferences()
     {
         return $this->belongsToMany(Preference::class, 'user_preferences');

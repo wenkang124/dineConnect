@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\MerchantMoodResource;
 use App\Http\Resources\UserResource;
+use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\MenuFood;
 use App\Models\Merchant;
@@ -105,6 +106,15 @@ class MerchantController extends Controller
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $galleries,
+        );
+    }
+
+    public function ads(Request $request, $id)
+    {
+        $ads = Merchant::find($id)->advertisements()->active()->orderBy('sequence')->get();
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $ads,
         );
     }
 }

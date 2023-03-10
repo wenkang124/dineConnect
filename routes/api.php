@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/favourite/{id}', 'MerchantController@favourite');
         Route::get('/{id}/dishes', 'MerchantController@dishes');
         Route::get('/{id}/galleries', 'MerchantController@galleries');
+        Route::get('/{id}/ads', 'MerchantController@ads');
     });
 
     Route::group(['prefix' => 'notification'], function () {

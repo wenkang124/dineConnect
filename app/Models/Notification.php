@@ -14,6 +14,10 @@ class Notification extends Model
         'display_date'
     ];
 
+    protected $casts = [
+        'data' => 'array',
+    ];
+
     /** Relation */
     public function notifiable()
     {

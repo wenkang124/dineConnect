@@ -57,7 +57,7 @@ class BannerController extends Controller
 
     public function store(Request $request) {
         $this->validate($request, [
-            'image' => 'required|file|mimes:jpg,jpeg,png,gif',
+            'image' => 'required|file|mimes:jpg,jpeg,png,gif,webp',
             'description' => 'nullable',
             'action' => 'nullable',
             'sequence' => 'required|numeric|min:1',
@@ -116,7 +116,7 @@ class BannerController extends Controller
 
     public function update(Banner $item, Request $request) {
         $this->validate($request, [
-            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp',
             'description' => 'nullable',
             'action' => 'nullable',
             'sequence' => 'required|numeric|min:1',

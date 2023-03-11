@@ -56,7 +56,7 @@ class MerchantGalleryController extends Controller
 
     public function store($merchant_id, Request $request) {
         $this->validate($request, [
-            'image' => 'required|file|mimes:jpg,jpeg,png,gif',
+            'image' => 'required|file|mimes:jpg,jpeg,png,gif,webp',
             'sequence' => 'required|numeric|min:1',
             'active' => 'required|numeric',
         ]);
@@ -112,7 +112,7 @@ class MerchantGalleryController extends Controller
 
     public function update(MerchantGallery $item, Request $request) {
         $this->validate($request, [
-            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp',
             'sequence' => 'required|numeric|min:1',
             'active' => 'required|numeric',
         ]);

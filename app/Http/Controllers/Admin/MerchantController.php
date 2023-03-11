@@ -80,7 +80,7 @@ class MerchantController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
-            'thumbnail' => 'required|file|mimes:jpg,jpeg,png,gif',
+            'thumbnail' => 'required|file|mimes:jpg,jpeg,png,gif,webp',
             'address' => 'required',
             'city' => 'required',
             'postal_code' => 'required',
@@ -247,7 +247,7 @@ class MerchantController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
-            'thumbnail' => 'nullable|file|mimes:jpg,jpeg,png,gif',
+            'thumbnail' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp',
             'address' => 'required',
             'city' => 'required',
             'postal_code' => 'required',

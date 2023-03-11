@@ -63,7 +63,7 @@ class AdvertisementController extends Controller
     public function store(Request $request) {
         $this->validate($request, [
             'title' => 'required',
-            'image' => 'required|file|mimes:jpg,jpeg,png,gif',
+            'image' => 'required|file|mimes:jpg,jpeg,png,gif,webp',
             'description' => 'required',
             'sequence' => 'required|numeric|min:1',
             'active' => 'required|numeric',
@@ -134,7 +134,7 @@ class AdvertisementController extends Controller
     public function update(Advertisement $item, Request $request) {
         $this->validate($request, [
             'title' => 'required',
-            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp',
             'description' => 'required',
             'sequence' => 'required|numeric|min:1',
             'active' => 'required|numeric',

@@ -25,7 +25,7 @@ class MenuFoodPortion extends Model
         "S" => "S",
         "M" => "M",
         "L" => "L",
-        "xL" => "xL",
+        "xL" => "XL",
     ];
 
     protected $fillable = [

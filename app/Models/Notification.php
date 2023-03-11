@@ -18,6 +18,12 @@ class Notification extends Model
         'data' => 'array',
     ];
 
+    protected $fillable = [
+        'id',
+        'type',
+        'data',
+    ];
+
     /** Relation */
     public function notifiable()
     {

@@ -21,19 +21,48 @@ class MenuSubCategory extends Model
         self::INACTIVE => self::INACTIVE_NAME,
     ];
 
+    const FILE_PREFIX = "menu_sub_category";
+    const MODULE = "menu_sub_category";
+    const UPLOAD_PATH = 'storage/images/' . self::MODULE . 's';
+
     protected $fillable = [
+        'merchant_menu_category_id',
         'name',
         'image',
         'active',
     ];
+
+    protected $appends = [
+        'image_full_path',
+    ];
+
+    public function merchant_menu_category()
+    {
+        return $this->belongsTo(MerchantMenuCategory::class);
+    }
 
     public function menu_foods()
     {
         return $this->belongsToMany(MenuFood::class, 'menu_food_menu_sub_categories');
     }
 
+    public function getImagePathAttribute()
+    {
+        return $this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->image : $this->image;
+    }
+
+    public function getImageFullPathAttribute()
+    {
+        return asset($this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->image : $this->image);
+    }
+
     public function getStatusNameAttribute()
     {
         return self::STATUS_LIST[$this->active] ?? '';
+    }
+
+    public function getCreatedAtYmdHiaAttribute()
+    {
+        return date('Y-m-d H:i A', strtotime($this->created_at));
     }
 }

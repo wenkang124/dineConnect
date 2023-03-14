@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\MenuCategory;
+use App\Models\Merchant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +15,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('menu_sub_categories', function (Blueprint $table) {
+        Schema::create('merchant_menu_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->longText('image');
-            $table->boolean('active')->default(true);
-            $table->softDeletes();
+            $table->foreignIdFor(Merchant::class);
+            $table->foreignIdFor(MenuCategory::class);
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_sub_categories');
+        Schema::dropIfExists('merchant_menu_categories');
     }
 };

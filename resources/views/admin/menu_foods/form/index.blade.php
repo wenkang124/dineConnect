@@ -14,7 +14,7 @@
 </div>
 <div class="col-lg-6 col-md-6 col-6 mb-5">
 </div>
-<div class="col-lg-6">
+{{-- <div class="col-lg-6">
     <div class="form-group">
         <label for="name" class="moto-widget-contact_form-label">Category </label>
         <select name="categories[]" required class="form-control single-select2 w-100" multiple="multiple" {{ ($readonly? 'disabled' : '') }}>
@@ -25,14 +25,14 @@
             @endforeach
         </select>
     </div>
-</div>
+</div> --}}
 <div class="col-lg-6">
     <div class="form-group">
         <label for="name" class="moto-widget-contact_form-label">Sub Categories </label>
-        <select name="sub_categories[]" required class="form-control multiple-select2 w-100" multiple="multiple" {{ ($readonly? 'disabled' : '') }}>
+        <select name="sub_categories[]" required class="form-control multiple-select2-without-tags w-100" multiple="multiple" {{ ($readonly? 'disabled' : '') }}>
             @foreach($sub_categories as $key => $sub_category)
             <option value="{{ $sub_category->id }}" {{ old('sub_categories')? \Helper::instance()->selectionSelected($sub_category->id, old('sub_categories')) : (isset($item)&&$item->menuSubCategories? \Helper::instance()->selectionSelected($sub_category->id, $item->menuSubCategories->pluck('id')->toArray()) : '') }}>
-                {{ $sub_category->name }}
+                {{ $sub_category->name }} ({{ $sub_category->merchant_menu_category->menuCategory->name }})
             </option>
             @endforeach
         </select>

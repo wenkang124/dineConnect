@@ -3,21 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <div class="row">
-        <div class="col-lg-auto">
-            <h4 class="text-dark pl-2">Merchant Management</h4>
-        </div>
-        <div class="col-lg-auto ml-auto">
-            <a href="{{ route('admin.menu_sub_categories.index', ['merchant_id'=>$item->id]) }}" class="btn btn-primary" title="Manage">
-                Manage Sub Categories
-            </a>
-        </div>
-        <div class="col-lg-auto">
-            <a href="{{ route('admin.menu_foods.index', ['merchant_id'=>$item->id]) }}" class="btn btn-primary" title="Manage">
-                Manage Dishes
-            </a>
-        </div>
-    </div>
+    <h4 class="text-dark pl-2">Menu Sub Categories Management</h4>
 @stop
 
 @section('content')
@@ -31,7 +17,7 @@
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('admin.merchants.index')}}">Merchants</a></li>
+                <li class="breadcrumb-item"><a href="{{route('admin.menu_sub_categories.index', ['merchant_id'=>$merchant_id])}}">Menu Sub Categories</a></li>
                 <li class="breadcrumb-item">{{ $item->name }}</li>
             </ol>
             </div>
@@ -68,7 +54,7 @@
                                     <!-- Default box -->
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">Merchant Details</h3>
+                                            <h3 class="card-title">Menu Sub Category Details</h3>
                             
                                             <div class="card-tools">
                                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -79,24 +65,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">    
-                                                @include('admin.merchants.form.index', ['readonly'=>'readonly'])
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Other Details</h3>
-                            
-                                            <div class="card-tools">
-                                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                                <i class="fas fa-minus"></i></button>
-                                                {{-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                                                <i class="fas fa-times"></i></button> --}}
-                                            </div>
-                                        </div>
-                                        <div class="card-body">      
-                                            <div class="row">    
-                                                @include('admin.merchants.form.other-details', ['readonly'=>'readonly'])
+                                                @include('admin.menu_sub_categories.form.index', ['readonly'=>'readonly'])
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +94,7 @@
     //         {
     //             extend: 'csv',
     //             text: 'Export',
-    //             title: 'Merchants {{ date('Y-m-d') }}'
+    //             title: 'Foods {{ date('Y-m-d') }}'
     //         },
     //         {
     //             extend: 'print',
@@ -134,10 +103,10 @@
     //                 key: 'p',
     //                 altkey: true
     //             }, 
-    //             title: 'Merchants {{ date('Y-m-d') }}'
+    //             title: 'Foods {{ date('Y-m-d') }}'
     //         }
     //     ],
-    //     ajax: "{!! route('admin.merchants.datatable') !!}",
+    //     ajax: "{!! route('admin.menu_sub_categories.datatable', ['merchant_id'=>$merchant_id]) !!}",
     //     order: [[ 0, "desc" ]],
     //     columns: [
     //         { data: 'id', name: 'id' },

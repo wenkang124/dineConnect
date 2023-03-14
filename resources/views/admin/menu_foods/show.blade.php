@@ -3,7 +3,11 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h4 class="text-dark pl-2">Dishes Management</h4>
+    <div class="row">
+        <div class="col-lg-auto">
+            <h4 class="text-dark pl-2">Dishes Management :- {{ $merchant->name }}</h4>
+        </div>
+    </div>
 @stop
 
 @section('content')

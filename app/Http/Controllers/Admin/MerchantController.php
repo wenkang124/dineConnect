@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\Country;
+use App\Models\MenuCategory;
 use App\Models\Merchant;
 use App\Models\MerchantOperationDaySetting;
 use App\Models\Mood;
@@ -48,7 +49,7 @@ class MerchantController extends Controller
                                     More Action
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="'.route('admin.menu_foods.index', ['merchant_id'=> $item->id]).'">Dishes Management</a>
+                                    <a class="dropdown-item" href="'.route('admin.menu_sub_categories.index', ['merchant_id'=> $item->id]).'">Dishes Management</a>
                                     <a class="dropdown-item" href="'.route('admin.merchant_galleries.index', ['merchant_id'=> $item->id]).'">Galleries Management</a>
                                 </div>
                             </div>';
@@ -217,6 +218,10 @@ class MerchantController extends Controller
                 }
             }
             $item->advertisements()->sync($advertisement_ids);
+
+            //Merchant Menu Categories Default Food and Beverage
+            $menu_categories = MenuCategory::pluck('id')->toArray();
+            $item->merchantMenuCategories()->sync($menu_categories);
 
             DB::commit();
             Session::flash("success", "New merchant successfully created.");

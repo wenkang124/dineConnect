@@ -38,10 +38,10 @@ class MenuFood extends Model
         'image_full_path',
     ];
 
-    public function menuCategories()
-    {
-        return $this->belongsToMany(MenuCategory::class, 'menu_food_menu_categories')->withTimestamps();
-    }
+    // public function menuCategories()
+    // {
+    //     return $this->belongsToMany(MenuCategory::class, 'menu_food_menu_categories')->withTimestamps();
+    // }
     public function menuSubCategories()
     {
         return $this->belongsToMany(MenuSubCategory::class, 'menu_food_menu_sub_categories')->withTimestamps();

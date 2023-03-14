@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             UserSearchTableSeeder::class,
             CountryTableSeeder::class,
             MerchantCategoryTableSeeder::class,
+            MerchantMenuCategoryTableSeeder::class,
             MerchantMoodTableSeeder::class,
             MenuCategoryTableSeeder::class,
             FilterOptionTableSeeder::class

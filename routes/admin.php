@@ -50,6 +50,18 @@ Route::middleware('auth:admin')->group(function () {
 
         Route::get('/{item}', [App\Http\Controllers\Admin\MerchantController::class, 'show'])->name('show');
     });
+    
+    Route::prefix('menu_sub_categories')->name('menu_sub_categories.')->group(function () {
+        Route::get('/{merchant_id}', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'index'])->name('index');
+        Route::get('/{merchant_id}/datatable', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'dataTable'])->name('datatable');
+        Route::get('/{merchant_id}/create', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'create'])->name('create');
+        Route::post('/{merchant_id}/store', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'store'])->name('store');
+        Route::get('/{merchant_id}/edit/{item}', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'edit'])->name('edit');
+        Route::post('/update/{item}', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'update'])->name('update');
+        Route::post('/delete/{menu_sub_category}', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{merchant_id}/{item}', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'show'])->name('show');
+    });
 
     Route::prefix('menu_foods')->name('menu_foods.')->group(function () {
         Route::get('/{merchant_id}', [App\Http\Controllers\Admin\MenuFoodController::class, 'index'])->name('index');

@@ -5,16 +5,16 @@
 @section('content_header')
 <div class="row">
     <div class="col-lg-auto">
-        <h4 class="text-dark pl-2">Dishes Management :- {{ $merchant->name }}</h4>
+        <h4 class="text-dark pl-2">Sub Categories Management :- {{ $merchant->name }}</h4>
     </div>
     <div class="col-lg-auto ml-auto">
-        <a href="{{ route('admin.menu_sub_categories.index', ['merchant_id'=>$merchant_id]) }}" class="btn btn-primary" title="Manage">
-            Manage Sub Categories
+        <a href="{{ route('admin.menu_foods.index', ['merchant_id'=>$merchant_id]) }}" class="btn btn-primary" title="Manage">
+            Manage Dishes
         </a>
     </div>
     <div class="col-lg-auto">
-        <a href="{{ route('admin.menu_foods.create', ['merchant_id'=>$merchant_id]) }}" class="btn btn-success" title="Add">
-            Add New Dish
+        <a href="{{ route('admin.menu_sub_categories.create', ['merchant_id'=>$merchant_id]) }}" class="btn btn-success" title="Add">
+            Add New Sub Category
         </a>
     </div>
 </div>
@@ -29,7 +29,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Dishes Listing</h3>
+                            <h3 class="card-title">Sub Category Listing</h3>
             
                             <div class="card-tools">
                                 {{-- <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -46,10 +46,8 @@
                                             <th>No.</th>
                                             <th>Created At</th>
                                             <th>Name</th>
-                                            <th>Sub Categories</th>
-                                            <th>Price</th>
+                                            <th>Category</th>
                                             <th>Image</th>
-                                            <th>Short Description</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -78,20 +76,18 @@
             {
                 extend: 'csv',
                 text: 'Export',
-                title: 'Dishes {{ date('Y-m-d') }}', 
+                title: 'Menu Sub Categories {{ date('Y-m-d') }}', 
                 className: 'btn-custom mb-3'
             }
         ],
-        ajax: "{!! route('admin.menu_foods.datatable', ['merchant_id'=>$merchant_id]) !!}",
+        ajax: "{!! route('admin.menu_sub_categories.datatable', ['merchant_id'=>$merchant_id]) !!}",
         order: [[ 0, "desc" ]],
         columns: [
             { data: 'id', name: 'id' },
             { data: 'created_at', name: 'created_at' },
             { data: 'name', name: 'name' },
-            { data: 'sub_category', name: 'sub_category' },
-            { data: 'price', name: 'price' },
+            { data: 'category', name: 'category' },
             { data: 'thumbnail', name: 'thumbnail' },
-            { data: 'short_description', name: 'short_description' },
             { data: 'active', name: 'active',
                 render: function(row){
                     return row? row : '-'

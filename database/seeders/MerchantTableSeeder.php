@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MenuCategory;
 use App\Models\Merchant;
 use Illuminate\Database\Seeder;
 

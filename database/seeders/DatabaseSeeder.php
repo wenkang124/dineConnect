@@ -25,10 +25,11 @@ class DatabaseSeeder extends Seeder
             UserSearchTableSeeder::class,
             CountryTableSeeder::class,
             MerchantCategoryTableSeeder::class,
+            MenuCategoryTableSeeder::class,
             MerchantMenuCategoryTableSeeder::class,
             MerchantMoodTableSeeder::class,
-            MenuCategoryTableSeeder::class,
-            FilterOptionTableSeeder::class
+            FilterOptionTableSeeder::class,
+            ReportReasonTableSeeder::class
         ]);
     }
 }

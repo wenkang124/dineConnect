@@ -167,10 +167,8 @@ trait Helpers
          */
         $extraNotificationData = [
             "click_action" => "FLUTTER_NOTIFICATION_CLICK",
-            "message" => $text,
             "type" => $type,
             "type_id" => $type_id,
-            'title' => $title,
             'flag' => $flag,
             'picture' => $picture,
             'unique_id' => $unique_id,
@@ -178,9 +176,15 @@ trait Helpers
             "silence" => (int)$silence
         ];
 
+        $notification = [
+            'title' => $title,
+            "message" => $text
+        ];
+
         $data = [
             "$tokenName" => $tokens,
             'data' => $extraNotificationData,
+            'notification' => $notification,
             'priority' => 'high',
             'badge' => 1,
             // 'content_available' => $silence // set 'true' if need silent IOS notification

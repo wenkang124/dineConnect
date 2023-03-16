@@ -178,7 +178,7 @@ trait Helpers
 
         $notification = [
             'title' => $title,
-            "message" => $text
+            "body" => $text
         ];
 
         $data = [

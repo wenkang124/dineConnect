@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\Controller;
 use App\Models\Notification;
+use App\Models\User;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -31,7 +32,7 @@ class NotificationController extends Controller
 
         $notification = Notification::where('id', $id)->firstOrFail();
         $data = $notification->data;
-        $data->display_date = $notification->display_date;
+        $data['display_date'] = $notification->display_date;
 
         return $this->__apiSuccess(
             'Retrieve Successful.',

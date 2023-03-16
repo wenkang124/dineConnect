@@ -16,6 +16,7 @@ class Notification extends Model
 
     protected $casts = [
         'data' => 'array',
+        'id' => 'string'
     ];
 
     protected $fillable = [
@@ -37,7 +38,8 @@ class Notification extends Model
         return date('Y-m-d H:i A', strtotime($this->created_at));
     }
 
-    public function getDisplayDateAttribute() {
+    public function getDisplayDateAttribute()
+    {
         return $this->created_at->diffForHumans();
     }
 }

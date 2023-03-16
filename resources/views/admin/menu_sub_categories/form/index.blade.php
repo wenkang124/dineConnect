@@ -19,8 +19,8 @@
         <label for="name" class="moto-widget-contact_form-label">Category </label>
         <select name="merchant_menu_category[]" required class="form-control single-select2-without-tags w-100" multiple="multiple" {{ ($readonly? 'disabled' : '') }}>
             @foreach($categories as $key => $category)
-            <option value="{{ $category->id }}" {{ old('merchant_menu_category')? \Helper::instance()->selectionSelected($category->id, old('merchant_menu_category')) : (isset($item)&&$item->merchant_menu_category&& $category->id == $item->merchant_menu_category->menu_category_id ? 'selected' : '') }}>
-                {{ $category->name }}
+            <option value="{{ $category->id }}" {{ old('merchant_menu_category')? \Helper::instance()->selectionSelected($category->id, old('merchant_menu_category')) : (isset($item)&&$item->merchant_menu_category&& $category->id == $item->merchant_menu_category_id ? 'selected' : '') }}>
+                {{ $category->menuCategory->name }}
             </option>
             @endforeach
         </select>

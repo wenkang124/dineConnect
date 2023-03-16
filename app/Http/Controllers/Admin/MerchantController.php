@@ -221,7 +221,7 @@ class MerchantController extends Controller
 
             //Merchant Menu Categories Default Food and Beverage
             $menu_categories = MenuCategory::pluck('id')->toArray();
-            $item->merchantMenuCategories()->sync($menu_categories);
+            $item->menuCategories()->sync($menu_categories);
 
             DB::commit();
             Session::flash("success", "New merchant successfully created.");

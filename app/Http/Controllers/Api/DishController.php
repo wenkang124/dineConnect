@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\Controller;
+use App\Http\Resources\MerchantMenuCategoryResource;
 use App\Http\Resources\MerchantMoodResource;
 use App\Http\Resources\UserResource;
 use App\Models\Category;
+use App\Models\MenuCategory;
 use App\Models\MenuFood;
 use App\Models\MenuSubCategory;
 use App\Models\Merchant;
@@ -59,9 +61,20 @@ class DishController extends Controller
     public function menuCategories(Request $request, $merchant_id)
     {
         $menu_categories = Merchant::find($merchant_id)->merchantMenuCategories;
+        $menu_categories->load([
+            'menuCategory' => function($q){
+                $q->where('active', MenuCategory::ACTIVE);
+            },
+            'menuSubCategories' => function($q){
+                $q->where('active', MenuSubCategory::ACTIVE);
+            }
+        ]);
+
+        $result = MerchantMenuCategoryResource::collection($menu_categories);
+
         return $this->__apiSuccess(
             'Retrieve Successful.',
-            $menu_categories,
+            $result,
         );
     }
 

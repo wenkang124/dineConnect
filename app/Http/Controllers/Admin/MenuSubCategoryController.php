@@ -36,7 +36,6 @@ class MenuSubCategoryController extends Controller
         $items = MenuSubCategory::query()->whereHas('merchant_menu_category', function ($query) use ($merchant_id) {
             $query->where('merchant_id', $merchant_id);
         });
-        
         return Datatables::of($items)
                 ->editColumn('active', function ($item) {
                     return $item->status_name;
@@ -69,6 +68,9 @@ class MenuSubCategoryController extends Controller
     public function create($merchant_id) {
         $merchant = Merchant::where('id', $merchant_id)->first();
         $categories = $merchant->merchantMenuCategories;
+        $categories->load([
+            'menuCategory'
+        ]);
 
         return view('admin.menu_sub_categories.create', compact('merchant_id', 'categories'));
     }
@@ -131,7 +133,9 @@ class MenuSubCategoryController extends Controller
     public function edit($merchant_id, MenuSubCategory $item) {
         $merchant = Merchant::where('id', $merchant_id)->first();
         $categories = $merchant->merchantMenuCategories;
-
+        $categories->load([
+            'menuCategory'
+        ]);
         return view('admin.menu_sub_categories.edit', compact('merchant_id', 'item', 'categories'));
     }
 

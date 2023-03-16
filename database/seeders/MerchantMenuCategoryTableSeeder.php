@@ -31,7 +31,7 @@ class MerchantMenuCategoryTableSeeder extends Seeder
         $merchants = Merchant::get();
         foreach($merchants as $merchant) {
             $menu_categories = MenuCategory::pluck('id')->toArray();
-            $merchant->merchantMenuCategories()->sync($menu_categories);
+            $merchant->menuCategories()->sync($menu_categories);
         }
     }
 }

@@ -221,7 +221,7 @@ trait Helpers
         $result = curl_exec($ch);
         curl_close($ch);
 
-        Log::info("FCM Token Sent.(" . (is_array($tokens) ? implode(', ', $tokens) : $tokens) . ")" . json_encode($result));
+        Log::info("FCM Token Sent.(" . (is_array($tokens) ? implode(', ', $tokens) : $tokens) . ")" . json_encode($result) . json_encode($data));
 
         return true;
     }

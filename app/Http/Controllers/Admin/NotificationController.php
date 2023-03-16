@@ -32,28 +32,10 @@ class NotificationController extends Controller
             })->editColumn('notifiable.name', function ($item) {
                 return $item->notifiable->name;
             })->addColumn('title', function ($item) {
-                if ($item->data) {
-                    $dataInArray = json_decode($item->data, true);
-                    if (isset($dataInArray['title'])) {
-                        return $dataInArray['title'];
-                    } else {
-                        return '-';
-                    }
-                } else {
-                    return '-';
-                }
+                return $item->data['title'] ?? '-';
             })
             ->addColumn('message', function ($item) {
-                if ($item->data) {
-                    $dataInArray = json_decode($item->data, true);
-                    if (isset($dataInArray['message'])) {
-                        return $dataInArray['message'];
-                    } else {
-                        return '-';
-                    }
-                } else {
-                    return '-';
-                }
+                return $item->data['message'] ?? '-';
             })
             ->rawColumns(['title', 'message'])
             ->make(true);

@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/categories', 'ConfigController@categories');
     });
 
-    
+
     Route::group(['prefix' => 'user'], function () {
         Route::get('/me', 'UserController@me');
         Route::post('/update', 'UserController@update');
@@ -83,7 +83,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'dishes'], function () {
         Route::get('/', 'DishController@getAllList');
         Route::get('/{sub_category_id}', 'DishController@getAllListBySubCategoryId');
-        Route::get('/detail/{id}', 'DishController@detail');
+        Route::get('/detail/{id}', 'DishController@detail')->name('api.dishes.detail');
         Route::get('/menu-categories/{merchant_id}', 'DishController@menuCategories');
         Route::get('/sub-categories/{menu_category_id}', 'DishController@subCategories');
     });
@@ -91,5 +91,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'advertisment'], function () {
         Route::get('/', 'AdvertismentController@getAllList');
         Route::get('/detail/{id}', 'AdvertismentController@detail');
+    });
+
+    Route::group(['prefix' => 'review'], function () {
+        Route::post('/', 'ReviewController@store');
+        Route::get('/detail/{id}', 'ReviewController@detail');
+        Route::post('comment/{id}', 'ReviewController@comment');
+        Route::post('like/{id}', 'ReviewController@like');
     });
 });

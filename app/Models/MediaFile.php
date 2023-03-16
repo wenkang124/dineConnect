@@ -9,9 +9,9 @@ use HighSolutions\EloquentSequence\Sequence;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class MediaFile extends BaseModel
+class MediaFile extends Model
 {
-    use HasFactory, SoftDeletes, Sequence;
+    use HasFactory, SoftDeletes;
 
     const ENTITLABLE_TYPES = [
         "vehicle" => Vehicle::class,

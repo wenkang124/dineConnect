@@ -39,6 +39,7 @@ class DishController extends Controller
     {
 
         $dish = MenuFood::with(['flavours', 'portions'])->where('id', $id)->firstOrFail();
+        $dish->share_url = route('api.dishes.detail', $id);
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
@@ -62,10 +63,10 @@ class DishController extends Controller
     {
         $menu_categories = Merchant::find($merchant_id)->merchantMenuCategories;
         $menu_categories->load([
-            'menuCategory' => function($q){
+            'menuCategory' => function ($q) {
                 $q->where('active', MenuCategory::ACTIVE);
             },
-            'menuSubCategories' => function($q){
+            'menuSubCategories' => function ($q) {
                 $q->where('active', MenuSubCategory::ACTIVE);
             }
         ]);

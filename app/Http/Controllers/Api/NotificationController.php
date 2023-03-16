@@ -14,10 +14,10 @@ class NotificationController extends Controller
 
     public function getAllList(Request $request)
     {
-        $page = $request->get('page') ?? 1;
-        $limit = $request->get('limit') ?? 10;
+        // $page = $request->get('page') ?? 1;
+        // $limit = $request->get('limit') ?? 10;
 
-        $notifications = auth()->user()->notifications()->limit($limit)->offset(($page - 1) * $limit)->get();
+        $notifications = Notification::where('notifiable_type', User::class)->where('notifiable_id', auth()->user()->id)->get();;
 
         return $this->__apiSuccess(
             'Retrieve Successful.',

@@ -138,7 +138,7 @@ trait Helpers
         // ];
     }
 
-    function __sendFirebaseCloudMessagingToken($tokens, $type, $title, $text, $type_id = null, $flag = false, $picture = 1, $unique_id = null, $html = null, bool $silence = false, $sound = null)
+    function __sendFirebaseCloudMessagingToken($tokens, $id, $type, $title, $text, $type_id = null, $flag = false, $picture = 1, $unique_id = null, $html = null, bool $silence = false, $sound = null)
     {
 
         if (!$flag) {
@@ -177,6 +177,7 @@ trait Helpers
         ];
 
         $notification = [
+            'id' => $id,
             'title' => $title,
             "body" => $text
         ];

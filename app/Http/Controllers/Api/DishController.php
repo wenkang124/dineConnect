@@ -49,8 +49,11 @@ class DishController extends Controller
 
     public function getAllListBySubCategoryId(Request $request, $sub_category_id)
     {
-
-        $dishes = MenuSubCategory::find($sub_category_id)->menu_foods()->active()->get();
+        if ($sub_category_id != 0) {
+            $dishes = MenuSubCategory::find($sub_category_id)->menu_foods()->active()->get();
+        } else {
+            $dishes = MenuFood::active()->get();
+        }
 
 
         return $this->__apiSuccess(

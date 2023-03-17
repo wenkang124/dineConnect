@@ -177,12 +177,12 @@ trait Helpers
         ];
 
         $notification = [
-            'id' => $id,
             'title' => $title,
             "body" => $text
         ];
 
         $data = [
+            'id' => $id,
             "$tokenName" => $tokens,
             'data' => $extraNotificationData,
             'notification' => $notification,

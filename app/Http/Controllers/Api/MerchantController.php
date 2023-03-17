@@ -62,6 +62,9 @@ class MerchantController extends Controller
             $merchant->is_open = 1;
         }
 
+        $merchant->share_url = route('api.merchant.detail', $id);
+
+
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $merchant,

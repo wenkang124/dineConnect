@@ -26,7 +26,7 @@ class Merchant extends Model
     const UPLOAD_PATH = 'storage/images/' . self::MODULE . 's';
 
     protected $appends = [
-        'is_favourite',
+        'is_favourite', 'rating'
     ];
 
     public function moods()
@@ -103,5 +103,18 @@ class Merchant extends Model
         }
         // $favourites = UserFavourite::where('user_id', auth()->user()->id)->()->get();
 
+    }
+
+    public function getRatingAttribute()
+    {
+        $total_rating = $this->reviews()->count();
+        $sumRatings = $this->reviews()->sum('rating');
+
+        if ($total_rating > 0) {
+            $average  = $sumRatings / ($total_rating * 5) * 5;
+        } else {
+            $average = 0;
+        }
+        return round($average, 2);
     }
 }

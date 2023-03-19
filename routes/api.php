@@ -65,6 +65,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/{id}/dishes', 'MerchantController@dishes');
         Route::get('/{id}/galleries', 'MerchantController@galleries');
         Route::get('/{id}/ads', 'MerchantController@ads');
+        Route::get('/{id}/reviews', 'MerchantController@reviews');
     });
 
     Route::group(['prefix' => 'notification'], function () {
@@ -96,7 +97,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'review'], function () {
         Route::post('/', 'ReviewController@store');
         Route::get('/detail/{id}', 'ReviewController@detail');
-        Route::post('comment/{id}', 'ReviewController@comment');
-        Route::post('like/{id}', 'ReviewController@like');
+        Route::post('comment', 'ReviewController@comment');
+        Route::post('like', 'ReviewController@like');
     });
 });

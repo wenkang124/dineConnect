@@ -120,4 +120,25 @@ class MerchantController extends Controller
             $ads,
         );
     }
+
+    public function reviews(Request $request, $id)
+    {
+        $reviews = Merchant::find($id)->reviews;
+        $total_rating = $reviews->count();
+
+        $sumRatings = $reviews->sum('rating');
+        $average  = $sumRatings / ($total_rating * 5) * 5;
+        $total_rating = round($average, 2);
+
+        $total_rating = $reviews->avg('rating');
+
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            [
+                'reviews' => $reviews,
+                'total_rating' => $total_rating,
+            ],
+
+        );
+    }
 }

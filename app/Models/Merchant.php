@@ -14,7 +14,7 @@ class Merchant extends Model
     const ACTIVE = 1;
     const INACTIVE = 0;
     const ACTIVE_NAME = 'Active';
-    const INACTIVE_NAME ='Inactive';
+    const INACTIVE_NAME = 'Inactive';
 
     const STATUS_LIST = [
         self::ACTIVE => self::ACTIVE_NAME,
@@ -43,7 +43,7 @@ class Merchant extends Model
     {
         return $this->belongsToMany(Advertisement::class, 'merchant_advertisements')->withTimestamps();
     }
-    
+
     public function menuCategories()
     {
         return $this->belongsToMany(MenuCategory::class, 'merchant_menu_categories')->withTimestamps();
@@ -58,7 +58,7 @@ class Merchant extends Model
     {
         return $this->hasMany(MenuFood::class);
     }
-    
+
     public function merchantGallery()
     {
         return $this->hasMany(MerchantGallery::class);
@@ -74,6 +74,11 @@ class Merchant extends Model
         return $this->morphMany(UserFavourite::class, 'favouritable');
     }
 
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'itemable')->with('comments.likes');
+    }
+
     public function getStatusNameAttribute()
     {
         return self::STATUS_LIST[$this->active] ?? '';
@@ -86,7 +91,7 @@ class Merchant extends Model
 
     public function getImagePathAttribute()
     {
-        return $this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->thumbnail : $this->thumbnail;
+        return $this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail;
     }
 
     public function getIsFavouriteAttribute()

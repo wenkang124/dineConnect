@@ -38,6 +38,11 @@ class Comment extends Model
     {
         return $this->morphTo();
     }
+
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'itemable');
+    }
     
     public function reports()
     {

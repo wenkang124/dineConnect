@@ -14,12 +14,12 @@ class Review extends Model
     const ACTIVE = 1;
     const INACTIVE = 0;
     const ACTIVE_NAME = 'Active';
-    const INACTIVE_NAME ='Inactive';
+    const INACTIVE_NAME = 'Inactive';
 
     const MODULE = "review";
     const IMAGE_ASSET_PATH = 'storage/images/' . self::MODULE . 's';
     const MEDIA_ASSET_PATH = 'storage/media/' . self::MODULE . 's';
-    
+
     const STATUS_LIST = [
         self::ACTIVE => self::ACTIVE_NAME,
         self::INACTIVE => self::INACTIVE_NAME,
@@ -38,12 +38,18 @@ class Review extends Model
     {
         return $this->morphTo();
     }
-    
+
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'itemable');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function reports()
     {
         return $this->morphMany(Report::class, 'itemable')->latest();

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Api\Controller;
-use App\Models\Advertisement;
+use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Review;
-use App\Models\ReviewComment;
-use App\Models\ReviewLike;
 use App\Traits\Helpers;
 use App\Traits\MediaTrait;
 use Illuminate\Http\Request;
@@ -20,7 +19,8 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'merchant_id' => 'required',
+            'type' => 'required',
+            'id' => 'required',
             'message' => 'required',
             'rating' => 'required',
         ]);
@@ -29,28 +29,31 @@ class ReviewController extends Controller
             return $this->__apiFailed($validator->errors()->first(), $validator->errors());
         }
 
+        $model = app()->make('App\Models\\' . $request->type);
+
         $review = new Review();
         $review->user_id = Auth::user()->id;
-        $review->merchant_id = $request->merchant_id;
+        $review->itemable_type  = $model::class;
+        $review->itemable_id   = $request->id;
         $review->message = $request->message;
         $review->rating = $request->rating;
         $review->save();
 
-        foreach ($request->file('images') ?? [] as $image) {
-            $this->upload($image, Review::class);
-            // $file_original_name = $file->getClientOriginalName();
-            // $extension = strtolower($file->getClientOriginalExtension());
-            // $path = Review::UPLOAD_PATH;
-            // $prefix_name = Review::FILE_PREFIX;
-            // $mime_type = $file->getMimeType();
+        // foreach ($request->file('images') ?? [] as $image) {
+        //     $this->upload($image, Review::class);
+        // $file_original_name = $file->getClientOriginalName();
+        // $extension = strtolower($file->getClientOriginalExtension());
+        // $path = Review::UPLOAD_PATH;
+        // $prefix_name = Review::FILE_PREFIX;
+        // $mime_type = $file->getMimeType();
 
-            // $destination_path = app()->make('path.public') . "/" . $path;
+        // $destination_path = app()->make('path.public') . "/" . $path;
 
-            // $new_filename = $prefix_name . time() . '-' . Str::random(5);
-            // $new_filename_with_extension = $new_filename . "." . $extension;
+        // $new_filename = $prefix_name . time() . '-' . Str::random(5);
+        // $new_filename_with_extension = $new_filename . "." . $extension;
 
-            // $upload_success = $file->move($destination_path, $new_filename_with_extension);
-        }
+        // $upload_success = $file->move($destination_path, $new_filename_with_extension);
+        // }
 
         $review->save();
 
@@ -63,29 +66,32 @@ class ReviewController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $review = Review::where('id', $id)->firstOrFail();
-
+        $review = Review::where('id', $id)->with('comments.likes')->firstOrFail();
+        
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $review,
         );
     }
 
-    public function comment(Request $request, $id)
+    public function comment(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'message' => 'required',
+            'type' => 'required',
+            'id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return $this->__apiFailed($validator->errors()->first(), $validator->errors());
         }
 
-        $review = Review::where('id', $id)->firstOrFail();
+        $model = app()->make('App\Models\\' . $request->type);
 
-        $comment = new ReviewComment();
+        $comment = new Comment();
         $comment->user_id = Auth::user()->id;
-        $comment->review_id = $review->id;
+        $comment->itemable_type  = $model::class;
+        $comment->itemable_id   = $request->id;
         $comment->message = $request->message;
         $comment->save();
 
@@ -95,17 +101,30 @@ class ReviewController extends Controller
         );
     }
 
-    public function like(Request $request, $id)
+    public function like(Request $request)
     {
 
-        $review_like = ReviewLike::where('user_id', Auth::user()->id)->where('review_id', $id)->first();
-        if ($review_like) {
-            $review_like->delete();
+        $validator = Validator::make($request->all(), [
+            'type' => 'required',
+            'id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->__apiFailed($validator->errors()->first(), $validator->errors());
+        }
+
+        $model = app()->make('App\Models\\' . $request->type);
+
+        $like = Like::where('user_id', Auth::user()->id)->where('itemable_type', $model::class)->where('itemable_id', $request->id)->first();
+
+        if ($like) {
+            $like->delete();
         } else {
-            $review_like = new ReviewLike();
-            $review_like->user_id = Auth::user()->id;
-            $review_like->review_id = $id;
-            $review_like->save();
+            $like = new Like();
+            $like->user_id = Auth::user()->id;
+            $like->itemable_type  = $model::class;
+            $like->itemable_id   = $request->id;
+            $like->save();
         }
 
         return $this->__apiSuccess(

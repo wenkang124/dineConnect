@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Merchant::class);
+            $table->morphs('itemable');
             $table->longText('message');
             $table->decimal('rating',10,2);
             $table->boolean('active')->default(true);

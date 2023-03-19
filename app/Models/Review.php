@@ -27,15 +27,16 @@ class Review extends Model
 
     protected $fillable = [
         'user_id',
-        'merchant_id',
+        'itemable_type',
+        'itemable_id',
         'message',
         'rating',
         'active'
     ];
 
-    public function merchant()
+    public function itemable()
     {
-        return $this->belongsTo(Merchant::class);
+        return $this->morphTo();
     }
     
     public function user()

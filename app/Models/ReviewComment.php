@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ReviewComment extends Model
+class Comment extends Model
 {
     use HasFactory, SoftDeletes, HasGlobalScope;
 
@@ -23,7 +23,8 @@ class ReviewComment extends Model
 
     protected $fillable = [
         'user_id',
-        'review_id',
+        'itemable_type',
+        'itemable_id',
         'message',
         'active'
     ];
@@ -33,9 +34,9 @@ class ReviewComment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function review()
+    public function itemable()
     {
-        return $this->belongsTo(Review::class);
+        return $this->morphTo();
     }
     
     public function reports()

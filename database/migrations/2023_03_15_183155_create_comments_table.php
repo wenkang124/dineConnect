@@ -15,10 +15,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('review_likes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('comments', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Review::class);
+            $table->morphs('itemable');
+            $table->longText('message');
+            $table->boolean('active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('review_likes');
+        Schema::dropIfExists('review_comments');
     }
 };

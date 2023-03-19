@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ReviewLike extends Model
+class Like extends Model
 {
     use HasFactory, HasGlobalScope;
 
@@ -23,7 +23,8 @@ class ReviewLike extends Model
 
     protected $fillable = [
         'user_id',
-        'review_id'
+        'itemable_type',
+        'itemable_id',
     ];
 
     public function user()
@@ -31,8 +32,8 @@ class ReviewLike extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function review()
+    public function itemable()
     {
-        return $this->belongsTo(Review::class);
+        return $this->morphTo();
     }
 }

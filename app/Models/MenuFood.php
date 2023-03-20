@@ -10,12 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class MenuFood extends Model
 {
     use HasFactory, SoftDeletes, HasGlobalScope;
-     
+
     const ACTIVE = 1;
     const INACTIVE = 0;
     const ACTIVE_NAME = 'Active';
-    const INACTIVE_NAME ='Inactive';
-    
+    const INACTIVE_NAME = 'Inactive';
+
     const STATUS_LIST = [
         self::ACTIVE => self::ACTIVE_NAME,
         self::INACTIVE => self::INACTIVE_NAME,
@@ -35,7 +35,7 @@ class MenuFood extends Model
     ];
 
     protected $appends = [
-        'image_full_path',
+        'image_full_path', 'is_favourite'
     ];
 
     // public function menuCategories()
@@ -46,34 +46,43 @@ class MenuFood extends Model
     {
         return $this->belongsToMany(MenuSubCategory::class, 'menu_food_menu_sub_categories')->withTimestamps();
     }
-    
+
     public function flavours()
     {
         return $this->hasMany(MenuFoodFlavour::class);
     }
-    
+
     public function portions()
     {
         return $this->hasMany(MenuFoodPortion::class);
     }
-    
+
     public function getCreatedAtYmdHiaAttribute()
     {
         return date('Y-m-d H:i A', strtotime($this->created_at));
     }
-    
+
     public function getImagePathAttribute()
     {
-        return $this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->thumbnail : $this->thumbnail;
+        return $this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail;
     }
 
     public function getImageFullPathAttribute()
     {
-        return asset($this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->thumbnail : $this->thumbnail);
+        return asset($this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail);
     }
 
     public function getStatusNameAttribute()
     {
         return self::STATUS_LIST[$this->active] ?? '';
+    }
+
+    public function getIsFavouriteAttribute()
+    {
+        if (get_class(auth()->user()) === User::class) {
+            return auth()->user()->favourites()->where('favouritable_type', MenuFood::class)->where('favouritable_id', $this->id)->get()->count() > 0 ? true : false;
+        } else {
+            return 0;
+        }
     }
 }

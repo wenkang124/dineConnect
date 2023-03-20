@@ -97,6 +97,11 @@ class User extends Authenticatable
         return $this->hasMany(UserSearch::class);
     }
 
+    public function favourites()
+    {
+        return $this->hasMany(UserFavourite::class);
+    }
+
     /** Get Attribute */
     public function getStatusNameAttribute()
     {

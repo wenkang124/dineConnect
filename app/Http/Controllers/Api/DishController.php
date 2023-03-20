@@ -9,6 +9,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Category;
 use App\Models\MenuCategory;
 use App\Models\MenuFood;
+use App\Models\MenuFoodMenuCategory;
 use App\Models\MenuSubCategory;
 use App\Models\Merchant;
 use App\Models\Mood;
@@ -47,12 +48,35 @@ class DishController extends Controller
         );
     }
 
-    public function getAllListBySubCategoryId(Request $request, $sub_category_id)
+    public function getAllListBySubCategoryId(Request $request, $sub_category_id, $merchant_id = null, $merchant_menu_category_id = null)
     {
-        if ($sub_category_id != 0) {
-            $dishes = MenuSubCategory::find($sub_category_id)->menu_foods()->active()->get();
+        if ($sub_category_id == 0 && $merchant_id) {
+
+            $dishes = [];
+
+            $menu_categories = Merchant::find($merchant_id)->merchantMenuCategories()->where('id', 19)->get();
+
+            $menu_categories->load([
+                'menuCategory' => function ($q) {
+                    $q->where('active', MenuCategory::ACTIVE);
+                },
+                'menuSubCategories' => function ($q) {
+                    $q->where('active', MenuSubCategory::ACTIVE);
+                }
+            ]);
+
+            foreach ($menu_categories as $menu_category) {
+                foreach ($menu_category->menuSubCategories as $sub_category) {
+                    foreach ($sub_category->menu_foods as $menu_food) {
+                        array_push($dishes, $menu_food);
+                    }
+                }
+            }
+
+            return $dishes;
         } else {
-            $dishes = MenuFood::active()->get();
+
+            $dishes = MenuSubCategory::find($sub_category_id)->menu_foods()->active()->get();
         }
 
 

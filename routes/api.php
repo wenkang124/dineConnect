@@ -83,7 +83,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'dishes'], function () {
         Route::get('/', 'DishController@getAllList');
-        Route::get('/{sub_category_id}', 'DishController@getAllListBySubCategoryId');
+        Route::get('/{sub_category_id}/merchant_id/{merchant_id?}/merchant_menu_category_id/{merchant_menu_category_id?}', 'DishController@getAllListBySubCategoryId');
         Route::get('/detail/{id}', 'DishController@detail')->name('api.dishes.detail');
         Route::get('/menu-categories/{merchant_id}', 'DishController@menuCategories');
         Route::get('/sub-categories/{menu_category_id}', 'DishController@subCategories');

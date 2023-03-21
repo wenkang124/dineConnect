@@ -39,8 +39,10 @@ class ReviewController extends Controller
         $review->rating = $request->rating;
         $review->save();
 
-        foreach ($request->file('images') as $image) {
-            $this->upload($image, $review);
+        if (!empty($request->file('images'))) {
+            foreach ($request->file('images') as $image) {
+                $this->upload($image, $review);
+            }
         }
 
         $review->save();

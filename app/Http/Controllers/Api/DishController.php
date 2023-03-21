@@ -72,8 +72,6 @@ class DishController extends Controller
                     }
                 }
             }
-
-            return $dishes;
         } else {
 
             $dishes = MenuSubCategory::find($sub_category_id)->menu_foods()->active()->get();

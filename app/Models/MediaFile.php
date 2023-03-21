@@ -146,7 +146,7 @@ class MediaFile extends Model
 
     public function getFullPathAttribute()
     {
-        return asset($this->og_path);
+        return storage_path($this->og_path);
     }
 
     public function remove()

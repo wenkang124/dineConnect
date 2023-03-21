@@ -17,8 +17,8 @@ class Review extends Model
     const INACTIVE_NAME = 'Inactive';
 
     const MODULE = "review";
-    const IMAGE_ASSET_PATH = 'images/' . self::MODULE . 's';
-    const MEDIA_ASSET_PATH = 'media/' . self::MODULE . 's';
+    const IMAGE_ASSET_PATH = 'storage/images/' . self::MODULE . 's';
+    const MEDIA_ASSET_PATH = 'storage/media/' . self::MODULE . 's';
 
     const STATUS_LIST = [
         self::ACTIVE => self::ACTIVE_NAME,

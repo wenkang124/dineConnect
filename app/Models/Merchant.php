@@ -76,7 +76,7 @@ class Merchant extends Model
 
     public function reviews()
     {
-        return $this->morphMany(Review::class, 'itemable')->with(['comments.likes', 'images', 'likes']);
+        return $this->morphMany(Review::class, 'itemable')->with(['comments.likes', 'images', 'likes', 'user','comments.user']);
     }
 
     public function getStatusNameAttribute()

@@ -67,7 +67,7 @@ trait Helpers
             $extension = str_replace("image/", '', $ofile->mime());
             $directory = str_replace('storage', 'public', $path);
             if (!$this->__directoryExist(storage_path(), $directory)) {
-                Storage::makeDirectory($directory);
+                Storage::makeDirectory($directory, 0777, true, true);
             }
 
             $ofile->save(public_path($path . $file_name . '.' . $extension), 100);

@@ -52,7 +52,7 @@ trait MediaTrait
             $folder = public_path("../public/$path");
 
             if (!File::exists($folder)) {
-                File::makeDirectory($folder, 0775, true, true);
+                File::makeDirectory($folder, 0777, true, true);
             }
         }
     }

@@ -14,8 +14,8 @@ class Comment extends Model
     const ACTIVE = 1;
     const INACTIVE = 0;
     const ACTIVE_NAME = 'Active';
-    const INACTIVE_NAME ='Inactive';
-    
+    const INACTIVE_NAME = 'Inactive';
+
     const STATUS_LIST = [
         self::ACTIVE => self::ACTIVE_NAME,
         self::INACTIVE => self::INACTIVE_NAME,
@@ -28,6 +28,11 @@ class Comment extends Model
         'message',
         'active'
     ];
+
+    protected $appends = [
+        'display_date'
+    ];
+
 
     public function user()
     {
@@ -43,9 +48,14 @@ class Comment extends Model
     {
         return $this->morphMany(Like::class, 'itemable');
     }
-    
+
     public function reports()
     {
         return $this->morphMany(Report::class, 'itemable')->latest();
+    }
+
+    public function getDisplayDateAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 }

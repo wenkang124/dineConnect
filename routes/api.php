@@ -100,4 +100,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('comment', 'ReviewController@comment');
         Route::post('like', 'ReviewController@like');
     });
+
+    Route::group(['prefix' => 'report'], function () {
+        Route::post('/', 'ReportController@store');
+        Route::get('/reason', 'ReportController@getReportReason');
+    });
 });

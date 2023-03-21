@@ -14,8 +14,8 @@ class Like extends Model
     const ACTIVE = 1;
     const INACTIVE = 0;
     const ACTIVE_NAME = 'Active';
-    const INACTIVE_NAME ='Inactive';
-    
+    const INACTIVE_NAME = 'Inactive';
+
     const STATUS_LIST = [
         self::ACTIVE => self::ACTIVE_NAME,
         self::INACTIVE => self::INACTIVE_NAME,
@@ -27,6 +27,10 @@ class Like extends Model
         'itemable_id',
     ];
 
+    protected $appends = [
+        'display_date'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -35,5 +39,10 @@ class Like extends Model
     public function itemable()
     {
         return $this->morphTo();
+    }
+
+    public function getDisplayDateAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 }

@@ -18,6 +18,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use function GuzzleHttp\Promise\all;
+
 class MerchantController extends Controller
 {
     use Helpers;
@@ -123,7 +125,9 @@ class MerchantController extends Controller
 
     public function reviews(Request $request, $id)
     {
-        $reviews = Merchant::find($id)->reviews;
+        $reviews = Merchant::find($id)->reviews()->when($request->get('limit'), function ($query) use ($request) {
+            $query->limit($request->get('limit'));
+        })->get();
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $reviews,

@@ -30,6 +30,10 @@ class MediaFile extends Model
         'zone',
     ];
 
+    protected $appends = [
+        'full_path',
+    ];
+
     public function sequence()
     {
         return [
@@ -65,13 +69,13 @@ class MediaFile extends Model
     {
         // dd($this->path,);
         $filesystemDisk = env('FILESYSTEM_DISK');
-        
+
         switch ($filesystemDisk) {
             case 's3':
                 // No longer using publicly accessible S3 links, instead using temporary URLs
                 // with credentials from AWS keys
                 // $imageUrl = env('AWS_URL') . "/" . urlencode($imageRelPath);
-                $assetPath = Storage::disk('s3')->temporaryUrl( str_replace('{type}', 'og',$this->path), now()->addMinutes(5));
+                $assetPath = Storage::disk('s3')->temporaryUrl(str_replace('{type}', 'og', $this->path), now()->addMinutes(5));
                 break;
             case 'public':
                 $assetPath = Storage::url("$this->path");
@@ -86,13 +90,13 @@ class MediaFile extends Model
     public function getFsPathAttribute()
     {
         $filesystemDisk = env('FILESYSTEM_DISK');
-        
+
         switch ($filesystemDisk) {
             case 's3':
                 // No longer using publicly accessible S3 links, instead using temporary URLs
                 // with credentials from AWS keys
                 // $imageUrl = env('AWS_URL') . "/" . urlencode($imageRelPath);
-                $assetPath = Storage::disk('s3')->temporaryUrl( str_replace('{type}', 'fs',$this->path), now()->addMinutes(5));
+                $assetPath = Storage::disk('s3')->temporaryUrl(str_replace('{type}', 'fs', $this->path), now()->addMinutes(5));
                 break;
             case 'public':
                 $assetPath = Storage::url("$this->path");
@@ -107,13 +111,13 @@ class MediaFile extends Model
     public function getTnPathAttribute()
     {
         $filesystemDisk = env('FILESYSTEM_DISK');
-        
+
         switch ($filesystemDisk) {
             case 's3':
                 // No longer using publicly accessible S3 links, instead using temporary URLs
                 // with credentials from AWS keys
                 // $imageUrl = env('AWS_URL') . "/" . urlencode($imageRelPath);
-                $assetPath = Storage::disk('s3')->temporaryUrl( str_replace('{type}', 'fs',$this->path), now()->addMinutes(5));
+                $assetPath = Storage::disk('s3')->temporaryUrl(str_replace('{type}', 'fs', $this->path), now()->addMinutes(5));
                 break;
             case 'public':
                 $assetPath = Storage::url("$this->path");
@@ -140,12 +144,16 @@ class MediaFile extends Model
         return $this->is_image_file ? str_replace('{type}', 'fs', $this->path) : $this->path;
     }
 
+    public function getFullPathAttribute()
+    {
+        return asset($this->og_path);
+    }
+
     public function remove()
     {
         $this->delete();
         Storage::delete($this->raw_og_path);
         Storage::delete($this->raw_fs_path);
         Storage::delete($this->raw_tn_path);
-
     }
 }

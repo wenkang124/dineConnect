@@ -17,8 +17,8 @@ class Review extends Model
     const INACTIVE_NAME = 'Inactive';
 
     const MODULE = "review";
-    const IMAGE_ASSET_PATH = 'storage/images/' . self::MODULE . 's';
-    const MEDIA_ASSET_PATH = 'storage/media/' . self::MODULE . 's';
+    const IMAGE_ASSET_PATH = 'images/' . self::MODULE . 's';
+    const MEDIA_ASSET_PATH = 'media/' . self::MODULE . 's';
 
     const STATUS_LIST = [
         self::ACTIVE => self::ACTIVE_NAME,
@@ -34,11 +34,24 @@ class Review extends Model
         'active'
     ];
 
+    protected $appends = [
+        'total_likes', 'is_liked', 'display_date'
+    ];
+
     public function itemable()
     {
         return $this->morphTo();
     }
 
+    public function images()
+    {
+        return $this->morphMany(MediaFile::class, 'fileable');
+    }
+
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'itemable');
+    }
 
     public function comments()
     {
@@ -58,5 +71,25 @@ class Review extends Model
     public function getStatusNameAttribute()
     {
         return self::STATUS_LIST[$this->active] ?? '';
+    }
+
+
+    public function getTotalLikesAttribute()
+    {
+        return $this->likes()->count();
+    }
+
+    public function getIsLikedAttribute()
+    {
+        if ($this->likes()->where('user_id', auth()->user()->id)->get()->count() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getDisplayDateAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 }

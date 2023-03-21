@@ -39,21 +39,9 @@ class ReviewController extends Controller
         $review->rating = $request->rating;
         $review->save();
 
-        // foreach ($request->file('images') ?? [] as $image) {
-        //     $this->upload($image, Review::class);
-        // $file_original_name = $file->getClientOriginalName();
-        // $extension = strtolower($file->getClientOriginalExtension());
-        // $path = Review::UPLOAD_PATH;
-        // $prefix_name = Review::FILE_PREFIX;
-        // $mime_type = $file->getMimeType();
-
-        // $destination_path = app()->make('path.public') . "/" . $path;
-
-        // $new_filename = $prefix_name . time() . '-' . Str::random(5);
-        // $new_filename_with_extension = $new_filename . "." . $extension;
-
-        // $upload_success = $file->move($destination_path, $new_filename_with_extension);
-        // }
+        foreach ($request->file('images') as $image) {
+            $this->upload($image, $review);
+        }
 
         $review->save();
 
@@ -67,7 +55,7 @@ class ReviewController extends Controller
     public function detail(Request $request, $id)
     {
         $review = Review::where('id', $id)->with('comments.likes')->firstOrFail();
-        
+
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $review,

@@ -200,7 +200,7 @@ class UserController extends Controller
             DB::rollback();
             return response()->json(['errors' => [
                 'error' => true,
-                'message' => 'Failed to create. '.$e->getMessage(),
+                'message' => 'Failed to update. '.$e->getMessage(),
             ]]);
         } 
     }

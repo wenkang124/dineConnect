@@ -26,7 +26,7 @@ class Merchant extends Model
     const UPLOAD_PATH = 'storage/images/' . self::MODULE . 's';
 
     protected $appends = [
-        'is_favourite', 'rating'
+        'is_favourite', 'rating', 'image_full_path'
     ];
 
     public function moods()
@@ -92,6 +92,11 @@ class Merchant extends Model
     public function getImagePathAttribute()
     {
         return $this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail;
+    }
+
+    public function getImageFullPathAttribute()
+    {
+        return asset($this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail);
     }
 
     public function getIsFavouriteAttribute()

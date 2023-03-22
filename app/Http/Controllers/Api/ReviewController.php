@@ -56,7 +56,7 @@ class ReviewController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $review = Review::where('id', $id)->with('comments.likes')->firstOrFail();
+        $review = Review::where('id', $id)->with(['comments.likes', 'images', 'likes', 'user', 'comments.user'])->firstOrFail();
 
         return $this->__apiSuccess(
             'Retrieve Successful.',

@@ -35,10 +35,10 @@ class SearchController extends Controller
 
         $mechants = Merchant::when($request->get('distance') > 0 && $request->get('lat') && $request->get('lng'), function ($query) use ($request) {
             $query->select(DB::raw("*, ( 3959 * acos( cos( radians(" . $request->get('lat') . ") ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(" . $request->lng . ") ) + sin( radians(" . $request->lat . ") ) * sin( radians( lat ) ) ) ) AS distance"))->havingRaw('distance < ' . $request->distance)->orderBy('distance');
-        })->when($request->get('price_range')[1] > 0, function ($query) use ($request) {
+        })->when($request->get('price_range[1]') > 0, function ($query) use ($request) {
             $query->whereHas('menuFoods', function ($query2) use ($request) {
                 $query2->select('*', DB::raw('MAX(price) as max_price'))
-                    ->havingRaw('max_price BETWEEN ' . $request->get('price_range')[0] . ' AND ' . $request->get('price_range')[1]);
+                    ->havingRaw('max_price BETWEEN ' . $request->get('price_range[0]') . ' AND ' . $request->get('price_range[1]'));
             });
         })->when($request->get('mood_id'), function ($query) use ($request) {
             $query->whereHas('moods', function ($query2) use ($request) {

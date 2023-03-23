@@ -154,8 +154,7 @@ class UserController extends Controller
 
         $favourites = UserFavourite::where('user_id', $request->user()->id)->with('favouritable')->get();
         return $this->__apiSuccess(
-            'Submit Successful.',
-            $favourites
+            'Submit Successful.'
         );
     }
 

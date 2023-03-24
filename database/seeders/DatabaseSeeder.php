@@ -16,18 +16,18 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminTableSeeder::class,
-            UserTableSeeder::class,
-            PreferenceTableSeeder::class,
-            BannerTableSeeder::class,
+            // UserTableSeeder::class,
+            // PreferenceTableSeeder::class,
+            // BannerTableSeeder::class,
             CategoryTableSeeder::class,
-            MoodTableSeeder::class,
-            MerchantTableSeeder::class,
-            UserSearchTableSeeder::class,
+            // MoodTableSeeder::class,
+            // MerchantTableSeeder::class,
+            // UserSearchTableSeeder::class,
             CountryTableSeeder::class,
             MerchantCategoryTableSeeder::class,
             MenuCategoryTableSeeder::class,
-            MerchantMenuCategoryTableSeeder::class,
-            MerchantMoodTableSeeder::class,
+            // MerchantMenuCategoryTableSeeder::class,
+            // MerchantMoodTableSeeder::class,
             FilterOptionTableSeeder::class,
             ReportReasonTableSeeder::class
         ]);

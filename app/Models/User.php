@@ -84,7 +84,7 @@ class User extends Authenticatable
 
     public function preferences()
     {
-        return $this->belongsToMany(Preference::class, 'user_preferences');
+        return $this->belongsToMany(Category::class, 'user_preferences', 'user_id','preference_id');
     }
 
     public function prefixNumber()

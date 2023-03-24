@@ -55,6 +55,6 @@ class Banner extends Model
 
     public function getImageFullPathAttribute()
     {
-        return $this->image && $this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . asset($this->image) : $this->image;
+        return asset($this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->image : $this->image);
     }
 }

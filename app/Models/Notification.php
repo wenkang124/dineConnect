@@ -28,7 +28,13 @@ class Notification extends Model
     /** Relation */
     public function notifiable()
     {
-        return $this->morphTo();
+        $morth = $this->morphTo();
+
+        try {
+            return $morth->withTrashed();
+        } catch (\Exception $e) {
+            return $morth;
+        }
     }
 
 

@@ -113,7 +113,7 @@ class User extends Authenticatable
     }
     public function getImageAttribute()
     {
-        return asset($this->profile_image);
+        return empty($this->profile_image) ? null : asset($this->profile_image);
     }
 
 

@@ -16,7 +16,7 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'image' => asset($this->image),
+            'image' => $this->image,
             'name' => $this->name,
             'email' => $this->email,
             'occupation' => $this->occupation,

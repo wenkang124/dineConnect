@@ -35,7 +35,7 @@ class Review extends Model
     ];
 
     protected $appends = [
-        'total_likes', 'is_liked', 'display_date'
+        'user_name', 'total_likes', 'is_liked', 'display_date'
     ];
 
     public function itemable()
@@ -62,10 +62,20 @@ class Review extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function merchant()
+    {
+        return $this->belongsTo(Merchant::class);
+    }
 
     public function reports()
     {
         return $this->morphMany(Report::class, 'itemable')->latest();
+    }
+
+    public function getUserNameAttribute()
+    {
+        return $this->user? $this->user->name : '';
     }
 
     public function getStatusNameAttribute()
@@ -91,5 +101,9 @@ class Review extends Model
     public function getDisplayDateAttribute()
     {
         return $this->created_at->diffForHumans();
+    }
+    public function getCreatedAtYmdHiaAttribute()
+    {
+        return date('Y-m-d H:i A', strtotime($this->created_at));
     }
 }

@@ -27,6 +27,10 @@ class Category extends Model
         'active',
     ];
 
+    const FILE_PREFIX = "category";
+    const MODULE = "category";
+    const UPLOAD_PATH = 'storage/images/' . self::MODULE . 's';
+
     protected $appends = [
         'image_full_path',
     ];
@@ -37,11 +41,20 @@ class Category extends Model
         return $this->belongsToMany(Merchant::class, 'merchant_categories');
     }
 
+    public function getCreatedAtYmdHiaAttribute()
+    {
+        return date('Y-m-d H:i A', strtotime($this->created_at));
+    }
+
     public function getStatusNameAttribute()
     {
         return self::STATUS_LIST[$this->active] ?? '';
     }
 
+    public function getImagePathAttribute()
+    {
+        return $this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->image : $this->image;
+    }
 
     public function getImageFullPathAttribute()
     {

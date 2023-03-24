@@ -51,6 +51,7 @@ class MerchantController extends Controller
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="'.route('admin.menu_sub_categories.index', ['merchant_id'=> $item->id]).'">Dishes Management</a>
                                     <a class="dropdown-item" href="'.route('admin.merchant_galleries.index', ['merchant_id'=> $item->id]).'">Galleries Management</a>
+                                    <a class="dropdown-item" href="'.route('admin.merchant_reviews.index', ['merchant_id'=> $item->id]).'">Reviews Management</a>
                                 </div>
                             </div>';
                 })

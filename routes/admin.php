@@ -87,6 +87,39 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/{merchant_id}/{item}', [App\Http\Controllers\Admin\MerchantGalleryController::class, 'show'])->name('show');
     });
 
+
+    Route::prefix('merchant_reviews')->name('merchant_reviews.')->group(function () {
+        Route::get('/{merchant_id}', [App\Http\Controllers\Admin\MerchantReviewController::class, 'index'])->name('index');
+        Route::get('/{merchant_id}/datatable', [App\Http\Controllers\Admin\MerchantReviewController::class, 'dataTable'])->name('datatable');
+        Route::post('/delete/{review}', [App\Http\Controllers\Admin\MerchantReviewController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{merchant_id}/{item}', [App\Http\Controllers\Admin\MerchantReviewController::class, 'show'])->name('show');
+    });
+    
+    Route::prefix('merchant_categories')->name('merchants.categories.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('index');
+        Route::get('/datatable', [App\Http\Controllers\Admin\CategoryController::class, 'dataTable'])->name('datatable');
+        Route::get('/create', [App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('store');
+        Route::get('/edit/{item}', [App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('edit');
+        Route::post('/update/{item}', [App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('update');
+        Route::post('/delete/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{item}', [App\Http\Controllers\Admin\CategoryController::class, 'show'])->name('show');
+    });
+
+    Route::prefix('merchant_moods')->name('merchants.moods.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\MoodController::class, 'index'])->name('index');
+        Route::get('/datatable', [App\Http\Controllers\Admin\MoodController::class, 'dataTable'])->name('datatable');
+        Route::get('/create', [App\Http\Controllers\Admin\MoodController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\Admin\MoodController::class, 'store'])->name('store');
+        Route::get('/edit/{item}', [App\Http\Controllers\Admin\MoodController::class, 'edit'])->name('edit');
+        Route::post('/update/{item}', [App\Http\Controllers\Admin\MoodController::class, 'update'])->name('update');
+        Route::post('/delete/{mood}', [App\Http\Controllers\Admin\MoodController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{item}', [App\Http\Controllers\Admin\MoodController::class, 'show'])->name('show');
+    });
+
     Route::prefix('banners')->name('banners.')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\BannerController::class, 'index'])->name('index');
         Route::get('/datatable', [App\Http\Controllers\Admin\BannerController::class, 'dataTable'])->name('datatable');

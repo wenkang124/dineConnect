@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Country;
-use App\Models\Category;
+use App\Models\Mood;
 use App\Models\Merchant;
 use App\Traits\MediaTrait;
 use Illuminate\Http\Request;
@@ -13,18 +13,18 @@ use Illuminate\Support\Str;
 use Yajra\Datatables\Datatables;
 use Image;
 
-class CategoryController extends Controller
+class MoodController extends Controller
 {
     use MediaTrait;
     
     public function index()
     {
-        return view('admin.merchants.categories.index');
+        return view('admin.merchants.moods.index');
     }
 
     public function dataTable()
     {
-        $items = Category::query();
+        $items = Mood::query();
 
         return Datatables::of($items)
                 ->editColumn('image', function ($item) {
@@ -37,22 +37,22 @@ class CategoryController extends Controller
                     return $item->created_at_ymd_hia;
                 })
                 ->addColumn('actions', function ($item) {
-                    return '<a href="'.route('admin.merchants.categories.show', [$item]).'" class="btn btn-xs btn-primary mx-1"><i class="fa fa-eye"></i></a>
-                            <a href="'.route('admin.merchants.categories.edit', [$item]).'" class="btn btn-xs btn-warning mx-1"><i class="fa fa-edit"></i></a>
-                            <a href="'.route('admin.merchants.categories.destroy', ['category'=>$item]).'" class="btn btn-xs btn-danger mx-1 delete-btn" data-confirm="Are you sure you want to delete this category?" data-redirect="'.route('admin.merchants.categories.index').'"><i class="fa fa-trash"></i></a>';
+                    return '<a href="'.route('admin.merchants.moods.show', [$item]).'" class="btn btn-xs btn-primary mx-1"><i class="fa fa-eye"></i></a>
+                            <a href="'.route('admin.merchants.moods.edit', [$item]).'" class="btn btn-xs btn-warning mx-1"><i class="fa fa-edit"></i></a>
+                            <a href="'.route('admin.merchants.moods.destroy', ['mood'=>$item]).'" class="btn btn-xs btn-danger mx-1 delete-btn" data-confirm="Are you sure you want to delete this mood?" data-redirect="'.route('admin.merchants.moods.index').'"><i class="fa fa-trash"></i></a>';
                 })
                 ->rawColumns(['image','actions'])
                 ->make(true);
     }
 
-    public function show(Category $item) {
+    public function show(Mood $item) {
         $merchants = Merchant::where('active', 1)->get();
-        return view('admin.merchants.categories.show', compact('item', 'merchants'));
+        return view('admin.merchants.moods.show', compact('item', 'merchants'));
     }
 
     public function create() {
         $merchants = Merchant::where('active', 1)->get();
-        return view('admin.merchants.categories.create', compact('merchants'));
+        return view('admin.merchants.moods.create', compact('merchants'));
     }
 
     public function store(Request $request) {
@@ -67,7 +67,7 @@ class CategoryController extends Controller
 
         try {
 
-            $item = new Category();
+            $item = new Mood();
 
             $item->name = $request->get('name');
             $item->active = $request->get('active');
@@ -76,8 +76,8 @@ class CategoryController extends Controller
                 $file = $request->file('image');
                 $file_original_name = $file->getClientOriginalName();
                 $extension = strtolower($file->getClientOriginalExtension());
-                $path = Category::UPLOAD_PATH;
-                $prefix_name = Category::FILE_PREFIX;
+                $path = Mood::UPLOAD_PATH;
+                $prefix_name = Mood::FILE_PREFIX;
                 $mime_type = $file->getMimeType();
 
                 $destination_path = app()->make('path.public') . "/" . $path;
@@ -103,7 +103,7 @@ class CategoryController extends Controller
             $item->merchants()->sync($merchant_ids);
 
             DB::commit();
-            Session::flash("success", "New Merchant Category successfully created.");
+            Session::flash("success", "New Merchant Mood successfully created.");
 
             return redirect()->back();
 
@@ -117,12 +117,12 @@ class CategoryController extends Controller
     }
 
     
-    public function edit(Category $item) {
+    public function edit(Mood $item) {
         $merchants = Merchant::where('active', 1)->get();
-        return view('admin.merchants.categories.edit', compact('item', 'merchants'));
+        return view('admin.merchants.moods.edit', compact('item', 'merchants'));
     }
 
-    public function update(Category $item, Request $request) {
+    public function update(Mood $item, Request $request) {
         $this->validate($request, [
             'name' => 'required',
             'image' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp',
@@ -143,8 +143,8 @@ class CategoryController extends Controller
                 $file = $request->file('image');
                 $file_original_name = $file->getClientOriginalName();
                 $extension = strtolower($file->getClientOriginalExtension());
-                $path = Category::UPLOAD_PATH;
-                $prefix_name = Category::FILE_PREFIX;
+                $path = Mood::UPLOAD_PATH;
+                $prefix_name = Mood::FILE_PREFIX;
                 $mime_type = $file->getMimeType();
 
                 $destination_path = app()->make('path.public') . "/" . $path;
@@ -173,7 +173,7 @@ class CategoryController extends Controller
             $item->merchants()->sync($merchant_ids);
 
             DB::commit();
-            Session::flash("success", "Category details successfully updated.");
+            Session::flash("success", "Mood details successfully updated.");
 
             return redirect()->back();
 
@@ -186,15 +186,15 @@ class CategoryController extends Controller
         } 
     }
 
-    public function destroy(Category $category) {
+    public function destroy(Mood $mood) {
         //
-        if(empty($category)){
-            return response()->json(['success' => false, 'message' => 'Category not found.']);
+        if(empty($mood)){
+            return response()->json(['success' => false, 'message' => 'Mood not found.']);
         }
  
-        $category->delete();
+        $mood->delete();
  
-        Session::flash("success", "Category has been successfully deleted.");
+        Session::flash("success", "Mood has been successfully deleted.");
  
         return response()->json(['success' => true]);
     }

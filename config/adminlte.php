@@ -308,9 +308,22 @@ return [
         ],
         ['header' => 'General Management'],
         [
-            'text' => 'Merchants',
-            'url'  => 'merchants',
-            'icon' => 'fas fa-fw fa-store pr-2'
+            'text' => 'Merchants Management',
+            'icon' => 'fas fa-fw fa-store pr-2',
+            'submenu' => [
+                [
+                    'text' => 'Merchants',
+                    'url'  => 'merchants',
+                ],
+                [
+                    'text' => 'Categories',
+                    'url'  => 'merchant_categories',
+                ],
+                [
+                    'text' => 'Moods',
+                    'url'  => 'merchant_moods',
+                ],
+            ]
         ],
         [
             'text' => 'Banners',

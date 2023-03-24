@@ -1,26 +1,5 @@
 
-@if(!$readonly)
-<div class="col-lg-4 col-md-6 col-12">
-    <div class="box">
-        <div class="js--image-preview" style="background-image: url('{{ $item->image_path ?? '/images/img-800x500.jpg' }}')"></div>
-        <div class="upload-options">
-          <label>
-            <input type="file" name="image" class="image-upload" accept="image/*" />
-          </label>
-        </div>
-    </div>
-</div>
-@else
-<div class="col-lg-12 col-md-12 col-12 mb-5">
-    <label for="image" class="moto-widget-contact_form-label">Uploaded Images</label>
-    <div class="row">
-        @foreach($item->images as $image)
-        <div class="col-lg-auto col-md-auto col-12">
-            <img src="{{ asset($image->tn_path) }}" class="w-auto" height="200" />
-        </div>
-        @endforeach
-    </div>
-</div>
+@if($readonly)
 <div class="col-lg-6">
     <div class="form-group">
         <label for="user_name" class="moto-widget-contact_form-label">User</label>
@@ -29,10 +8,18 @@
 </div>
 <div class="col-lg-6">
     <div class="form-group">
-        <label for="rating" class="moto-widget-contact_form-label">Rating <i class="fa fa-star pl-2 text-warning" aria-hidden="true"></i></label>
-        <input type="number" min="1" step="1" name="rating" class="form-control" value="{{ old('rating',$item->rating??"") }}" {{ $readonly??'' }} required autocomplete="nope">
+        <label for="active" class="moto-widget-contact_form-label">Status <span class="red">*</span></label>
+        @if(!$readonly)
+        <select name="active" required class="form-control w-100" >
+            @foreach(App\Models\Comment::STATUS_LIST as $key => $status)
+            <option value="{{ $key }}" {{ old('active',$item->active??"") == $key ? 'selected' : '' }}>{{ $status }}</option>
+            @endforeach
+        </select>
+        @else
+        <input type="text" name="active" required="" class="form-control" value="{{ $item->status_name }}" {{ $readonly??'' }}>
+        @endif
     </div>
-</div> 
+</div>
 <div class="col-lg-6">
     <div class="form-group">
         <label for="total_likes" class="moto-widget-contact_form-label">Total Likes <i class="fa fa-heart pl-2 text-danger" aria-hidden="true"></i></label>
@@ -47,25 +34,11 @@
 </div> 
 <div class="col-lg-12">
     <div class="form-group">
-        <label for="message" class="moto-widget-contact_form-label">Review <i class="fa fa-comment pl-2 text-secondary" aria-hidden="true"></i></label>
+        <label for="message" class="moto-widget-contact_form-label">Message <i class="fa fa-comment pl-2 text-secondary" aria-hidden="true"></i></label>
         <textarea name="message" class="form-control" {{ $readonly??'' }} required>{{ old('message',$item->message??"") }}</textarea>
     </div>
 </div>
 @endif
-<div class="col-lg-6">
-    <div class="form-group">
-        <label for="active" class="moto-widget-contact_form-label">Status <span class="red">*</span></label>
-        @if(!$readonly)
-        <select name="active" required class="form-control w-100" >
-            @foreach(App\Models\Review::STATUS_LIST as $key => $status)
-            <option value="{{ $key }}" {{ old('active',$item->active??"") == $key ? 'selected' : '' }}>{{ $status }}</option>
-            @endforeach
-        </select>
-        @else
-        <input type="text" name="active" required="" class="form-control" value="{{ $item->status_name }}" {{ $readonly??'' }}>
-        @endif
-    </div>
-</div>
 @if($readonly)
 <div class="col-lg-6">
     <div class="form-group">

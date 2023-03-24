@@ -42,8 +42,9 @@
                                             <th>Created At</th>
                                             <th>User</th>
                                             <th>Review</th>
-                                            <th>Rating</th>
-                                            <th>Total Likes</th>
+                                            <th>Rating <i class="fa fa-star pl-2 text-warning" aria-hidden="true"></i></th>
+                                            <th>Total Likes <i class="fa fa-heart pl-2 text-danger" aria-hidden="true"></i></th>
+                                            <th>Total Reports <i class="fa fa-exclamation-triangle pl-2 text-danger" aria-hidden="true"></i></th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -85,6 +86,7 @@
             { data: 'message', name: 'message' },
             { data: 'rating', name: 'rating' },
             { data: 'total_likes', name: 'total_likes' },
+            { data: 'total_reports', name: 'total_reports' },
             { data: 'active', name: 'active',
                 render: function(row){
                     return row? row : '-'

@@ -35,7 +35,7 @@ class Review extends Model
     ];
 
     protected $appends = [
-        'user_name', 'total_likes', 'is_liked', 'display_date'
+        'user_name', 'total_likes', 'total_reports', 'is_liked', 'display_date'
     ];
 
     public function itemable()
@@ -87,6 +87,11 @@ class Review extends Model
     public function getTotalLikesAttribute()
     {
         return $this->likes()->count();
+    }
+    
+    public function getTotalReportsAttribute()
+    {
+        return $this->reports()->count();
     }
 
     public function getIsLikedAttribute()

@@ -306,25 +306,23 @@ return [
             'url'  => 'users',
             'icon' => 'fas fa-fw fa-user',
         ],
-        ['header' => 'General Management'],
+        ['header' => 'Merchant Management'],
         [
-            'text' => 'Merchants Management',
-            'icon' => 'fas fa-fw fa-store pr-2',
-            'submenu' => [
-                [
-                    'text' => 'Merchants',
-                    'url'  => 'merchants',
-                ],
-                [
-                    'text' => 'Categories',
-                    'url'  => 'merchant_categories',
-                ],
-                [
-                    'text' => 'Moods',
-                    'url'  => 'merchant_moods',
-                ],
-            ]
+            'text' => 'Merchants',
+            'url'  => 'merchants',
+            'icon' => 'fas fa-fw fa-store pr-2'
         ],
+        [
+            'text' => 'Categories',
+            'url'  => 'merchant_categories',
+            'icon' => 'fas fa-fw fa-layer-group pr-2'
+        ],
+        [
+            'text' => 'Moods',
+            'url'  => 'merchant_moods',
+            'icon' => 'fas fa-fw fa-heart pr-2'
+        ],
+        ['header' => 'General Management'],
         [
             'text' => 'Banners',
             'url'  => 'banners',
@@ -339,6 +337,11 @@ return [
             'text' => 'Notifications',
             'url'  => 'notifications',
             'icon' => 'fas fa-fw fa-envelope pr-2'
+        ],
+        [
+            'text' => 'Feedbacks',
+            'url'  => 'feedbacks',
+            'icon' => 'fas fa-fw fa-comments pr-2'
         ],
 
         // Sidebar items:

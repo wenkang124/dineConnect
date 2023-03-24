@@ -75,13 +75,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12">  
-                @include('admin.merchants.reviews.comments.index')
-            </div>
-            
-            <div class="col-lg-12">  
-                @include('admin.merchants.reviews.reports.index')
-            </div>
         </div>
     </div>
 </div>
@@ -92,63 +85,43 @@
     integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-  
-  $('#datatable').DataTable({
-        processing: true,
-        // serverSide: true,
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export',
-                title: 'Review Comments {{ date('Y-m-d') }}', 
-                className: 'btn-custom mb-3'
-            }
-        ],
-        ajax: "{!! route('admin.review_comments.datatable', ['review_id'=>$item->id]) !!}",
-        order: [[ 0, "desc" ]],
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'created_at', name: 'created_at' },
-            { data: 'user', name: 'user' },
-            { data: 'message', name: 'message' },
-            { data: 'total_likes', name: 'total_likes' },
-            { data: 'total_reports', name: 'total_reports' },
-            { data: 'active', name: 'active',
-                render: function(row){
-                    return row? row : '-'
-                } 
-            },
-            { data: 'actions', name: 'actions' },
-        ]
-    });
+    // $('#datatable').DataTable({
+    //     processing: true,
+    //     // serverSide: true,
+    //     dom: 'Bfrtip',
+    //     buttons: [
+    //         { extend: 'copy', text: 'Copy' },
+    //         {
+    //             extend: 'csv',
+    //             text: 'Export',
+    //             title: 'Users {{ date('Y-m-d') }}'
+    //         },
+    //         {
+    //             extend: 'print',
+    //             text: 'Print',
+    //             key: {
+    //                 key: 'p',
+    //                 altkey: true
+    //             }, 
+    //             title: 'Users {{ date('Y-m-d') }}'
+    //         }
+    //     ],
+    //     ajax: "{!! route('admin.users.datatable') !!}",
+    //     order: [[ 0, "desc" ]],
+    //     columns: [
+    //         { data: 'id', name: 'id' },
+    //         { data: 'created_at', name: 'created_at' },
+    //         { data: 'name', name: 'name' },
+    //         { data: 'email', name: 'email' },
+    //         { data: 'phone', name: 'phone' },
+    //         { data: 'status', name: 'status',
+    //             render: function(row){
+    //                 return row? row : '-'
+    //             } 
+    //         },
+    //         { data: 'action', name: 'action' },
+    //     ]
+    // });
 
-    $('#datatable2').DataTable({
-        processing: true,
-        // serverSide: true,
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export',
-                title: 'Review Reports {{ date('Y-m-d') }}', 
-                className: 'btn-custom mb-3'
-            }
-        ],
-        ajax: "{!! route('admin.review_reports.datatable', ['review_id'=>$item->id]) !!}",
-        order: [[ 0, "desc" ]],
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'created_at', name: 'created_at' },
-            { data: 'user', name: 'user' },
-            { data: 'reason_name', name: 'reason_name' },
-            { data: 'active', name: 'active',
-                render: function(row){
-                    return row? row : '-'
-                } 
-            },
-            { data: 'actions', name: 'actions' },
-        ]
-    });
 </script>
 @stop

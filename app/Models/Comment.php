@@ -30,7 +30,7 @@ class Comment extends Model
     ];
 
     protected $appends = [
-        'display_date'
+        'display_date', 'total_likes', 'total_reports'
     ];
 
 
@@ -54,8 +54,34 @@ class Comment extends Model
         return $this->morphMany(Report::class, 'itemable')->latest();
     }
 
+    public function getTotalLikesAttribute()
+    {
+        return $this->likes()->count();
+    }
+    
+    public function getTotalReportsAttribute()
+    {
+        return $this->reports()->count();
+    }
+
     public function getDisplayDateAttribute()
     {
         return $this->created_at->diffForHumans();
     }
+
+    public function getUserNameAttribute()
+    {
+        return $this->user? $this->user->name : '';
+    }
+
+    public function getStatusNameAttribute()
+    {
+        return self::STATUS_LIST[$this->active] ?? '';
+    }
+    
+    public function getCreatedAtYmdHiaAttribute()
+    {
+        return date('Y-m-d H:i A', strtotime($this->created_at));
+    }
+
 }

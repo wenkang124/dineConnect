@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h4 class="text-dark pl-2">Review Management</h4>
+    <h4 class="text-dark pl-2">Comment Management</h4>
 @stop
 
 @section('content')
@@ -17,8 +17,8 @@
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('admin.merchant_reviews.index', ['merchant_id'=> $merchant_id])}}">Reviews</a></li>
-                <li class="breadcrumb-item">Review Details</li>
+                <li class="breadcrumb-item"><a href="{{route('admin.merchant_reviews.show', ['merchant_id'=>$review->itemable_id,'item'=>$review])}}">Review Details</a></li>
+                <li class="breadcrumb-item">Comment Details</li>
             </ol>
             </div>
         </div>
@@ -54,7 +54,7 @@
                                     <!-- Default box -->
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">Review Details</h3>
+                                            <h3 class="card-title">Comment Details</h3>
                             
                                             <div class="card-tools">
                                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">    
-                                                @include('admin.merchants.reviews.form.index', ['readonly'=>'readonly'])
+                                                @include('admin.merchants.reviews.comments.form.index', ['readonly'=>'readonly'])
                                             </div>
                                         </div>
                                     </div>
@@ -75,10 +75,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12">  
-                @include('admin.merchants.reviews.comments.index')
-            </div>
-            
             <div class="col-lg-12">  
                 @include('admin.merchants.reviews.reports.index')
             </div>
@@ -92,37 +88,6 @@
     integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-  
-  $('#datatable').DataTable({
-        processing: true,
-        // serverSide: true,
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export',
-                title: 'Review Comments {{ date('Y-m-d') }}', 
-                className: 'btn-custom mb-3'
-            }
-        ],
-        ajax: "{!! route('admin.review_comments.datatable', ['review_id'=>$item->id]) !!}",
-        order: [[ 0, "desc" ]],
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'created_at', name: 'created_at' },
-            { data: 'user', name: 'user' },
-            { data: 'message', name: 'message' },
-            { data: 'total_likes', name: 'total_likes' },
-            { data: 'total_reports', name: 'total_reports' },
-            { data: 'active', name: 'active',
-                render: function(row){
-                    return row? row : '-'
-                } 
-            },
-            { data: 'actions', name: 'actions' },
-        ]
-    });
-
     $('#datatable2').DataTable({
         processing: true,
         // serverSide: true,
@@ -131,11 +96,11 @@
             {
                 extend: 'csv',
                 text: 'Export',
-                title: 'Review Reports {{ date('Y-m-d') }}', 
+                title: 'Comment Reports {{ date('Y-m-d') }}', 
                 className: 'btn-custom mb-3'
             }
         ],
-        ajax: "{!! route('admin.review_reports.datatable', ['review_id'=>$item->id]) !!}",
+        ajax: "{!! route('admin.review_comments.reports.datatable', ['comment_id'=>$item->id]) !!}",
         order: [[ 0, "desc" ]],
         columns: [
             { data: 'id', name: 'id' },
@@ -150,5 +115,43 @@
             { data: 'actions', name: 'actions' },
         ]
     });
+    // $('#datatable').DataTable({
+    //     processing: true,
+    //     // serverSide: true,
+    //     dom: 'Bfrtip',
+    //     buttons: [
+    //         { extend: 'copy', text: 'Copy' },
+    //         {
+    //             extend: 'csv',
+    //             text: 'Export',
+    //             title: 'Users {{ date('Y-m-d') }}'
+    //         },
+    //         {
+    //             extend: 'print',
+    //             text: 'Print',
+    //             key: {
+    //                 key: 'p',
+    //                 altkey: true
+    //             }, 
+    //             title: 'Users {{ date('Y-m-d') }}'
+    //         }
+    //     ],
+    //     ajax: "{!! route('admin.users.datatable') !!}",
+    //     order: [[ 0, "desc" ]],
+    //     columns: [
+    //         { data: 'id', name: 'id' },
+    //         { data: 'created_at', name: 'created_at' },
+    //         { data: 'name', name: 'name' },
+    //         { data: 'email', name: 'email' },
+    //         { data: 'phone', name: 'phone' },
+    //         { data: 'status', name: 'status',
+    //             render: function(row){
+    //                 return row? row : '-'
+    //             } 
+    //         },
+    //         { data: 'action', name: 'action' },
+    //     ]
+    // });
+
 </script>
 @stop

@@ -40,9 +40,29 @@ class Report extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function reportReason()
+    {
+        return $this->belongsTo(ReportReason::class);
+    }
 
     public function getStatusNameAttribute()
     {
         return self::STATUS_LIST[$this->active] ?? '';
+    }
+    
+    public function getReasonAttribute()
+    {
+        return $this->reportReason->is_other? $this->other : $this->reportReason->title;
+    }
+
+    public function getUserNameAttribute()
+    {
+        return $this->user? $this->user->name : '';
+    }
+    
+    public function getCreatedAtYmdHiaAttribute()
+    {
+        return date('Y-m-d H:i A', strtotime($this->created_at));
     }
 }

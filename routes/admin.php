@@ -96,6 +96,25 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/{merchant_id}/{item}', [App\Http\Controllers\Admin\MerchantReviewController::class, 'show'])->name('show');
     });
     
+    Route::prefix('review_comments')->name('review_comments.')->group(function () {
+        Route::get('/{review_id}', [App\Http\Controllers\Admin\ReviewCommentController::class, 'index'])->name('index');
+        Route::get('/{review_id}/datatable', [App\Http\Controllers\Admin\ReviewCommentController::class, 'dataTable'])->name('datatable');        
+        Route::get('/reports/{comment_id}/datatable', [App\Http\Controllers\Admin\ReviewCommentController::class, 'reportDataTable'])->name('reports.datatable');
+        Route::post('/reports/delete/{report}', [App\Http\Controllers\Admin\ReviewCommentController::class, 'reportDestroy'])->name('reports.destroy');
+
+        Route::post('/delete/{comment}', [App\Http\Controllers\Admin\ReviewCommentController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{review_id}/{item}', [App\Http\Controllers\Admin\ReviewCommentController::class, 'show'])->name('show');
+    });
+    
+    Route::prefix('review_reports')->name('review_reports.')->group(function () {
+        Route::get('/{review_id}', [App\Http\Controllers\Admin\ReviewReportController::class, 'index'])->name('index');
+        Route::get('/{review_id}/datatable', [App\Http\Controllers\Admin\ReviewReportController::class, 'dataTable'])->name('datatable');
+        Route::post('/delete/{report}', [App\Http\Controllers\Admin\ReviewReportController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{review_id}/{item}', [App\Http\Controllers\Admin\ReviewReportController::class, 'show'])->name('show');
+    });
+    
     Route::prefix('merchant_categories')->name('merchants.categories.')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('index');
         Route::get('/datatable', [App\Http\Controllers\Admin\CategoryController::class, 'dataTable'])->name('datatable');
@@ -142,6 +161,11 @@ Route::middleware('auth:admin')->group(function () {
         Route::post('/delete/{advertisement}', [App\Http\Controllers\Admin\AdvertisementController::class, 'destroy'])->name('destroy');
 
         Route::get('/{item}', [App\Http\Controllers\Admin\AdvertisementController::class, 'show'])->name('show');
+    });
+    
+    Route::prefix('feedbacks')->name('feedbacks.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('index');
+        Route::get('/datatable', [App\Http\Controllers\Admin\FeedbackController::class, 'dataTable'])->name('datatable');
     });
 
     Route::get('notifications/datatable', [App\Http\Controllers\Admin\NotificationController::class, 'dataTable'])->name('notifications.datatable');

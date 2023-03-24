@@ -13,7 +13,7 @@ class Banner extends Model
     const ACTIVE = 1;
     const INACTIVE = 0;
     const ACTIVE_NAME = 'Active';
-    const INACTIVE_NAME ='Inactive';
+    const INACTIVE_NAME = 'Inactive';
 
     const TYPE_HOME = 1;
     const TYPE_HOME_NAME = 'Home';
@@ -29,7 +29,12 @@ class Banner extends Model
     const FILE_PREFIX = "banner";
     const MODULE = "banner";
     const UPLOAD_PATH = 'storage/images/' . self::MODULE . 's';
-    
+
+    protected $appends = [
+        'image_full_path',
+    ];
+
+
     /** Get Attribute */
     public function getStatusNameAttribute()
     {
@@ -45,7 +50,11 @@ class Banner extends Model
     }
     public function getImagePathAttribute()
     {
-        return $this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->image : $this->image;
+        return $this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->image : $this->image;
     }
 
+    public function getImageFullPathAttribute()
+    {
+        return asset($this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->image : $this->image);
+    }
 }

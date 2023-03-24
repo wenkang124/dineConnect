@@ -54,7 +54,7 @@ class DishController extends Controller
 
             $dishes = [];
 
-            $menu_categories = Merchant::find($merchant_id)->merchantMenuCategories()->where('id', $merchant_menu_category_id)->get();
+            $menu_categories = Merchant::find($merchant_id)->merchantMenuCategories()->get();
 
             $menu_categories->load([
                 'menuCategory' => function ($q) {

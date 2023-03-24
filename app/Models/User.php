@@ -67,7 +67,7 @@ class User extends Authenticatable
 
 
     protected $appends = [
-        'status_name'
+        'status_name', 'image'
     ];
 
 
@@ -110,6 +110,10 @@ class User extends Authenticatable
     public function getCreatedAtYmdHiaAttribute()
     {
         return date('Y-m-d H:i A', strtotime($this->created_at));
+    }
+    public function getImageAttribute()
+    {
+        return asset($this->profile_image);
     }
 
 

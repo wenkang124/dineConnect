@@ -113,7 +113,7 @@ class AdvertisementController extends Controller
             DB::commit();
             Session::flash("success", "New Advertisement successfully created.");
 
-            return redirect()->back();
+            return redirect()->route('admin.advertisements.index');
 
         } catch (\Exception $e) {
             DB::rollback();

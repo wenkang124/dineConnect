@@ -118,7 +118,7 @@ class MenuSubCategoryController extends Controller
             DB::commit();
             Session::flash("success", "New menu sub category successfully created.");
 
-            return redirect()->back();
+            return redirect()->route('admin.menu_sub_categories.index', $merchant_id);
 
         } catch (\Exception $e) {
             DB::rollback();

@@ -20,7 +20,8 @@ class MerchantReviewController extends Controller
     
     public function index($merchant_id)
     {
-        return view('admin.merchants.reviews.index', compact('merchant_id'));
+        $merchant = Merchant::find($merchant_id);
+        return view('admin.merchants.reviews.index', compact('merchant','merchant_id'));
     }
 
     public function dataTable($merchant_id)
@@ -47,7 +48,8 @@ class MerchantReviewController extends Controller
     }
 
     public function show($merchant_id, Review $item) {
-        return view('admin.merchants.reviews.show', compact('merchant_id','item'));
+        $merchant = Merchant::find($merchant_id);
+        return view('admin.merchants.reviews.show', compact('merchant','merchant_id','item'));
     }
 
     public function destroy(Review $review) {

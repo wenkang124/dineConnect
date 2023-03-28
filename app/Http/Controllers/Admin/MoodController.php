@@ -105,7 +105,7 @@ class MoodController extends Controller
             DB::commit();
             Session::flash("success", "New Merchant Mood successfully created.");
 
-            return redirect()->back();
+            return redirect()->route('admin.merchants.moods.index');
 
         } catch (\Exception $e) {
             DB::rollback();

@@ -227,7 +227,7 @@ class MerchantController extends Controller
             DB::commit();
             Session::flash("success", "New merchant successfully created.");
 
-            return redirect()->back();
+            return redirect()->route('admin.merchants.index');
 
         } catch (\Exception $e) {
             DB::rollback();

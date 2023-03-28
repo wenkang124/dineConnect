@@ -197,7 +197,7 @@ class MenuFoodController extends Controller
             DB::commit();
             Session::flash("success", "New dish successfully created.");
 
-            return redirect()->back();
+            return redirect()->route('admin.menu_foods.index', $merchant_id);
 
         } catch (\Exception $e) {
             DB::rollback();

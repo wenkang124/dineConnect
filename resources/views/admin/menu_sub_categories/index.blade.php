@@ -5,7 +5,7 @@
 @section('content_header')
 <div class="row">
     <div class="col-lg-auto">
-        <h4 class="text-dark pl-2">Sub Categories Management :- {{ $merchant->name }}</h4>
+        <h4 class="text-dark pl-2">Sub Categories Management :- <a href="{{ route('admin.merchants.show',$merchant) }}">{{ $merchant->name }}</a></h4>
     </div>
     <div class="col-lg-auto ml-auto">
         <a href="{{ route('admin.menu_foods.index', ['merchant_id'=>$merchant_id]) }}" class="btn btn-primary" title="Manage">

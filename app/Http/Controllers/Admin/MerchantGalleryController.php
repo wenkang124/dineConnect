@@ -94,7 +94,7 @@ class MerchantGalleryController extends Controller
             DB::commit();
             Session::flash("success", "New Gallery successfully created.");
 
-            return redirect()->back();
+            return redirect()->route('admin.merchant_galleries.index', $merchant_id);
 
         } catch (\Exception $e) {
             DB::rollback();

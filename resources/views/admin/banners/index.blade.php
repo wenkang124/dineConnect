@@ -41,8 +41,8 @@
                                             <th>No.</th>
                                             <th>Created At</th>
                                             <th>Image</th>
-                                            <th>Description</th>
-                                            <th>URL Link</th>
+                                            {{-- <th>Description</th>
+                                            <th>URL Link</th> --}}
                                             <th>Sequence</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -82,8 +82,8 @@
             { data: 'id', name: 'id' },
             { data: 'created_at', name: 'created_at' },
             { data: 'image', name: 'image' },
-            { data: 'description', name: 'description' },
-            { data: 'url_link', name: 'url_link' },
+            // { data: 'description', name: 'description' },
+            // { data: 'url_link', name: 'url_link' },
             { data: 'sequence', name: 'sequence' },
             { data: 'active', name: 'active',
                 render: function(row){

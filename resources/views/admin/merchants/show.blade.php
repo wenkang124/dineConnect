@@ -8,6 +8,18 @@
             <h4 class="text-dark pl-2">Merchant Management</h4>
         </div>
         <div class="col-lg-auto ml-auto">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More Action
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {{-- <a class="dropdown-item" href="{{ route('admin.menu_sub_categories.index', ['merchant_id'=> $item->id]) }}">Dishes Management</a> --}}
+                    <a class="dropdown-item" href="{{ route('admin.merchant_galleries.index', ['merchant_id'=> $item->id]) }}">Galleries Management</a>
+                    <a class="dropdown-item" href="{{ route('admin.merchant_reviews.index', ['merchant_id'=> $item->id]) }}">Reviews Management</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-auto">
             <a href="{{ route('admin.menu_sub_categories.index', ['merchant_id'=>$item->id]) }}" class="btn btn-primary" title="Manage">
                 Manage Sub Categories
             </a>

@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h4 class="text-dark pl-2">Review Management</h4>
+    <h4 class="text-dark pl-2">Review Management:- <a href="{{ route('admin.merchants.show',$merchant) }}">{{ $merchant->name }}</a></h4>
 @stop
 
 @section('content')

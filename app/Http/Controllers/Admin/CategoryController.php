@@ -105,7 +105,7 @@ class CategoryController extends Controller
             DB::commit();
             Session::flash("success", "New Merchant Category successfully created.");
 
-            return redirect()->back();
+            return redirect()->route('admin.merchants.categories.index');
 
         } catch (\Exception $e) {
             DB::rollback();

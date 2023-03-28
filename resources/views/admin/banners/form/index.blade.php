@@ -14,13 +14,13 @@
 </div>
 <div class="col-lg-6 col-md-6 col-6 mb-5">
 </div>
-<div class="col-lg-6">
+<div class="col-lg-6 d-none">
     <div class="form-group">
         <label for="description" class="moto-widget-contact_form-label">Description</label>
         <textarea name="description" class="form-control" value="" {{ $readonly??'' }}  autocomplete="nope">{{ old('description',$item->description??"") }}</textarea>
     </div>
 </div>
-<div class="col-lg-6">
+<div class="col-lg-6 d-none">
     <div class="form-group">
         <label for="action" class="moto-widget-contact_form-label">URL Link</label>
         <input type="text" name="action" class="form-control" value="{{ old('action',$item->action??"") }}" {{ $readonly??'' }}  autocomplete="nope">

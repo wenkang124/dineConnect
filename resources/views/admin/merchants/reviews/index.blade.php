@@ -5,7 +5,7 @@
 @section('content_header')
 <div class="row">
     <div class="col-lg-auto">
-        <h4 class="text-dark pl-2">Merchant Review Management</h4>
+        <h4 class="text-dark pl-2">Merchant Review Management:- <a href="{{ route('admin.merchants.show',$merchant) }}">{{ $merchant->name }}</a></h4>
     </div>
     {{-- <div class="col-lg-auto ml-auto">
         <a href="{{ route('admin.merchant_galleries.create', ['merchant_id'=>$merchant_id]) }}" class="btn btn-success" title="Add">

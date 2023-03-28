@@ -98,7 +98,7 @@ class BannerController extends Controller
             DB::commit();
             Session::flash("success", "New banner successfully created.");
 
-            return redirect()->back();
+            return redirect()->route('admin.banners.index');
 
         } catch (\Exception $e) {
             DB::rollback();

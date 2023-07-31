@@ -1,7 +1,7 @@
 <div class="col-lg-4 col-md-6 col-12 mb-5">
     @if(!$readonly)
     <div class="box">
-        <div class="js--image-preview" style="background-image: url('{{ $item->image_path ?? '/images/img-800x500.jpg' }}')"></div>
+        <div class="js--image-preview" style="background-image: url('{{ $item->thumbnail ?? '/images/img-800x500.jpg' }}')"></div>
         <div class="upload-options">
           <label>
             <input type="file" name="thumbnail" class="image-upload" accept="image/*" />
@@ -9,7 +9,7 @@
         </div>
     </div>
     @else
-    <img src="{{ asset($item->thumbnail) }}" class="w-100" />
+    <img src="{{ asset($item->thumbnail ?? '/images/Dyme Eat.png') }}" class="w-100" />
     @endif
 </div>
 <div class="col-lg-6 col-md-6 col-6 mb-5">

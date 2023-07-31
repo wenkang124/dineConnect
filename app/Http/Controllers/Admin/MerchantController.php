@@ -38,7 +38,8 @@ class MerchantController extends Controller
                     return $item->created_at_ymd_hia;
                 })
                 ->editColumn('thumbnail', function ($item) {
-                    return "<img src='".$item->thumbnail."' width='250' class='p-4' />";
+                    $image = $item->thumbnail? $item->thumbnail : asset('images/Dyme Eat.png');
+                    return "<img src='".$image."' width='250' class='p-4' />";
                 })
                 ->addColumn('actions', function ($item) {
                     return '<a href="'.route('admin.merchants.show', [$item]).'" class="btn btn-xs btn-primary mx-1 my-1">View <i class="fa fa-eye"></i></a>
@@ -82,7 +83,7 @@ class MerchantController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
-            'thumbnail' => 'required|file|mimes:jpg,jpeg,png,gif,webp',
+            'thumbnail' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp',
             'address' => 'required',
             'city' => 'required',
             'postal_code' => 'required',

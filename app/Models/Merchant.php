@@ -96,7 +96,11 @@ class Merchant extends Model
 
     public function getImageFullPathAttribute()
     {
-        return asset($this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail);
+        if(!$this->thumbnail) {
+            return asset('/images/Dyme Eat.png');
+        } else {
+            return asset($this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail);
+        }
     }
 
     public function getIsFavouriteAttribute()

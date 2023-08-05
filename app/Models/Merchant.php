@@ -76,7 +76,12 @@ class Merchant extends Model
 
     public function reviews()
     {
-        return $this->morphMany(Review::class, 'itemable')->with(['comments.likes', 'images', 'likes', 'user','comments.user']);
+        return $this->morphMany(Review::class, 'itemable')->with(['comments.likes', 'images', 'likes', 'user', 'comments.user']);
+    }
+
+    public function views()
+    {
+        return $this->morphMany(View::class, 'itemable');
     }
 
     public function getStatusNameAttribute()
@@ -96,7 +101,7 @@ class Merchant extends Model
 
     public function getImageFullPathAttribute()
     {
-        if(!$this->thumbnail) {
+        if (!$this->thumbnail) {
             return asset('/images/Dyme Eat.png');
         } else {
             return asset($this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail);

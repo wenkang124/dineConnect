@@ -42,6 +42,9 @@ class DishController extends Controller
         $dish = MenuFood::with(['flavours', 'portions'])->where('id', $id)->firstOrFail();
         $dish->share_url = route('api.dishes.detail', $id);
 
+        $dish->views()->create();
+        $dish->total_views = $dish->views()->count();
+
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $dish,

@@ -65,7 +65,9 @@ class MerchantController extends Controller
         }
 
         $merchant->share_url = route('api.merchant.detail', $id);
-
+        
+        $merchant->views()->create();
+        $merchant->total_views = $merchant->views()->count();
 
         return $this->__apiSuccess(
             'Retrieve Successful.',

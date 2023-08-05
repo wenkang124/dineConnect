@@ -85,4 +85,9 @@ class MenuFood extends Model
             return 0;
         }
     }
+
+    public function views()
+    {
+        return $this->morphMany(View::class, 'itemable');
+    }
 }

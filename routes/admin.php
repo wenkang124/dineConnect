@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/download-app', function () {
+    return view('download-app');
+});
+
+
 Route::get('', function () {
     return redirect()->route('admin.home');
 });

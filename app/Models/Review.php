@@ -53,6 +53,11 @@ class Review extends Model
         return $this->morphMany(Like::class, 'itemable');
     }
 
+    public function views()
+    {
+        return $this->morphMany(View::class, 'itemable');
+    }
+
     public function comments()
     {
         return $this->morphMany(Comment::class, 'itemable');
@@ -62,7 +67,7 @@ class Review extends Model
     {
         return $this->belongsTo(User::class)->withTrashed();
     }
-    
+
     public function merchant()
     {
         return $this->belongsTo(Merchant::class);
@@ -75,7 +80,7 @@ class Review extends Model
 
     public function getUserNameAttribute()
     {
-        return $this->user? $this->user->name : '';
+        return $this->user ? $this->user->name : '';
     }
 
     public function getStatusNameAttribute()
@@ -88,7 +93,7 @@ class Review extends Model
     {
         return $this->likes()->count();
     }
-    
+
     public function getTotalReportsAttribute()
     {
         return $this->reports()->count();

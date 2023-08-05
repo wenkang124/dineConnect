@@ -58,6 +58,9 @@ class ReviewController extends Controller
     {
         $review = Review::where('id', $id)->with(['comments.likes', 'images', 'likes', 'user', 'comments.user'])->firstOrFail();
 
+        $review->views()->create();
+        $review->total_views = $review->views()->count();
+
         return $this->__apiSuccess(
             'Retrieve Successful.',
             $review,

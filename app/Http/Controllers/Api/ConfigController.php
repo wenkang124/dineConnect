@@ -23,6 +23,40 @@ class ConfigController extends Controller
         );
     }
 
+
+    public function occupations()
+    {
+        $occupations = [
+            [
+                'name' => 'Student',
+                'label' => 'Student',
+            ],
+            [
+                'name' => 'Employed',
+                'label' => 'Employed',
+            ],
+            [
+                'name' => 'Self Employed',
+                'label' => 'Self Employed',
+            ],
+            [
+                'name' => 'Unemployed',
+                'label' => 'Unemployed',
+            ],
+            [
+                'name' => 'Retired',
+                'label' => 'Retired',
+            ]
+
+        ];
+
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $occupations
+        );
+    }
+
+
     public function filterOptions()
     {
         $filterPriceOptions = FilterOption::where('label', 'Price')->first();

@@ -43,7 +43,13 @@ class UserController extends Controller
             return $this->__apiFailed($validator->errors()->first(), $validator->errors());
         }
 
+
+        //update user fillable
+
+
         $user = auth()->user();
+
+        $user->fill($request->all());
 
         if ($request->file('profile_image')) {
             $data = $request->file('profile_image');
@@ -61,14 +67,6 @@ class UserController extends Controller
             $user->profile_image = User::IMAGE_ASSET_PATH . '/' . $file_name;
         }
 
-        $user->save();
-
-
-
-        // $user->mobile_prefix_id = $request->mobile_prefix_id;
-        // $user->phone = $request->phone;
-        $user->name = $request->name;
-        $user->occupation = $request->occupation;
         $user->save();
 
 

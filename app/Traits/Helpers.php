@@ -188,6 +188,7 @@ trait Helpers
             'notification' => $notification,
             'priority' => 'high',
             'badge' => 1,
+            'image' => asset('/images/logo.png'),
             // 'content_available' => $silence // set 'true' if need silent IOS notification
         ];
 
@@ -199,7 +200,8 @@ trait Helpers
                     'body' => $text, // body used for iOS
                     'android_channel_id' => 'push_noti_roger_squad',
                     'sound' => $sound != null ? $sound : true,
-                    'icon' => asset('favicon.png')
+                    'icon' => asset('favicon.png'),
+                    'image' => asset('/images/logo.png')
                 ]
             ]);
         }

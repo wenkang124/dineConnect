@@ -37,6 +37,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'gender',
+        'dob',
         'username',
         'mobile_prefix_id',
         'phone',
@@ -85,7 +87,7 @@ class User extends Authenticatable
 
     public function preferences()
     {
-        return $this->belongsToMany(Category::class, 'user_preferences', 'user_id','preference_id');
+        return $this->belongsToMany(Category::class, 'user_preferences', 'user_id', 'preference_id');
     }
 
     public function prefixNumber()

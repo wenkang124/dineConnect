@@ -92,4 +92,12 @@ class ConfigController extends Controller
             $categpries
         );
     }
+
+    public function annoucmentPopUp()
+    {
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            true
+        );
+    }
 }

@@ -46,6 +46,7 @@ class User extends Authenticatable
         'password',
         'occupation',
         'profile_image',
+        'material_status',
         'status',
     ];
 

@@ -28,6 +28,7 @@ Route::group(['prefix' => 'config'], function () {
     Route::get('/countries', 'ConfigController@countries');
     Route::get('/occupations', 'ConfigController@occupations');
     Route::get('/annoucment-pop-up', 'ConfigController@annoucmentPopUp');
+    Route::get('/states', 'ConfigController@states');
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {

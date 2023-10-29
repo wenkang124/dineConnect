@@ -24,6 +24,83 @@ class ConfigController extends Controller
     }
 
 
+    public function states()
+    {
+        //list of malaysia states
+        $states = [
+            [
+                'name' => 'Johor',
+                'label' => 'Johor',
+            ],
+            [
+                'name' => 'Kedah',
+                'label' => 'Kedah',
+            ],
+            [
+                'name' => 'Kelantan',
+                'label' => 'Kelantan',
+            ],
+            [
+                'name' => 'Kuala Lumpur',
+                'label' => 'Kuala Lumpur',
+            ],
+            [
+                'name' => 'Labuan',
+                'label' => 'Labuan',
+            ],
+            [
+                'name' => 'Melaka',
+                'label' => 'Melaka',
+            ],
+            [
+                'name' => 'Negeri Sembilan',
+                'label' => 'Negeri Sembilan',
+            ],
+            [
+                'name' => 'Pahang',
+                'label' => 'Pahang',
+            ],
+            [
+                'name' => 'Perak',
+                'label' => 'Perak',
+            ],
+            [
+                'name' => 'Perlis',
+                'label' => 'Perlis',
+            ],
+            [
+                'name' => 'Pulau Pinang',
+                'label' => 'Pulau Pinang',
+            ],
+            [
+                'name' => 'Putrajaya',
+                'label' => 'Putrajaya',
+            ],
+            [
+                'name' => 'Sabah',
+                'label' => 'Sabah',
+            ],
+            [
+                'name' => 'Sarawak',
+                'label' => 'Sarawak',
+            ],
+            [
+                'name' => 'Selangor',
+                'label' => 'Selangor',
+            ],
+            [
+                'name' => 'Terengganu',
+                'label' => 'Terengganu',
+            ],
+
+        ];
+
+        return $this->__apiSuccess(
+            'Retrieve Successful.',
+            $states
+        );
+    }
+
     public function occupations()
     {
         $occupations = [

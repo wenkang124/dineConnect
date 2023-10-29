@@ -48,6 +48,8 @@ class SearchController extends Controller
             $query->whereHas('categories', function ($query2) use ($request) {
                 $query2->where('category_id', $request->category_id);
             });
+        })->when($request->get('state'), function ($query) use ($request) {
+            $query->where('state', $request->state);
         })->Active()->get();
 
         return $this->__apiSuccess(

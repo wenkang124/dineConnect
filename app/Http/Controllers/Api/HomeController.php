@@ -8,7 +8,6 @@ use App\Models\Category;
 use App\Models\FeatureCategory;
 use App\Models\Merchant;
 use App\Models\Mood;
-use App\Models\Review;
 use App\Traits\Helpers;
 
 class HomeController extends Controller

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\FeatureCategory;
 use App\Models\Merchant;
 use App\Models\Mood;
+use App\Models\Review;
 use App\Traits\Helpers;
 
 class HomeController extends Controller
@@ -23,7 +24,7 @@ class HomeController extends Controller
         $topReviews = Merchant::with('reviews')->get()->map(function ($merchant) {
             $merchant->total_rating = $merchant->reviews->avg('rating');
             return $merchant;
-        })->sortByDesc('total_rating')->take(5);
+        })->sortByDesc('total_rating')->take(5)->values();
 
 
         return $this->__apiSuccess('Retrieve Successful.', [

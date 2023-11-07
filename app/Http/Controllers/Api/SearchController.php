@@ -42,7 +42,7 @@ class SearchController extends Controller
             });
         })->when($request->get('mood_id'), function ($query) use ($request) {
             $query->whereHas('moods', function ($query2) use ($request) {
-                $query2->whereIn('mood_id', $request->mood_id);
+                $query2->whereIn('mood_id', $request->mood_id->toArray());
             });
         })->when($request->get('category_id'), function ($query) use ($request) {
             $query->whereHas('categories', function ($query2) use ($request) {

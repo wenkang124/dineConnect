@@ -56,6 +56,7 @@ class UserController extends Controller
         $this->validate($request, [
             'create_img' => 'nullable',
             'name' => 'required',
+            'username' => 'required',
             'password' => 'required|min:4|max:4',
             'confirmation_password' => 'required|min:4|max:4|same:password',
             'mobile_prefix_id' => 'required',
@@ -78,6 +79,7 @@ class UserController extends Controller
             $user = new User();
 
             $user->name = $request->get('name');
+            $user->username = $request->get('username');
             $user->email = $request->get('email');
             $user->phone = $request->get('new_phone');
             $user->mobile_prefix_id = $phoneCodeCountry? $phoneCodeCountry->id : 129;
@@ -129,6 +131,7 @@ class UserController extends Controller
         $this->validate($request, [
             'create_img' => 'nullable',
             'name' => 'required',
+            'username' => 'required',
             'password' => 'nullable|min:4|max:4',
             'confirmation_password' => 'nullable|min:4|max:4|same:password',
             'mobile_prefix_id' => 'required',
@@ -160,6 +163,7 @@ class UserController extends Controller
         try {
 
             $item->name = $request->get('name');
+            $item->username = $request->get('username');
             $item->email = $request->get('email');
             $item->phone = $request->get('new_phone');
             $item->mobile_prefix_id = $phoneCodeCountry? $phoneCodeCountry->id : 129;

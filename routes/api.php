@@ -76,9 +76,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/detail/{id}', 'NotificationController@detail');
     });
 
-    Route::group(['prefix' => 'annoucement'], function () {
-        Route::get('/', 'AnnoucementController@getAllList');
-        Route::get('/detail/{id}', 'AnnoucementController@detail');
+    Route::group(['prefix' => 'announcements'], function () {
+        Route::get('/', 'AnnouncementController@getAllList');
+        Route::get('/detail/{id}', 'AnnouncementController@detail');
     });
 
     Route::group(['prefix' => 'search'], function () {

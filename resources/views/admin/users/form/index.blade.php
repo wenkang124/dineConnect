@@ -22,6 +22,12 @@
 </div>
 <div class="col-lg-6">
     <div class="form-group">
+        <label for="username" class="moto-widget-contact_form-label">Username <span class="red">*</span></label>
+        <input type="text" name="username" required class="form-control" value="{{ old('username',$item->username??"") }}" {{ $readonly??'' }}  autocomplete="nope">
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="form-group">
         <label for="email" class="moto-widget-contact_form-label">Email <span class="red">*</span></label>
         <input type="email" name="email" required class="form-control" value="{{ old('email',$item->email??"") }}" {{ $readonly??'' }}  autocomplete="nope">
     </div>

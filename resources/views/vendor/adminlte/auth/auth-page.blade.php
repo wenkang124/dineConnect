@@ -37,11 +37,11 @@
                          @endif>
                 @else
                     <img src="{{ asset(config('adminlte.logo_img')) }}"
-                         alt="{{ config('adminlte.logo_img_alt') }}" height="50">
+                         alt="{{ config('adminlte.logo_img_alt') }}" height="200">
                 @endif
 
                 {{-- Logo Label --}}
-                {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
+                {{-- {!! config('adminlte.logo', '<b>Admin</b>LTE') !!} --}}
 
             </a>
         </div>

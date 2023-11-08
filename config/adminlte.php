@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => env('APP_NAME', 'Dine Connect'),
-    'logo_img' => 'images/logo.svg',
+    'logo_img' => 'images/Dyme Eat 2.PNG',
     'logo_img_class' => 'brand-image svg-white',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'images/Dyme Eat 2.PNG',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -324,24 +324,34 @@ return [
         ],
         ['header' => 'General Management'],
         [
-            'text' => 'Banners',
-            'url'  => 'banners',
-            'icon' => 'fas fa-fw fa-images pr-2'
-        ],
-        [
             'text' => 'Advertisements',
             'url'  => 'advertisements',
             'icon' => 'fas fa-fw fa-ad pr-2'
         ],
         [
-            'text' => 'Notifications',
-            'url'  => 'notifications',
-            'icon' => 'fas fa-fw fa-envelope pr-2'
+            'text' => 'Announcements',
+            'url'  => 'announcements',
+            'icon' => 'fas fa-fw fa-bullhorn pr-2'
+        ],
+        [
+            'text' => 'Banners',
+            'url'  => 'banners',
+            'icon' => 'fas fa-fw fa-images pr-2'
+        ],
+        [
+            'text' => 'Features',
+            'url'  => 'features',
+            'icon' => 'fas fa-fw fa-star pr-2'
         ],
         [
             'text' => 'Feedbacks',
             'url'  => 'feedbacks',
             'icon' => 'fas fa-fw fa-comments pr-2'
+        ],
+        [
+            'text' => 'Notifications',
+            'url'  => 'notifications',
+            'icon' => 'fas fa-fw fa-envelope pr-2'
         ],
 
         // Sidebar items:

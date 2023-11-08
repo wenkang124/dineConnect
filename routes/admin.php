@@ -157,6 +157,18 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/{item}', [App\Http\Controllers\Admin\BannerController::class, 'show'])->name('show');
     });
 
+    Route::prefix('announcements')->name('announcements.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\AnnouncementController::class, 'index'])->name('index');
+        Route::get('/datatable', [App\Http\Controllers\Admin\AnnouncementController::class, 'dataTable'])->name('datatable');
+        Route::get('/create', [App\Http\Controllers\Admin\AnnouncementController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\Admin\AnnouncementController::class, 'store'])->name('store');
+        Route::get('/edit/{item}', [App\Http\Controllers\Admin\AnnouncementController::class, 'edit'])->name('edit');
+        Route::post('/update/{item}', [App\Http\Controllers\Admin\AnnouncementController::class, 'update'])->name('update');
+        Route::post('/delete/{announcement}', [App\Http\Controllers\Admin\AnnouncementController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{item}', [App\Http\Controllers\Admin\AnnouncementController::class, 'show'])->name('show');
+    });
+
     Route::prefix('advertisements')->name('advertisements.')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\AdvertisementController::class, 'index'])->name('index');
         Route::get('/datatable', [App\Http\Controllers\Admin\AdvertisementController::class, 'dataTable'])->name('datatable');
@@ -167,6 +179,17 @@ Route::middleware('auth:admin')->group(function () {
         Route::post('/delete/{advertisement}', [App\Http\Controllers\Admin\AdvertisementController::class, 'destroy'])->name('destroy');
 
         Route::get('/{item}', [App\Http\Controllers\Admin\AdvertisementController::class, 'show'])->name('show');
+    });
+    Route::prefix('features')->name('features.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\FeatureController::class, 'index'])->name('index');
+        Route::get('/datatable', [App\Http\Controllers\Admin\FeatureController::class, 'dataTable'])->name('datatable');
+        Route::get('/create', [App\Http\Controllers\Admin\FeatureController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\Admin\FeatureController::class, 'store'])->name('store');
+        Route::get('/edit/{item}', [App\Http\Controllers\Admin\FeatureController::class, 'edit'])->name('edit');
+        Route::post('/update/{item}', [App\Http\Controllers\Admin\FeatureController::class, 'update'])->name('update');
+        Route::post('/delete/{feature_category}', [App\Http\Controllers\Admin\FeatureController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{item}', [App\Http\Controllers\Admin\FeatureController::class, 'show'])->name('show');
     });
     
     Route::prefix('feedbacks')->name('feedbacks.')->group(function () {

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class FeatureCategory extends Model
+class Feature extends Model
 {
     use HasFactory, SoftDeletes, HasGlobalScope;
 
@@ -22,13 +22,13 @@ class FeatureCategory extends Model
     ];
 
     protected $fillable = [
-        'name',
+        'title',
         'image',
         'active',
     ];
 
-    const FILE_PREFIX = "feature_category";
-    const MODULE = "feature_category";
+    const FILE_PREFIX = "feature";
+    const MODULE = "feature";
     const UPLOAD_PATH = 'storage/images/' . self::MODULE . 's';
 
     protected $appends = [
@@ -36,7 +36,7 @@ class FeatureCategory extends Model
 
     public function merchants()
     {
-        return $this->belongsToMany(Merchant::class, 'feature_category_merchants', 'feature_category_id', 'merchant_id');
+        return $this->belongsToMany(Merchant::class, 'merchant_features');
     }
 
     public function getCreatedAtYmdHiaAttribute()

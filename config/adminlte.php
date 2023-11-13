@@ -318,6 +318,11 @@ return [
             'icon' => 'fas fa-fw fa-layer-group pr-2'
         ],
         [
+            'text' => 'Sub Categories',
+            'url'  => 'merchant_sub_categories',
+            'icon' => 'fas fa-fw fa-layer-group pr-2'
+        ],
+        [
             'text' => 'Moods',
             'url'  => 'merchant_moods',
             'icon' => 'fas fa-fw fa-heart pr-2'

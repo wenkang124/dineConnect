@@ -9,6 +9,7 @@ use App\Models\MenuCategory;
 use App\Models\Merchant;
 use App\Models\MerchantOperationDaySetting;
 use App\Models\Mood;
+use App\Models\SubCategory;
 use App\Traits\MediaTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -41,6 +42,9 @@ class MerchantController extends Controller
                     $image = $item->thumbnail? $item->thumbnail : asset('images/Dyme Eat.png');
                     return "<img src='".$image."' width='250' class='p-4' />";
                 })
+                ->addColumn('total_views', function ($item) {
+                    return $item->views()->count();
+                })
                 ->addColumn('actions', function ($item) {
                     return '<a href="'.route('admin.merchants.show', [$item]).'" class="btn btn-xs btn-primary mx-1 my-1">View <i class="fa fa-eye"></i></a>
                             <a href="'.route('admin.merchants.edit', [$item]).'" class="btn btn-xs btn-warning mx-1 my-1">Edit <i class="fa fa-edit"></i></a>                           
@@ -71,11 +75,12 @@ class MerchantController extends Controller
 
     public function create() {
         $categories = Category::where('active', Category::ACTIVE)->get();
+        $sub_categories = SubCategory::where('active', SubCategory::ACTIVE)->get();
         $moods = Mood::where('active', Mood::ACTIVE)->get();
         $countries = Country::where('status', 1)->get();
         $advertisements = Advertisement::all();
 
-        return view('admin.merchants.create', compact('categories', 'moods', 'countries', 'advertisements'));
+        return view('admin.merchants.create', compact('categories', 'sub_categories', 'moods', 'countries', 'advertisements'));
     }
 
     public function store(Request $request) {
@@ -97,6 +102,7 @@ class MerchantController extends Controller
             'start_times' => 'nullable',
             'end_times' => 'nullable',
             'categories' => 'required',
+            'sub_categories' => 'required',
             'moods' => 'required',
             'advertisements' => 'nullable'
         ]);
@@ -190,7 +196,26 @@ class MerchantController extends Controller
 
                 $item->categories()->sync($category_ids);
             }
-            
+
+            if($request->get('sub_categories')) {
+                $sub_category_ids = [];
+                foreach($request->get('sub_categories') as $sub_category) {
+                    $exist_sub_category = SubCategory::find($sub_category);
+                    if(!$exist_sub_category) {
+                        $new_sub_category = SubCategory::create([
+                            'name' => $sub_category,
+                            'image' => 'https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg',
+                            'active' => SubCategory::ACTIVE
+                        ]);
+                        $sub_category_ids[]= $new_sub_category->id;
+                    } else {
+                        $sub_category_ids[] = $sub_category;
+                    }
+                }
+
+                $item->subCategories()->sync($sub_category_ids);
+            }
+
             if($request->get('moods')) {
                 $mood_ids = [];
                 foreach($request->get('moods') as $mood) {
@@ -242,11 +267,12 @@ class MerchantController extends Controller
     
     public function edit(Merchant $item) {
         $categories = Category::where('active', Category::ACTIVE)->get();
+        $sub_categories = SubCategory::where('active', SubCategory::ACTIVE)->get();
         $moods = Mood::where('active', Mood::ACTIVE)->get();
         $countries = Country::where('status', 1)->get();
         $advertisements = Advertisement::all();
 
-        return view('admin.merchants.edit', compact('item', 'categories', 'moods', 'countries', 'advertisements'));
+        return view('admin.merchants.edit', compact('item', 'categories', 'sub_categories', 'moods', 'countries', 'advertisements'));
     }
 
     public function update(Merchant $item, Request $request) {
@@ -268,6 +294,7 @@ class MerchantController extends Controller
             'start_times' => 'nullable',
             'end_times' => 'nullable',
             'categories' => 'required',
+            'sub_categories' => 'required',
             'moods' => 'required'
         ]);
 
@@ -364,6 +391,27 @@ class MerchantController extends Controller
 
                 $item->categories()->sync($category_ids);
             }
+
+            
+            if($request->get('sub_categories')) {
+                $sub_category_ids = [];
+                foreach($request->get('sub_categories') as $sub_category) {
+                    $exist_sub_category = SubCategory::find($sub_category);
+                    if(!$exist_sub_category) {
+                        $new_sub_category = SubCategory::create([
+                            'name' => $sub_category,
+                            'image' => 'https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg',
+                            'active' => SubCategory::ACTIVE
+                        ]);
+                        $sub_category_ids[]= $new_sub_category->id;
+                    } else {
+                        $sub_category_ids[] = $sub_category;
+                    }
+                }
+
+                $item->subCategories()->sync($sub_category_ids);
+            }
+
 
             if($request->get('moods')) {
                 $mood_ids = [];

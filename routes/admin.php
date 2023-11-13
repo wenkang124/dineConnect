@@ -120,7 +120,7 @@ Route::middleware('auth:admin')->group(function () {
 
         Route::get('/{review_id}/{item}', [App\Http\Controllers\Admin\ReviewReportController::class, 'show'])->name('show');
     });
-    
+
     Route::prefix('merchant_categories')->name('merchants.categories.')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('index');
         Route::get('/datatable', [App\Http\Controllers\Admin\CategoryController::class, 'dataTable'])->name('datatable');
@@ -129,6 +129,18 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/edit/{item}', [App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('edit');
         Route::post('/update/{item}', [App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('update');
         Route::post('/delete/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('destroy');
+
+        Route::get('/{item}', [App\Http\Controllers\Admin\CategoryController::class, 'show'])->name('show');
+    });
+
+    Route::prefix('merchant_sub_categories')->name('merchants.sub_categories.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\SubCategoryController::class, 'index'])->name('index');
+        Route::get('/datatable', [App\Http\Controllers\Admin\SubCategoryController::class, 'dataTable'])->name('datatable');
+        Route::get('/create', [App\Http\Controllers\Admin\SubCategoryController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\Admin\SubCategoryController::class, 'store'])->name('store');
+        Route::get('/edit/{item}', [App\Http\Controllers\Admin\SubCategoryController::class, 'edit'])->name('edit');
+        Route::post('/update/{item}', [App\Http\Controllers\Admin\SubCategoryController::class, 'update'])->name('update');
+        Route::post('/delete/{sub_category}', [App\Http\Controllers\Admin\SubCategoryController::class, 'destroy'])->name('destroy');
 
         Route::get('/{item}', [App\Http\Controllers\Admin\CategoryController::class, 'show'])->name('show');
     });

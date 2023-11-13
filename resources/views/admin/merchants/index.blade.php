@@ -43,6 +43,7 @@
                                             <th>Name</th>
                                             <th>Description</th>
                                             <th>Image</th>
+                                            <th>Total Views</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -83,6 +84,7 @@
             { data: 'name', name: 'name' },
             { data: 'description', name: 'description' },
             { data: 'thumbnail', name: 'thumbnail' },
+            { data: 'total_views', name: 'total_views' },
             { data: 'active', name: 'active',
                 render: function(row){
                     return row? row : '-'

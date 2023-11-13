@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h4 class="text-dark pl-2">Category Management</h4>
+    <h4 class="text-dark pl-2">Merchant Sub Category Management</h4>
 @stop
 
 @section('content')
@@ -12,13 +12,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">   
-            <h5>Listing</h5>
+            <h5>Create New Merchant Sub Category</h5>
             </div>
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('admin.merchants.categories.index')}}">Categories</a></li>
-                <li class="breadcrumb-item">Category Details</li>
+                <li class="breadcrumb-item"><a href="{{route('admin.merchants.sub_categories.index')}}">Merchant Sub Category</a></li>
+                <li class="breadcrumb-item">New Merchant Sub Category</li>
             </ol>
             </div>
         </div>
@@ -54,7 +54,7 @@
                                     <!-- Default box -->
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">Category Details</h3>
+                                            <h3 class="card-title">Merchant Sub Category Details</h3>
                             
                                             <div class="card-tools">
                                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -64,9 +64,19 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <div class="row">    
-                                                @include('admin.merchants.categories.form.index', ['readonly'=>'readonly'])
-                                            </div>
+                                            <form class="form-horizontal" action="{{ route('admin.merchants.sub_categories.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                                                @csrf                        
+                                                <div class="row">    
+                                                    @include('admin.merchants.sub_categories.form.index', ['readonly'=>''])
+
+                                                    <div class="col-lg-12" style="margin-top: 25px;">
+                                                        <div class="form-group text-right">
+                                                            <a class="btn btn-secondary" href="{{ route('admin.merchants.sub_categories.index') }}">Back</a>
+                                                            <button type="submit" class="btn btn-success create-banner_btn">Add</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </section>
@@ -84,44 +94,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"
     integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
 <script>
-    // $('#datatable').DataTable({
-    //     processing: true,
-    //     // serverSide: true,
-    //     dom: 'Bfrtip',
-    //     buttons: [
-    //         { extend: 'copy', text: 'Copy' },
-    //         {
-    //             extend: 'csv',
-    //             text: 'Export',
-    //             title: 'Users {{ date('Y-m-d') }}'
-    //         },
-    //         {
-    //             extend: 'print',
-    //             text: 'Print',
-    //             key: {
-    //                 key: 'p',
-    //                 altkey: true
-    //             }, 
-    //             title: 'Users {{ date('Y-m-d') }}'
-    //         }
-    //     ],
-    //     ajax: "{!! route('admin.users.datatable') !!}",
-    //     order: [[ 0, "desc" ]],
-    //     columns: [
-    //         { data: 'id', name: 'id' },
-    //         { data: 'created_at', name: 'created_at' },
-    //         { data: 'name', name: 'name' },
-    //         { data: 'email', name: 'email' },
-    //         { data: 'phone', name: 'phone' },
-    //         { data: 'status', name: 'status',
-    //             render: function(row){
-    //                 return row? row : '-'
-    //             } 
-    //         },
-    //         { data: 'action', name: 'action' },
-    //     ]
-    // });
 
 </script>
 @stop

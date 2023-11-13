@@ -44,6 +44,9 @@ class MenuFoodController extends Controller
                 ->addColumn('sub_category', function ($item) {
                     return $item->menuSubCategories()? implode(', ', $item->menuSubCategories()->pluck('name')->toArray()) : '-';
                 })
+                ->addColumn('total_views', function ($item) {
+                    return $item->views()->count();
+                })
                 ->addColumn('actions', function ($item) {
                     return '<a href="'.route('admin.menu_foods.show', ['merchant_id'=>$item->merchant_id, 'item'=>$item]).'" class="btn btn-xs btn-primary mx-1 my-1">View <i class="fa fa-eye"></i></a>
                             <a href="'.route('admin.menu_foods.edit', ['merchant_id'=>$item->merchant_id, 'item'=>$item]).'" class="btn btn-xs btn-warning mx-1 my-1">Edit <i class="fa fa-edit"></i></a>                           

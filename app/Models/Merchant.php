@@ -39,6 +39,11 @@ class Merchant extends Model
         return $this->belongsToMany(Category::class, 'merchant_categories')->withTimestamps();
     }
 
+    public function subCategories()
+    {
+        return $this->belongsToMany(SubCategory::class, 'merchant_sub_categories')->withTimestamps();
+    }
+
     public function advertisements()
     {
         return $this->belongsToMany(Advertisement::class, 'merchant_advertisements')->withTimestamps();

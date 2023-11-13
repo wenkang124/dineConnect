@@ -13,6 +13,18 @@
 </div>
 <div class="col-lg-6">
     <div class="form-group">
+        <label for="name" class="moto-widget-contact_form-label">Sub Categories </label>
+        <select name="sub_categories[]" required class="form-control multiple-select2-without-tags w-100" multiple="multiple" {{ ($readonly? 'disabled' : '') }}>
+            @foreach($sub_categories as $key => $sub_category)
+            <option value="{{ $sub_category->id }}" {{ old('sub_categories')? \Helper::instance()->selectionSelected($sub_category->id, old('sub_categories')) : (isset($item)&&$item->subCategories? \Helper::instance()->selectionSelected($sub_category->id, $item->subCategories->pluck('id')->toArray()) : '') }}>
+                {{ $sub_category->name }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="form-group">
         <label for="name" class="moto-widget-contact_form-label">Moods </label>
         <select name="moods[]" required class="form-control multiple-select2-without-tags w-100" multiple="multiple" {{ ($readonly? 'disabled' : '') }}>
             @foreach($moods as $key => $mood)

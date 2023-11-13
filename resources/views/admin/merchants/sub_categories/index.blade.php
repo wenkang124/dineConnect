@@ -5,16 +5,11 @@
 @section('content_header')
 <div class="row">
     <div class="col-lg-auto">
-        <h4 class="text-dark pl-2">Dishes Management :- <a href="{{ route('admin.merchants.show',$merchant) }}">{{ $merchant->name }}</a></h4>
+        <h4 class="text-dark pl-2">Merchant Sub Category Management</h4>
     </div>
     <div class="col-lg-auto ml-auto">
-        <a href="{{ route('admin.menu_sub_categories.index', ['merchant_id'=>$merchant_id]) }}" class="btn btn-primary" title="Manage">
-            Manage Sub Categories
-        </a>
-    </div>
-    <div class="col-lg-auto">
-        <a href="{{ route('admin.menu_foods.create', ['merchant_id'=>$merchant_id]) }}" class="btn btn-success" title="Add">
-            Add New Dish
+        <a href="{{ route('admin.merchants.sub_categories.create') }}" class="btn btn-success" title="Add">
+            Add New Merchant Sub Category
         </a>
     </div>
 </div>
@@ -29,7 +24,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Dishes Listing</h3>
+                            <h3 class="card-title">Merchant Sub Category Listing</h3>
             
                             <div class="card-tools">
                                 {{-- <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -46,11 +41,7 @@
                                             <th>No.</th>
                                             <th>Created At</th>
                                             <th>Name</th>
-                                            <th>Sub Categories</th>
-                                            <th>Price</th>
                                             <th>Image</th>
-                                            <th>Short Description</th>
-                                            <th>Total Views</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -79,21 +70,17 @@
             {
                 extend: 'csv',
                 text: 'Export',
-                title: 'Dishes {{ date('Y-m-d') }}', 
+                title: 'Sub Categories {{ date('Y-m-d') }}', 
                 className: 'btn-custom mb-3'
             }
         ],
-        ajax: "{!! route('admin.menu_foods.datatable', ['merchant_id'=>$merchant_id]) !!}",
+        ajax: "{!! route('admin.merchants.sub_categories.datatable') !!}",
         order: [[ 0, "desc" ]],
         columns: [
             { data: 'id', name: 'id' },
             { data: 'created_at', name: 'created_at' },
             { data: 'name', name: 'name' },
-            { data: 'sub_category', name: 'sub_category' },
-            { data: 'price', name: 'price' },
-            { data: 'thumbnail', name: 'thumbnail' },
-            { data: 'short_description', name: 'short_description' },
-            { data: 'total_views', name: 'total_views' },
+            { data: 'image', name: 'image' },
             { data: 'active', name: 'active',
                 render: function(row){
                     return row? row : '-'

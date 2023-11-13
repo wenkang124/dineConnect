@@ -39,6 +39,9 @@ class MerchantReviewController extends Controller
                 ->editColumn('active', function ($item) {
                     return $item->status_name;
                 })
+                ->addColumn('total_views', function ($item) {
+                    return $item->views()->count();
+                })
                 ->addColumn('actions', function ($item)  use ($merchant){
                     return '<a href="'.route('admin.merchant_reviews.show', ['merchant_id'=>$merchant->id,'item'=>$item]).'" class="btn btn-xs btn-primary mx-1 my-1"><i class="fa fa-eye"></i></a>
                             <a href="'.route('admin.merchant_reviews.destroy', ['review'=>$item]).'" class="btn btn-xs btn-danger mx-1 my-1 delete-btn" data-confirm="Are you sure you want to delete this review?" data-redirect="'.route('admin.merchant_reviews.index', ['merchant_id'=>$merchant->id]).'"><i class="fa fa-trash"></i></a>';

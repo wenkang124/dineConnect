@@ -24,6 +24,7 @@ class HomeController extends Controller
         $topReviews = Merchant::with('reviews')->get()->map(function ($merchant) {
             $merchant->total_rating = $merchant->reviews->avg('rating');
             $merchant->total_review = $merchant->reviews->count();
+            $merchant->total_views = $merchant->reviews->sum('read_count');
             return $merchant;
         })->sortByDesc('total_rating')->take(5)->values();
 

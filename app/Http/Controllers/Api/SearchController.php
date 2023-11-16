@@ -48,6 +48,10 @@ class SearchController extends Controller
             $query->whereHas('categories', function ($query2) use ($request) {
                 $query2->whereIn('category_id', [$request->category_id]);
             });
+        })->when($request->get('sub_category_id'), function ($query) use ($request) {
+            $query->whereHas('subCategories', function ($query2) use ($request) {
+                $query2->whereIn('sub_category_id', [$request->sub_category_id]);
+            });
         })->when($request->get('state'), function ($query) use ($request) {
             $query->where('state', $request->state);
         })->Active()->get();

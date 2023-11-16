@@ -21,9 +21,8 @@ class HomeController extends Controller
         $categories = Category::Active()->get();
         $moods = Mood::Active()->get();
         $featuredCategories = FeatureCategory::with('merchants')->Active()->get();
-        $topReviews = Merchant::with('reviews')->get()->map(function ($merchant) {
+        $topReviews = Merchant::with('reviews.views')->get()->map(function ($merchant) {
             $merchant->total_rating = $merchant->reviews->avg('rating');
-            $merchant->total_review = $merchant->reviews->count();
             $merchant->total_views = $merchant->reviews->sum('read_count');
             return $merchant;
         })->sortByDesc('total_rating')->take(5)->values();

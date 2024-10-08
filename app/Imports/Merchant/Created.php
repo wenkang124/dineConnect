@@ -75,6 +75,14 @@ class Created implements ToCollection, WithHeadingRow, WithStartRow, WithChunkRe
 
                 case ($data['monday'] === 'Closed'):
                     break;
+                case ($data['monday'] === 'Open 24 hours'):
+                    $monday->day = 1;
+                    $monday->start_time = "00:00";
+                    $monday->end_time = "00:00";
+                    $monday->active = 1;
+                    $monday->merchant_id = $merchant->id; // Ensure $merchant is defined
+                    $monday->save();
+                    break;
 
                 default:
                     $monday->day = 1;
@@ -127,7 +135,14 @@ class Created implements ToCollection, WithHeadingRow, WithStartRow, WithChunkRe
 
                 case ($data['tuesday'] === 'Closed'):
                     break;
-
+                case ($data['tuesday'] === 'Open 24 hours'):
+                    $tuesday->day = 2;
+                    $tuesday->start_time = "00:00";
+                    $tuesday->end_time = "00:00";
+                    $tuesday->active = 1;
+                    $tuesday->merchant_id = $merchant->id; // Ensure $merchant is defined
+                    $tuesday->save();
+                    break;
                 default:
                     $tuesday->day = 2;
                     $tuesday->start_time = "08:00";
@@ -179,7 +194,14 @@ class Created implements ToCollection, WithHeadingRow, WithStartRow, WithChunkRe
 
                 case ($data['wednesday'] === 'Closed'):
                     break;
-
+                case ($data['wednesday'] === 'Open 24 hours'):
+                    $wednesday->day = 3;
+                    $wednesday->start_time = "00:00";
+                    $wednesday->end_time = "00:00";
+                    $wednesday->active = 1;
+                    $wednesday->merchant_id = $merchant->id; // Ensure $merchant is defined
+                    $wednesday->save();
+                    break;
                 default:
                     $wednesday->day = 3;
                     $wednesday->start_time = "08:00";
@@ -231,7 +253,14 @@ class Created implements ToCollection, WithHeadingRow, WithStartRow, WithChunkRe
 
                 case ($data['thursday'] === 'Closed'):
                     break;
-
+                case ($data['thursday'] === 'Open 24 hours'):
+                    $thursday->day = 4;
+                    $thursday->start_time = "00:00";
+                    $thursday->end_time = "00:00";
+                    $thursday->active = 1;
+                    $thursday->merchant_id = $merchant->id; // Ensure $merchant is defined
+                    $thursday->save();
+                    break;
                 default:
                     $thursday->day = 4;
                     $thursday->start_time = "08:00";
@@ -283,7 +312,14 @@ class Created implements ToCollection, WithHeadingRow, WithStartRow, WithChunkRe
 
                 case ($data['friday'] === 'Closed'):
                     break;
-
+                case ($data['friday'] === 'Open 24 hours'):
+                    $friday->day = 5;
+                    $friday->start_time = "00:00";
+                    $friday->end_time = "00:00";
+                    $friday->active = 1;
+                    $friday->merchant_id = $merchant->id; // Ensure $merchant is defined
+                    $friday->save();
+                    break;
                 default:
                     $friday->day = 5;
                     $friday->start_time = "08:00";
@@ -335,7 +371,14 @@ class Created implements ToCollection, WithHeadingRow, WithStartRow, WithChunkRe
 
                 case ($data['saturday'] === 'Closed'):
                     break;
-
+                case ($data['saturday'] === 'Open 24 hours'):
+                    $saturday->day = 6;
+                    $saturday->start_time = "00:00";
+                    $saturday->end_time = "00:00";
+                    $saturday->active = 1;
+                    $saturday->merchant_id = $merchant->id; // Ensure $merchant is defined
+                    $saturday->save();
+                    break;
                 default:
                     $saturday->day = 6;
                     $saturday->start_time = "08:00";
@@ -387,7 +430,14 @@ class Created implements ToCollection, WithHeadingRow, WithStartRow, WithChunkRe
 
                 case ($data['sunday'] === 'Closed'):
                     break;
-
+                case ($data['sunday'] === 'Open 24 hours'):
+                    $sunday->day = 0;
+                    $sunday->start_time = "00:00";
+                    $sunday->end_time = "00:00";
+                    $sunday->active = 1;
+                    $sunday->merchant_id = $merchant->id; // Ensure $merchant is defined
+                    $sunday->save();
+                    break;
                 default:
                     $sunday->day = 0;
                     $sunday->start_time = "08:00";

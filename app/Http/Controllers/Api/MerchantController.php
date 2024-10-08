@@ -60,8 +60,19 @@ class MerchantController extends Controller
             $merchant->operation = 'Closed';
             $merchant->is_open = 0;
         } else {
-            $merchant->operation = 'Open till ' . Carbon::parse($opeation_setting->end_time)->format('h:i');
-            $merchant->is_open = 1;
+            if ($opeation_setting->end_time == '00:00:00') {
+                $merchant->operation = 'Open 24 hours';
+                $merchant->is_open = 1;
+            } else if (Carbon::now()->format('H:i') < $opeation_setting->start_time) {
+                $merchant->operation = 'Open at ' . Carbon::parse($opeation_setting->start_time)->format('h:i');
+                $merchant->is_open = 0;
+            } else if (Carbon::now()->format('H:i') > $opeation_setting->end_time) {
+                $merchant->operation = 'Closed';
+                $merchant->is_open = 0;
+            } else {
+                $merchant->operation = 'Open till ' . Carbon::parse($opeation_setting->end_time)->format('h:i');
+                $merchant->is_open = 1;
+            }
         }
 
         $merchant->share_url = route('api.merchant.detail', $id);

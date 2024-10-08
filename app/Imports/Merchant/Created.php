@@ -2,6 +2,7 @@
 
 namespace App\Imports\Merchant;
 
+use App\Models\Category;
 use App\Models\Country;
 use App\Models\Merchant;
 use Carbon\Carbon;
@@ -32,6 +33,13 @@ class Created implements ToCollection, WithHeadingRow, WithStartRow, WithChunkRe
             $merchant->is_open = $data['temporarilyclosed'] || $data['permanentlyclosed'] ? 0 : 1;
             $merchant->active = 1;
             $merchant->save();
+
+            if ($data['categoryname']) {
+                $category = Category::where('name', $data['categoryname'])->firstOrNew();
+                $category->name = $data['categoryname'];
+                $category->save();
+                $merchant->categories()->sync($category->id);
+            }
 
             $monday = $merchant->operationDaySettings()->where('day', 1)->firstOrNew();
 

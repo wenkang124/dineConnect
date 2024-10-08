@@ -69,6 +69,11 @@ class Merchant extends Model
         return $this->hasMany(MerchantGallery::class);
     }
 
+    public function merchantPdfMenus()
+    {
+        return $this->hasMany(MerchantPdfMenu::class);
+    }
+
     public function operationDaySettings()
     {
         return $this->hasMany(MerchantOperationDaySetting::class);

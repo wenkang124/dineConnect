@@ -17,10 +17,10 @@ return new class extends Migration
         Schema::create('merchants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->longText('thumbnail');
             $table->longText('address');
-            $table->string('postal_code');
+            $table->string('postal_code')->nullable();
             $table->string('city');
             $table->string('state');
             $table->foreignIdFor(Country::class);

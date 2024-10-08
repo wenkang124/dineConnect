@@ -53,7 +53,7 @@ class MerchantController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $merchant = Merchant::with(['operationDaySettings', 'moods', 'categories', 'subCategories'])->where('id', $id)->firstOrFail();
+        $merchant = Merchant::with(['operationDaySettings', 'moods', 'categories', 'subCategories', 'merchantPdfMenus'])->where('id', $id)->firstOrFail();
         $operation = Carbon::now()->dayOfWeek;
         $opeation_setting = MerchantOperationDaySetting::where('merchant_id', $id)->where('day', $operation)->latest()->first();
         if (empty($opeation_setting)) {

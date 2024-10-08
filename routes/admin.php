@@ -56,7 +56,7 @@ Route::middleware('auth:admin')->group(function () {
 
         Route::get('/{item}', [App\Http\Controllers\Admin\MerchantController::class, 'show'])->name('show');
     });
-    
+
     Route::prefix('menu_sub_categories')->name('menu_sub_categories.')->group(function () {
         Route::get('/{merchant_id}', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'index'])->name('index');
         Route::get('/{merchant_id}/datatable', [App\Http\Controllers\Admin\MenuSubCategoryController::class, 'dataTable'])->name('datatable');
@@ -101,10 +101,22 @@ Route::middleware('auth:admin')->group(function () {
 
         Route::get('/{merchant_id}/{item}', [App\Http\Controllers\Admin\MerchantReviewController::class, 'show'])->name('show');
     });
-    
+
+    Route::prefix('merchant_pdf_menus')->name('merchant_pdf_menus.')->group(function () {
+        Route::get('/{merchant_id}', [App\Http\Controllers\Admin\MerchantPdfMenuController::class, 'index'])->name('index');
+        Route::get('/{merchant_id}/datatable', [App\Http\Controllers\Admin\MerchantPdfMenuController::class, 'dataTable'])->name('datatable');
+        Route::get('/{merchant_id}/create', [App\Http\Controllers\Admin\MerchantPdfMenuController::class, 'create'])->name('create');
+        Route::post('/{merchant_id}/store', [App\Http\Controllers\Admin\MerchantPdfMenuController::class, 'store'])->name('store');
+        Route::get('/{merchant_id}/edit/{item}', [App\Http\Controllers\Admin\MerchantPdfMenuController::class, 'edit'])->name('edit');
+        Route::post('/update/{item}', [App\Http\Controllers\Admin\MerchantPdfMenuController::class, 'update'])->name('update');
+        Route::post('/delete/{merchant_pdf_menu}', [App\Http\Controllers\Admin\MerchantPdfMenuController::class, 'destroy'])->name('destroy');
+    });
+
+
+
     Route::prefix('review_comments')->name('review_comments.')->group(function () {
         Route::get('/{review_id}', [App\Http\Controllers\Admin\ReviewCommentController::class, 'index'])->name('index');
-        Route::get('/{review_id}/datatable', [App\Http\Controllers\Admin\ReviewCommentController::class, 'dataTable'])->name('datatable');        
+        Route::get('/{review_id}/datatable', [App\Http\Controllers\Admin\ReviewCommentController::class, 'dataTable'])->name('datatable');
         Route::get('/reports/{comment_id}/datatable', [App\Http\Controllers\Admin\ReviewCommentController::class, 'reportDataTable'])->name('reports.datatable');
         Route::post('/reports/delete/{report}', [App\Http\Controllers\Admin\ReviewCommentController::class, 'reportDestroy'])->name('reports.destroy');
 
@@ -112,7 +124,7 @@ Route::middleware('auth:admin')->group(function () {
 
         Route::get('/{review_id}/{item}', [App\Http\Controllers\Admin\ReviewCommentController::class, 'show'])->name('show');
     });
-    
+
     Route::prefix('review_reports')->name('review_reports.')->group(function () {
         Route::get('/{review_id}', [App\Http\Controllers\Admin\ReviewReportController::class, 'index'])->name('index');
         Route::get('/{review_id}/datatable', [App\Http\Controllers\Admin\ReviewReportController::class, 'dataTable'])->name('datatable');
@@ -203,7 +215,7 @@ Route::middleware('auth:admin')->group(function () {
 
         Route::get('/{item}', [App\Http\Controllers\Admin\FeatureController::class, 'show'])->name('show');
     });
-    
+
     Route::prefix('feedbacks')->name('feedbacks.')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('index');
         Route::get('/datatable', [App\Http\Controllers\Admin\FeedbackController::class, 'dataTable'])->name('datatable');

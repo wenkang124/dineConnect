@@ -66,7 +66,7 @@
 <script>
     $('#datatable').DataTable({
         processing: true,
-        // serverSide: true,
+        serverSide: true,
         dom: 'Bfrtip',
         buttons: [
             {
@@ -77,7 +77,7 @@
             }
         ],
         ajax: "{!! route('admin.merchants.datatable') !!}",
-        order: [[ 0, "desc" ]],
+        order: [[ 0, "asc" ]],
         columns: [
             { data: 'id', name: 'id' },
             { data: 'created_at', name: 'created_at' },

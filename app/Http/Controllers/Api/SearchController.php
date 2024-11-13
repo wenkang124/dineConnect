@@ -17,7 +17,7 @@ class SearchController extends Controller
 
     public function search(Request $request)
     {
-        $mechants = Merchant::where('name', 'LIKE', '%' . $request->keyword . '%')->Active()->get();
+        $mechants = Merchant::where('name', 'LIKE', '%' . $request->keyword . '%')->Active()->paginate($request->get('per_page', 15));
 
         $search_history = new UserSearch();
         $search_history->user_id = auth()->user()->id;
@@ -54,7 +54,7 @@ class SearchController extends Controller
             });
         })->when($request->get('state'), function ($query) use ($request) {
             $query->where('state', $request->state);
-        })->Active()->get();
+        })->Active()->paginate($request->get('per_page', 15));
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
@@ -75,7 +75,7 @@ class SearchController extends Controller
     public function suggestionByLatLng(Request $request)
     {
         $merchants = Merchant::select(DB::raw("*, ( 3959 * acos( cos( radians(" . $request->get('lat') . ") ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(" . $request->get('lng') . ") ) + sin( radians(" . $request->get('lat') . ") ) * sin( radians( lat ) ) ) ) AS distance"))->orderby('distance', 'desc')->orderBy('distance')
-            ->get();
+            ->paginate($request->get('per_page', 15));
 
         return $this->__apiSuccess(
             'Retrieve Successful.',

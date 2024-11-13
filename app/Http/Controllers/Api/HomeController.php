@@ -10,17 +10,18 @@ use App\Models\Merchant;
 use App\Models\Mood;
 use App\Models\Review;
 use App\Traits\Helpers;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     use Helpers;
 
-    public function getAllHomeData()
+    public function getAllHomeData(Request $request)
     {
         $banners = Banner::Active()->get();
         $categories = Category::Active()->get();
         $moods = Mood::Active()->get();
-        $featuredCategories = FeatureCategory::with('merchants')->Active()->get();
+        $featuredCategories = FeatureCategory::with('merchants')->Active()->paginate($request->get('per_page', 10));
         $topReviews = Merchant::with('reviews.views')->get()->map(function ($merchant) {
             $merchant->total_rating = $merchant->reviews->avg('rating');
             $merchant->total_views = $merchant->reviews->sum('read_count');

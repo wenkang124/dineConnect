@@ -27,7 +27,10 @@ class MerchantController extends Controller
     public function randomList(Request $request)
     {
 
-        $merchants = Merchant::active()->inRandomOrder()->paginate($request->get('per_page', 15));
+        $page = $request->get('page') ?? 1;
+        $limit = $request->get('limit') ?? 10;
+
+        $merchants = Merchant::active()->inRandomOrder()->limit($limit)->offset(($page - 1) * $limit)->get();
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
@@ -44,10 +47,15 @@ class MerchantController extends Controller
             $list = Category::Active()->where('id', $request->get('id'))->first();
         }
 
+        $page = $request->get('page') ?? 1;
+        $limit = $request->get('limit') ?? 10;
+
+        $merchants = $list->merchants()->active()->limit($limit)->offset(($page - 1) * $limit)->get();
+
 
         return $this->__apiSuccess(
             'Retrieve Successful.',
-            $list->merchants ?? [],
+            $merchants ?? [],
         );
     }
 

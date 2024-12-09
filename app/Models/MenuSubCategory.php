@@ -10,12 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class MenuSubCategory extends Model
 {
     use HasFactory, SoftDeletes, HasGlobalScope;
-    
+
     const ACTIVE = 1;
     const INACTIVE = 0;
     const ACTIVE_NAME = 'Active';
-    const INACTIVE_NAME ='Inactive';
-    
+    const INACTIVE_NAME = 'Inactive';
+
     const STATUS_LIST = [
         self::ACTIVE => self::ACTIVE_NAME,
         self::INACTIVE => self::INACTIVE_NAME,
@@ -48,12 +48,12 @@ class MenuSubCategory extends Model
 
     public function getImagePathAttribute()
     {
-        return $this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->image : $this->image;
+        return $this->image ? "/" . $this->image : "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg";
     }
 
     public function getImageFullPathAttribute()
     {
-        return asset($this->image != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg"? "/".$this->image : $this->image);
+        return asset($this->image ? "/" . $this->image : "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg");
     }
 
     public function getStatusNameAttribute()

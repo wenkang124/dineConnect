@@ -106,7 +106,7 @@ class Merchant extends Model
 
     public function getImagePathAttribute()
     {
-        return $this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail;
+        return $this->thumbnail ? "/" . $this->thumbnail : "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg";
     }
 
     public function getImageFullPathAttribute()
@@ -114,7 +114,7 @@ class Merchant extends Model
         if (!$this->thumbnail) {
             return asset('/images/Dyme Eat.png');
         } else {
-            return asset($this->thumbnail != "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg" ? "/" . $this->thumbnail : $this->thumbnail);
+            return asset($this->thumbnail ? "/" . $this->thumbnail : "https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg");
         }
     }
 

@@ -23,10 +23,10 @@ class Created implements ToCollection, WithHeadingRow, WithStartRow, WithChunkRe
             $merchant = Merchant::where('name', $data['title'])->firstOrNew();
             $merchant->name = $data['title'] ?? 'Unknown';
             $merchant->description = $data['description'];
-            $merchant->address = $data['address'];
+            $merchant->address = $data['address'] ?? 'Unknown';
             $merchant->postal_code = $data['postalcode'];
             $merchant->city = $data['city'] ?? 'Unknown';
-            $merchant->state = $data['state'];
+            $merchant->state = $data['state'] ?? 'Unknown';
             $merchant->country_id = $country->id;
             $merchant->lat = $data['locationlat'];
             $merchant->lng = $data['locationlng'];

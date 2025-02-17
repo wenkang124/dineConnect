@@ -26,7 +26,7 @@ class Import extends Command
      */
     public function handle()
     {
-        $file = public_path('assets/import.xlsx');
+        $file = public_path('assets/import.xls');
 
         if (!file_exists($file)) {
             $this->error('File not found');

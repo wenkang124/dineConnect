@@ -125,6 +125,7 @@ class MerchantController extends Controller
             $item->lng = $request->get('lng');
             $item->lat = $request->get('lat');
             $item->active = $request->get('active');
+            $item->change_store = $request->get('change_store');
 
             if($request->hasFile('thumbnail')) {
                 $file = $request->file('thumbnail');
@@ -314,6 +315,7 @@ class MerchantController extends Controller
             $item->lng = $request->get('lng');
             $item->lat = $request->get('lat');
             $item->active = $request->get('active');
+            $item->change_store = $request->get('change_store');
 
             if($request->hasFile('thumbnail')) {
                 $temp_path = $item->thumbnail;

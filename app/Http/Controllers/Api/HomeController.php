@@ -22,8 +22,15 @@ class HomeController extends Controller
         $categories = Category::Active()->get();
         $moods = Mood::Active()->get();
         $featuredCategories = FeatureCategory::with('merchants')->Active()->paginate($request->get('per_page', 10));
+        // $topReviews = Merchant::with('reviews.views')->get()->map(function ($merchant) {
+        //     $merchant->total_rating = $merchant->reviews->avg('rating');
+        //     $merchant->total_views = $merchant->reviews->sum('read_count');
+        //     return $merchant;
+        // })->sortByDesc('total_rating')->take(5)->values();
+
+
         $topReviews = Merchant::with(['reviews' => function ($query) {
-            $query->select('merchant_id', 'rating', 'read_count');
+            $query->select('id', 'itemable_id', 'itemable_type', 'rating', 'read_count');
         }])
             ->withCount(['reviews as total_reviews'])
             ->withAvg('reviews as avg_rating', 'rating')
@@ -31,6 +38,7 @@ class HomeController extends Controller
             ->orderByDesc('avg_rating')
             ->take(5)
             ->get();
+
 
         return $this->__apiSuccess('Retrieve Successful.', [
             "banners" => $banners,

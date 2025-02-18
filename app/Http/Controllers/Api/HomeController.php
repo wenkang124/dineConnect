@@ -29,13 +29,16 @@ class HomeController extends Controller
         // })->sortByDesc('total_rating')->take(5)->values();
 
 
-        $topReviews = Merchant::with(['reviews' => function ($query) {
-            $query->select('id', 'itemable_id', 'itemable_type', 'rating', 'read_count');
-        }])
-            ->withCount(['reviews as total_reviews'])
+        $topMerchants = Merchant::select('merchants.*')
+            ->selectRaw('COUNT(views.id) as total_views')
+            ->join('views', function ($join) {
+                $join->on('merchants.id', '=', 'views.itemable_id')
+                    ->where('views.itemable_type', Merchant::class);
+            })
+            ->groupBy('merchants.id')
+            ->orderByDesc('total_views')
+            ->withCount('reviews as total_reviews')
             ->withAvg('reviews as avg_rating', 'rating')
-            ->withSum('reviews as total_views', 'read_count')
-            ->orderByDesc('avg_rating')
             ->take(5)
             ->get();
 
@@ -45,7 +48,7 @@ class HomeController extends Controller
             "categories" => $categories,
             "moods" => $moods,
             "featured_categories" => $featuredCategories,
-            "top_reviews" => $topReviews,
+            "top_reviews" => $topMerchants,
         ]);
     }
 }

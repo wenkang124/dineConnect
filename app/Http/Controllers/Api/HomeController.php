@@ -39,6 +39,7 @@ class HomeController extends Controller
             ->orderByDesc('total_views')
             ->withCount('reviews as total_reviews')
             ->withAvg('reviews as avg_rating', 'rating')
+            ->with('reviews')
             ->take(5)
             ->get();
 
